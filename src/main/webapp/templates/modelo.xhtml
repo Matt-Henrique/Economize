@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<title>E-conomize</title>
+	<link href='../resources/images/house.png' rel='icon'
+		type='image/x-icon' />
+</h:head>
+<h:body>
+	<p:growl id="mensagem" />
+	<div id="header" align="left">
+		<a href="inicio.xhtml"><p:graphicImage library="imagens"
+				name="econologo.png" height="100" width="300" /></a>
+	</div>
+	<h:form id="formMenu">
+		<h:outputStylesheet library="css" name="estilo.css"></h:outputStylesheet>
+		<p:menubar id="menu">
+			<p:menuitem value="Home" url="inicio.xhtml" icon="fa fa-home">
+			</p:menuitem>
+			<p:submenu label="Produto" icon="fa fa-shopping-cart">
+				<p:menuitem value="Lista de Produtos" url="produto.xhtml"
+					icon="fa fa-shopping-basket"
+					rendered="#{autenticacaoBean.controladorAcesso.permissaoEmpresa}" />
+				<p:menuitem value="Lista de Categorias" url="categoria.xhtml"
+					icon="fa fa-book"
+					rendered="#{autenticacaoBean.controladorAcesso.permissaoAdministrador}" />
+			</p:submenu>
+
+			<p:submenu label="Campanha" icon="fa fa-tags"
+				rendered="#{autenticacaoBean.controladorAcesso.permissaoEmpresa}">
+				<p:submenu label="Lista de Campanhas" icon="fa fa-calendar">
+					<p:menuitem value="Campanha Comum" url="campanha.xhtml"
+						icon="fa fa-calendar-plus-o" />
+					<p:menuitem value="Campanha Premium" url="premium.xhtml"
+						icon="fa fa-calendar-plus-o" />
+				</p:submenu>
+			</p:submenu>
+			<p:submenu label="Usuarios" icon="fa fa-group"
+				rendered="#{autenticacaoBean.controladorAcesso.permissaoAdministrador}">
+				<p:menuitem value="Administrador" url="administrador.xhtml"
+					icon="fa fa-user" />
+				<p:menuitem value="Empresa" url="empresa.xhtml"
+					icon="fa fa-building" />
+			</p:submenu>
+			<p:submenu label="Ajuda" icon="fa fa-flag">
+				<p:menuitem value="Sobre" icon="fa fa-info" />
+			</p:submenu>
+			<p:submenu styleClass="Logout" label="Conta" icon="fa fa-gear">
+				<p:menuitem value="Meu Perfil" icon="fa fa-building"
+					rendered="#{autenticacaoBean.controladorAcesso.permissaoEmpresa}"
+					url="empresa-perfil.xhtml">
+					<f:attribute name="usuarioSelecionado" value="#{usuario.codigo}" />
+				</p:menuitem>
+				<p:menuitem value="Meu Perfil" icon="fa fa-user"
+					rendered="#{autenticacaoBean.controladorAcesso.permissaoAdministrador}"
+					url="adm-perfil.xhtml">
+					<f:attribute name="usuarioSelecionado" value="#{usuario.codigo}" />
+				</p:menuitem>
+				<p:menuitem value="Sair" icon="fa fa-power-off"
+					actionListener="#{autenticacaoBean.logout()}" />
+			</p:submenu>
+		</p:menubar>
+	</h:form>
+
+	<div id="conteudo">
+		<ui:insert name="conteudo" />
+	</div>
+
+	<div id="footer" style="text-align: center;">
+		<h:outputStylesheet library="css" name="estilo.css"></h:outputStylesheet>
+		<p:column>
+			<h4>2016 E-conomize. © Todos os direitos reservados.</h4>
+		</p:column>
+	</div>
+</h:body>
+</html>

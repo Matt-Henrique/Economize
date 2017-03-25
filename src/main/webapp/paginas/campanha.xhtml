@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate template="/templates/modelo.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:define name="conteudo">
+		<h:form id="frmListagem">
+			<p:panel header="Campanha - Listagem">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{campanhaBean.campanhas}" var="campanha"
+					rows="8" paginatorPosition="top">
+					<f:facet name="header">
+						<p:commandButton value="Novo"
+							actionListener="#{campanhaBean.novo}"
+							oncomplete="PF('dialogo').show();"
+							update=":mensagem :frmCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+					<p:column headerText="Título Campanha">
+						<h:outputText value="#{campanha.titulo}" />
+					</p:column>
+					<p:column headerText="Data Inicial">
+						<h:outputText value="#{campanha.dataInicial}" />
+					</p:column>
+					<p:column headerText="Data Final">
+						<h:outputText value="#{campanha.dataFinal}" />
+					</p:column>
+					<p:column headerText="Vigência">
+						<h:outputText value="#{campanha.vigencia}" />
+					</p:column>
+					<p:column headerText="Adicionar Itens">
+						<p:commandButton icon="ui-icon-folder-open"
+							title="Adicionar Itens"
+							actionListener="#{campanhaBean.adcionarItem}"
+							update=":mensagem">
+							<f:attribute name="campanhaSelecionada" value="#{campanha.codigo}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+		<p:dialog header="Campanha - Cadastro" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" closable="false">
+			<h:form id="frmCadastro">
+					<h:panelGrid columns="2" id="painel">
+						<p:outputLabel value="Título.:" for="titulo" />
+						<p:inputText id="titulo" value="#{campanhaBean.campanha.titulo}" />
+
+						<p:outputLabel for="dataInicial" value="Data Inicial.:" />
+						<p:calendar id="dataInicial"
+							value="#{campanhaBean.campanha.dataInicial}" pattern="dd-MM-yyyy"
+							mask="true" />
+
+						<p:outputLabel for="dataFinal" value="Data Final.:" />
+						<p:calendar id="dataFinal"
+							value="#{campanhaBean.campanha.dataFinal}" pattern="dd-MM-yyyy"
+							mask="true" />
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<p:commandButton value="Salvar"
+							actionListener="#{campanhaBean.salvar}"
+							update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
+						<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:decorate>

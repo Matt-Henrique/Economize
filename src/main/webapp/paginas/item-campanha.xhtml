@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate template="/templates/modelo.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:define name="conteudo">
+		<h:form id="frmListagem">
+			<p:panel header="Itens da Campanha - Listagem">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{itemCampanhaBean.itensCampanha}"
+					var="itemCampanha" rows="10" paginatorPosition="top">
+
+					<f:facet name="header">
+						<p:button outcome="campanha" value="Voltar" />
+						<p:commandButton value="Novo"
+							actionListener="#{itemCampanhaBean.novo}"
+							oncomplete="PF('dialogo').show();"
+							update=":mensagem :frmCadastro:painel :frmCadastro:tabelaProduto">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+
+					<p:column headerText="Campanha">
+						<h:outputText value="#{itemCampanha.campanha.titulo}" />
+					</p:column>
+					
+					<p:column headerText="Empresa">
+						<h:outputText value="#{itemCampanha.produto.empresa.nome}" />
+					</p:column>
+
+					<p:column headerText="Produto">
+						<h:outputText value="#{itemCampanha.produto.descricao}" />
+					</p:column>
+
+					<p:column headerText="Preço">
+						<h:outputText value="#{itemCampanha.precoOferta}" />
+					</p:column>
+
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+		
+		<p:dialog header="Itens - Cadastro" widgetVar="dialogo"
+			responsive="true" resizable="false" modal="true" maximizable="true"
+			draggable="false">
+			<h:form id="frmCadastro">
+				<p:panel header="Produtos">
+					<p:dataTable id="tabelaProduto" emptyMessage="Nenhum registro encontrado."
+						paginator="true" value="#{itemCampanhaBean.produtos}" var="produto"
+						paginatorPosition="bottom" rowHover="true" rows="4">
+
+						<p:column headerText="Descrição" filterBy="#{produto.descricao}"
+							sortBy="#{produto.descricao}" width="250">
+							<h:outputText value="#{produto.descricao}" />
+						</p:column>
+
+						<p:column headerText="Descrição Reduzida" width="200">
+							<h:outputText value="#{produto.descricaoReduzida}" />
+						</p:column>
+
+						<p:column headerText="Un" width="20">
+							<h:outputText value="#{produto.unidadeMedida}" />
+						</p:column>
+
+						<p:column headerText="Preço" width="55">
+							<h:outputText value="#{produto.preco}" />
+						</p:column>
+
+						<p:column headerText="Ean" filterBy="#{produto.ean}"
+							sortBy="#{produto.ean}" width="100">
+							<h:outputText value="#{produto.ean}" />
+						</p:column>
+
+						<p:column headerText="Fabricante" width="150">
+							<h:outputText value="#{produto.empresa.nome}" />
+						</p:column>
+
+						<p:column headerText="Embalagem" width="100">
+							<h:outputText value="#{produto.embalagem}" />
+						</p:column>
+
+						<p:column headerText="Imagem" width="80">
+							<p:graphicImage cache="false" height="35" width="45"
+								url="http://localhost:8080/imagens/#{produto.codigo}.png" />
+						</p:column>
+
+						<p:column headerText="Opções" styleClass="colunaOpcoes" width="50">
+							<p:commandButton icon="ui-icon-plus"
+								actionListener="#{itemCampanhaBean.adicionar}" update=":frmCadastro:painel">
+								<f:attribute name="produtoSelecionado" value="#{produto}" />
+							</p:commandButton>
+
+						</p:column>
+					</p:dataTable>
+
+				</p:panel>
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel value="Preço" for="preco" />
+					<p:inputText id="preco"
+						value="#{itemCampanhaBean.itemCampanha.precoOferta}">
+					</p:inputText>
+
+					<p:outputLabel for="produto" value="produto" />
+					<p:selectOneMenu id="produto" filter="true"
+						value="#{itemCampanhaBean.itemCampanha.produto}" required="true"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um produto..." />
+						<f:selectItems value="#{itemCampanhaBean.produtos}" var="produto"
+							itemValue="#{produto}"
+							itemLabel="#{produto.descricaoReduzida} - #{produto.categoria.categoria}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				<p:separator />
+				<div align="right">
+					<h:panelGrid columns="2">
+						<p:commandButton value="Salvar"
+							actionListener="#{itemCampanhaBean.salvar}"
+							update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
+						<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</h:panelGrid>
+				</div>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:decorate>

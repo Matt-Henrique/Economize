@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+	<ui:define name="conteudo">
+		<p:panel>
+			<div align="center">
+				<h:form id="formListagem"
+					rendered="#{autenticacaoBean.controladorAcesso.permissaoAdministrador}">
+					<p:carousel numVisible="1" effect="easeInStrong" responsive="true"
+						headerText="Meu Perfil" autoPlayInterval="10000"
+						style="margin-bottom:0">
+						<h:panelGrid columns="2" width="100%">
+							<p:repeat id="pessoal" var="administrador"
+								value="#{administradorPerfilBean.administradores}">
+								<p:panel header="Dados Pessoais">
+									<p:panelGrid columns="2" layout="grid">
+										<h:outputText value="Nome Completo:" style="font-weight: bold" />
+										<h:outputText value="#{administrador.nome}" />
+
+										<h:outputText value="CPF:" style="font-weight: bold" />
+										<h:outputText value="#{administrador.cpf_cnpj}" />
+										
+										<h:outputText value="Setor:" style="font-weight: bold" />
+										<h:outputText value="#{administrador.setor.toString()}" />
+									</p:panelGrid>
+								</p:panel>
+							</p:repeat>
+						</h:panelGrid>
+						<h:panelGrid columns="2" width="100%">
+							<p:repeat id="contato" var="administrador"
+								value="#{administradorPerfilBean.administradores}">
+								<p:panel header="Contatos">
+									<p:panelGrid columns="2" cellpadding="10" layout="grid">
+										<h:outputText value="Telefone:" style="font-weight: bold" />
+										<h:outputText value="#{administrador.telefone}" />
+
+										<h:outputText value="Telefone:" style="font-weight: bold" />
+										<h:outputText value="#{administrador.telefone2}" />
+
+										<h:outputText value="Celular:" style="font-weight: bold" />
+										<h:outputText value="#{administrador.celular}" />
+
+										<h:outputText value="E-mail:" style="font-weight: bold" />
+										<h:outputText value="#{administrador.email}" />
+									</p:panelGrid>
+								</p:panel>
+							</p:repeat>
+						</h:panelGrid>
+					</p:carousel>
+					<p:repeat id="dados" var="administrador"
+						value="#{administradorPerfilBean.administradores}">
+						<h:panelGrid columns="2" width="100%">
+							<p:panel header="Editar Perfil">
+								<p:commandButton value="Editar Dados" icon="fa fa-pencil"
+									title="Editar"
+									actionListener="#{administradorPerfilBean.editar}"
+									update=":mensagem :formCadastro"
+									oncomplete="PF('administrador').show();">
+									<f:attribute name="administradorSelecionado"
+										value="#{administrador}" />
+								</p:commandButton>
+
+								<p:commandButton value="Alterar Senha" icon="fa fa-key"
+									title="Alterar Senha"
+									actionListener="#{administradorPerfilBean.editar}"
+									update=":mensagem :formSenha:mudarSenha"
+									oncomplete="PF('senha').show();">
+									<f:actionListener
+										type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+									<f:attribute name="administradorSelecionado"
+										value="#{administrador}" />
+								</p:commandButton>
+							</p:panel>
+						</h:panelGrid>
+					</p:repeat>
+				</h:form>
+			</div>
+
+			<p:dialog header="Meus Dados" widgetVar="administrador"
+				maximizable="true" resizable="false" modal="true" height="550"
+				draggable="false" responsive="true" showEffect="clip"
+				hideEffect="fold" closeOnEscape="true">
+				<h:form id="formCadastro">
+					<p:tab id="tabPerfil" title="Perfil">
+						<p:panel header="Dados do Administrador">
+							<h:panelGrid columns="1" id="administrador">
+								<p:outputLabel value="Nome Completo:" for="nome" />
+								<p:inputText id="nome"
+									value="#{administradorPerfilBean.administrador.nome}"
+									style="width:350px;" title="Nome Completo" required="true"
+									requiredMessage="Informe o Nome Completo"
+									placeholder="Ex: Mateus Henrique Neto" maxlength="50" />
+
+								<p:outputLabel value="CPF:" for="cpf" />
+								<p:inputMask mask="999.999.999-99" id="cpf" title="CPF"
+									style="width:350px;"
+									value="#{administradorPerfilBean.administrador.cpf_cnpj}"
+									required="true" requiredMessage="Informe o CPF"
+									placeholder="Somente números" />
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="tabContato" title="Contatos">
+						<p:panel header="Contatos do Administrador">
+							<h:panelGrid columns="1" id="contato">
+								<p:outputLabel value="Telefone:" for="telefone" />
+								<p:inputMask mask="(99) 9999-9999" id="telefone"
+									style="width:350px;" title="Telefone"
+									value="#{administradorPerfilBean.administrador.telefone}"
+									required="true" requiredMessage="Informe o Telefone"
+									placeholder="(DDD) Telefone" />
+
+								<p:outputLabel value="Telefone (Opcional):" for="telefone2" />
+								<p:inputMask mask="(99) 9999-9999" id="telefone2"
+									style="width:350px;" title="Telefone"
+									value="#{administradorPerfilBean.administrador.telefone2}"
+									placeholder="(DDD) Telefone" />
+
+								<p:outputLabel value="Celular:" for="celular" />
+								<p:inputMask mask="(99) 99999-9999" id="celular"
+									style="width:350px;"
+									value="#{administradorPerfilBean.administrador.celular}"
+									title="Celular" required="true"
+									requiredMessage="Informe o Celular" placeholder="(DDD) Celular" />
+
+								<p:outputLabel value="E-mail:" for="email" />
+								<p:inputText id="email"
+									value="#{administradorPerfilBean.administrador.email}"
+									style="width:350px;" title="E-mail" required="true"
+									requiredMessage="Informe o E-mail"
+									validatorMessage="Informe o E-mail"
+									placeholder="Ex: joaoSantos@email.com" maxlength="100">
+									<f:validateRegex
+										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+								</p:inputText>
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+					<p:separator />
+					<div align="left">
+						<h:panelGrid columns="2">
+							<p:commandButton value="Confirmar" icon="fa fa-check"
+								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('administrador').hide()"
+								actionListener="#{administradorPerfilBean.salvar}"
+								update=":mensagem :formListagem" />
+							<p:commandButton value="Fechar" icon="fa fa-times"
+								process="@none" oncomplete="PF('administrador').hide();">
+								<f:actionListener
+									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							</p:commandButton>
+						</h:panelGrid>
+					</div>
+				</h:form>
+			</p:dialog>
+
+			<p:dialog header="Alteração" widgetVar="senha" maximizable="true"
+				resizable="false" modal="true" draggable="false" responsive="true"
+				showEffect="clip" hideEffect="fold" closeOnEscape="true">
+				<h:form id="formSenha">
+					<p:tab id="tabSenha" title="Senha">
+						<p:panel header="Alterar a Senha">
+							<h:panelGrid columns="1" id="mudarSenha">
+								<p:outputLabel value="Nova senha:" for="senha" />
+								<p:password id="senha" style="width:350px;"
+									value="#{administradorPerfilBean.administrador.senhaSemCriptografia}"
+									promptLabel="Digite a senha" weakLabel="Força da senha : Fraca"
+									goodLabel="Força da senha : Média" required="true"
+									requiredMessage="Digite a nova senha"
+									strongLabel="Força da senha : Forte" match="confSenha"
+									validatorMessage="As duas senhas devem ser iguais"
+									maxlength="20" feedback="true" title="Senha até 20 dígitos"
+									placeholder="Digite sua senha">
+								</p:password>
+
+								<p:outputLabel value="Confirme a senha:" for="confSenha" />
+								<p:password id="confSenha" style="width:350px;"
+									value="#{administradorPerfilBean.administrador.senhaSemCriptografia}"
+									match="confSenha" title="Confirme sua senha"
+									validatorMessage="As duas senhas devem ser iguais"
+									maxlength="20" placeholder="Confirme sua senha">
+								</p:password>
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+					<p:separator />
+					<div align="left">
+						<h:panelGrid columns="2">
+							<p:commandButton value="Confirmar" icon="fa fa-check"
+								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('senha').hide()"
+								actionListener="#{administradorPerfilBean.mudarSenha}"
+								update=":mensagem :formSenha:mudarSenha" />
+							<p:commandButton value="Fechar" icon="fa fa-times"
+								process="@none" oncomplete="PF('senha').hide();">
+								<f:actionListener
+									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							</p:commandButton>
+						</h:panelGrid>
+					</div>
+				</h:form>
+			</p:dialog>
+		</p:panel>
+	</ui:define>
+</ui:composition>

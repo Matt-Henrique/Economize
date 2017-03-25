@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/templates/modelo.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	<ui:define name="conteudo">
+		<h:form id="formListagem"
+			rendered="#{autenticacaoBean.controladorAcesso.permissaoEmpresa}">
+			<p:panel header="Produtos - Listagem">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" rows="20" value="#{produtoBean.produtos}"
+					var="produto" paginatorPosition="bottom" rowHover="true"
+					rowExpandMode="true" widgetVar="produtoTable" multiViewState="true"
+					reflow="true">
+					<f:facet name="header">
+						<div align="left">
+							<p:commandButton value="Novo" icon="fa fa-file-o"
+								oncomplete="PF('dialogo').show();"
+								actionListener="#{produtoBean.novo}"
+								update="formCadastro:painel">
+								<f:actionListener
+									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							</p:commandButton>
+						</div>
+						<div align="right">
+							<p:outputLabel value="Pesquisar Campos: " />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('produtoTable').filter()"
+								placeholder="Faça uma busca" style="width: 150px" />
+						</div>
+					</f:facet>
+
+					<p:column headerText="Descrição" sortBy="#{produto.descricao}"
+						filterBy="#{produto.descricao}" filterMatchMode="contains">
+						<h:outputText value="#{produto.descricao}" />
+					</p:column>
+
+					<p:column headerText="Descrição Reduzida"
+						sortBy="#{produto.descricaoReduzida}"
+						filterBy="#{produto.descricaoReduzida}" filterMatchMode="contains">
+						<h:outputText value="#{produto.descricaoReduzida}" />
+					</p:column>
+
+					<p:column headerText="Unidade" sortBy="#{produto.unidadeMedida}"
+						filterBy="#{produto.unidadeMedida}" filterMatchMode="contains">
+						<h:outputText value="#{produto.unidadeMedida}" />
+					</p:column>
+
+					<p:column headerText="Preço" sortBy="#{produto.preco}"
+						filterBy="#{produto.preco}" filterMatchMode="contains">
+						<h:outputText value="#{produto.preco}" />
+					</p:column>
+
+					<p:column headerText="Ean" sortBy="#{produto.ean}"
+						filterBy="#{produto.ean}" filterMatchMode="contains">
+						<h:outputText value="#{produto.ean}" />
+					</p:column>
+
+					<p:column headerText="Embalagem" sortBy="#{produto.embalagem}"
+						filterBy="#{produto.embalagem}" filterMatchMode="contains">
+						<h:outputText value="#{produto.embalagem}" />
+					</p:column>
+
+					<p:column headerText="Empresa"
+						sortBy="#{produto.empresa.nome}"
+						filterBy="#{produto.empresa.nome}"
+						filterMatchMode="contains">
+						<h:outputText value="#{produto.empresa.nome}" />
+					</p:column>
+
+					<p:column headerText="Opções">
+						<p:commandButton icon="fa fa-trash" title="Excluir"
+							actionListener="#{produtoBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o produto?" />
+							<f:attribute name="produtoSelecionado" value="#{produto}" />
+						</p:commandButton>
+
+						<p:commandButton icon="fa fa-pencil" title="Editar"
+							actionListener="#{produtoBean.editar}"
+							update=":mensagem :formCadastro:painel"
+							oncomplete="PF('dialogo').show();">
+							<f:attribute name="produtoSelecionado" value="#{produto}" />
+						</p:commandButton>
+
+						<p:commandButton icon="fa fa-download" title="Download"
+							actionListener="#{produtoBean.download}" ajax="false">
+							<f:attribute name="produtoSelecionado" value="#{produto}" />
+							<p:fileDownload value="#{produtoBean.foto}" />
+						</p:commandButton>
+
+						<p:commandButton update="view" oncomplete="PF('view').show()"
+							icon="ui-icon-search" title="Visualizar"
+							actionListener="#{produtoBean.editar}">
+							<f:setPropertyActionListener value="#{produto}"
+								target="#{produtoBean.selectedProduto}" />
+								<f:attribute name="produtoSelecionado" value="#{produto}" />
+						</p:commandButton>
+
+					</p:column>
+				</p:dataTable>
+
+				<p:confirmDialog global="true" hideEffect="fold" showEffect="clip"
+					responsive="true">
+					<div align="center">
+						<p:commandButton value="Sim" type="button"
+							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+					</div>
+				</p:confirmDialog>
+			</p:panel>
+		</h:form>
+
+		<p:dialog header="Informações do Produto" widgetVar="view"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+			<p:outputPanel id="view" style="text-align:center;">
+				<p:panelGrid columns="2"
+					rendered="#{not empty produtoBean.selectedProduto}"
+					columnClasses="label,value">
+					<f:facet name="header">
+						<p:graphicImage id="foto" value="#{imagemBean.foto}" width="300"
+							height="200">
+							<f:param name="caminho" value="#{produtoBean.selectedProduto.caminho}" />
+						</p:graphicImage>
+					</f:facet>
+
+					<h:outputText value="Descrição" />
+					<h:outputText value="#{produtoBean.selectedProduto.descricao}" />
+
+					<h:outputText value="Desc. Reduzida" />
+					<h:outputText
+						value="#{produtoBean.selectedProduto.descricaoReduzida}" />
+
+					<h:outputText value="Ean" />
+					<h:outputText value="#{produtoBean.selectedProduto.ean}" />
+
+					<h:outputText value="Embalagem" />
+					<h:outputText value="#{produtoBean.selectedProduto.embalagem}" />
+				</p:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+
+		<p:dialog header="Cadastro" widgetVar="dialogo" maximizable="true"
+			resizable="false" modal="true" draggable="false" responsive="true"
+			showEffect="clip" hideEffect="fold">
+			<h:form id="formCadastro">
+				<p:wizard id="w" nextLabel="Próximo" backLabel="Voltar"
+					widgetVar="wiz">
+					<p:tab id="tabProduto" title="Produto">
+						<p:panel header="Dados do Produto">
+							<p:messages closable="true" />
+							<h:panelGrid id="painel" columns="1">
+								<p:outputLabel value="Descrição:" for="desc" />
+								<p:inputTextarea id="desc" maxlength="100" title="Descrição"
+									value="#{produtoBean.produto.descricao}" required="true"
+									requiredMessage="Informe a Descrição" style="width:350px;" />
+
+								<p:outputLabel value="Descrição Reduzida:" for="descReduzida" />
+								<p:inputText id="descReduzida" maxlength="50"
+									title="Descrição Reduzida"
+									value="#{produtoBean.produto.descricaoReduzida}"
+									required="true" requiredMessage="Informe a Descrição Reduzida"
+									style="width:350px;" />
+
+								<p:outputLabel value="Embalagem:" for="embalagem" />
+								<p:inputText id="embalagem" maxlength="10" title="Embalagem"
+									value="#{produtoBean.produto.embalagem}" required="true"
+									requiredMessage="Informe a embalagem" style="width:350px;" />
+
+								<p:outputLabel value="Unidade de Medida:" for="un" />
+								<p:inputText id="un" maxlength="10" title="Unidade de Medida"
+									value="#{produtoBean.produto.unidadeMedida}" required="true"
+									requiredMessage="Informe a Unidade de Medida"
+									style="width:350px;" />
+
+								<p:outputLabel value="Preço:" for="preco" />
+								<p:inputText id="preco" maxlength="7" title="Preço"
+									value="#{produtoBean.produto.preco}" required="true"
+									requiredMessage="Informe o Valor" style="width:350px;" />
+
+								<p:outputLabel value="Ean:" for="ean" />
+								<p:inputText id="ean" maxlength="50" title="Ean"
+									value="#{produtoBean.produto.ean}" required="true"
+									requiredMessage="Informe o Ean" style="width:350px;" />
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+					<p:tab id="tabCateg" title="Categoria">
+						<p:panel header="Categoria do Produto">
+							<p:messages closable="true" />
+							<h:panelGrid id="painel2" columns="1">
+								<p:outputLabel value="Categoria:" for="categ" />
+								<p:selectOneMenu id="categ" filter="true"
+									value="#{produtoBean.produto.categoria}" style="width:325px;"
+									autoWidth="325" required="true"
+									requiredMessage="Informe a Categoria"
+									converter="omnifaces.SelectItemsConverter">
+									<f:selectItem noSelectionOption="true"
+										itemLabel="Selecione uma categoria..." />
+									<f:selectItems value="#{produtoBean.categorias}"
+										var="categoria" itemValue="#{categoria}"
+										itemLabel="#{categoria.categoria}" />
+								</p:selectOneMenu>
+								
+								<p:outputLabel value="Sub-Categoria:" for="subcateg" />
+								<p:inputText id="subcateg" maxlength="50" title="Sub-Categoria"
+									value="#{produtoBean.produto.subCategoria}" required="true"
+									requiredMessage="Informe a Sub-Categoria" style="width:350px;" />
+
+								<p:outputLabel value="Empresa:" for="empresa" />
+								<p:selectOneMenu id="empresa" filter="true"
+									value="#{produtoBean.produto.empresa}" style="width:325px;"
+									autoWidth="325" required="true"
+									requiredMessage="Informe a Empresa"
+									converter="omnifaces.SelectItemsConverter">
+									<f:selectItem noSelectionOption="true"
+										itemLabel="Selecione uma empresa..." />
+									<f:selectItems value="#{produtoBean.empresas}" var="empresa"
+										itemValue="#{empresa}" itemLabel="#{empresa.nome}" />
+								</p:selectOneMenu>
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="tabUpload" title="Upload">
+						<p:panel header="Upload da Imagem do Produto">
+							<p:messages closable="true" />
+							<h:panelGrid id="painel3" columns="1">
+								<p:fileUpload id="upload" mode="advanced" fileLimit="1"
+									update=":formCadastro:painel3" label="Escolher"
+									cancelLabel="Cancelar"
+									fileUploadListener="#{produtoBean.upload}"
+									allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="2000000" />
+								<p:outputLabel for="foto" />
+								<p:graphicImage id="foto" value="#{imagemBean.foto}" width="400"
+									height="300">
+									<f:param name="caminho" value="#{produtoBean.produto.caminho}" />
+								</p:graphicImage>
+							</h:panelGrid>
+							<p:separator />
+							<h:panelGrid columns="2">
+								<p:commandButton value="Salvar" icon="fa fa-check"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogo').hide()"
+									actionListener="#{produtoBean.salvar}" ajax="false"
+									process="@this"
+									update="growl :mensagem :formCadastro:painel :formListagem:tabela" />
+								<p:commandButton value="Fechar"
+									oncomplete="PF('dialogo').hide();" />
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+				</p:wizard>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>
