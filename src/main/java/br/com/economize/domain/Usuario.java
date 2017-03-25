@@ -4,8 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.Transient;
 
 import br.com.economize.enumerate.Ativo;
@@ -13,14 +11,17 @@ import br.com.economize.enumerate.TipoUsuario;
 
 @SuppressWarnings("serial")
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Usuario extends GenericDomain {
+
+	@Column(length = 15, nullable = false)
+	@Enumerated(EnumType.STRING)
+	private TipoUsuario tipoUsuario;
 
 	@Column(length = 100, nullable = false)
 	private String nome;
 
 	@Column(length = 20, nullable = false)
-	private String cpf_cnpj;
+	private String cpf;
 
 	@Column(length = 15, nullable = true)
 	private String telefone;
@@ -34,10 +35,6 @@ public class Usuario extends GenericDomain {
 	@Column(length = 100, nullable = false, unique = true)
 	private String email;
 
-	@Column(length = 15, nullable = false)
-	@Enumerated(EnumType.STRING)
-	private TipoUsuario tipoUsuario;
-
 	@Column(length = 3, nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Ativo ativo;
@@ -48,6 +45,14 @@ public class Usuario extends GenericDomain {
 	@Transient
 	private String senhaSemCriptografia;
 
+	public TipoUsuario getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(TipoUsuario tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -56,12 +61,12 @@ public class Usuario extends GenericDomain {
 		this.nome = nome;
 	}
 
-	public String getCpf_cnpj() {
-		return cpf_cnpj;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setCpf_cnpj(String cpf_cnpj) {
-		this.cpf_cnpj = cpf_cnpj;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public String getTelefone() {
@@ -94,14 +99,6 @@ public class Usuario extends GenericDomain {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public TipoUsuario getTipoUsuario() {
-		return tipoUsuario;
-	}
-
-	public void setTipoUsuario(TipoUsuario tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
 	}
 
 	public Ativo getAtivo() {

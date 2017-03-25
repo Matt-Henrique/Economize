@@ -7,7 +7,6 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import br.com.economize.domain.Usuario;
-import br.com.economize.enumerate.TipoUsuario;
 
 public class ControladorAcesso {
 
@@ -19,7 +18,7 @@ public class ControladorAcesso {
 		Usuario usuarioSessao = (Usuario) sessao.getAttribute("USUARIO_SESSAO");
 
 		if (usuarioSessao != null) {
-			permissaoAdministrador = (usuarioSessao.getTipoUsuario() == TipoUsuario.ADMINISTRADOR);
+			//permissaoAdministrador = (usuarioSessao.getTipoUsuario() == TipoUsuario.ADMINISTRADOR);
 		} else {
 			permissaoAdministrador = false;
 		}
@@ -31,7 +30,7 @@ public class ControladorAcesso {
 		Usuario usuarioSessao = (Usuario) sessao.getAttribute("USUARIO_SESSAO");
 
 		if (usuarioSessao != null) {
-			permissaoEmpresa = (usuarioSessao.getTipoUsuario() == TipoUsuario.EMPRESA);
+			//permissaoEmpresa = (usuarioSessao.getTipoUsuario() == TipoUsuario.EMPRESA);
 		} else {
 			permissaoEmpresa = false;
 		}

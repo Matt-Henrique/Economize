@@ -5,11 +5,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 
 @SuppressWarnings("serial")
 @Entity
-@PrimaryKeyJoinColumn(name = "codigo")
 public class Empresa extends Usuario {
 
 	@Column(length = 15, nullable = false)

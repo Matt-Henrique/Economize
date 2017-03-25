@@ -1,6 +1,6 @@
 package br.com.economize.dao;
 
-import java.util.List;
+/*import java.util.List;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.hibernate.Criteria;
@@ -75,4 +75,4 @@ public class EmpresaDAO extends GenericDAO<Empresa> {
 			sessao.close();
 		}
 	}
-}
+}*/

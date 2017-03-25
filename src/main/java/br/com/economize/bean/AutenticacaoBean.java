@@ -1,6 +1,6 @@
 package br.com.economize.bean;
 
-import java.io.IOException;
+/*import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,7 +16,7 @@ import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import br.com.economize.controller.ControladorAcesso;
-import br.com.economize.controller.ControladorAdministrativo;
+import br.com.economize.controller.ControladorAcessoEmpresa;
 import br.com.economize.dao.AdministradorDAO;
 import br.com.economize.dao.EmpresaDAO;
 import br.com.economize.domain.Administrador;
@@ -37,7 +37,7 @@ public class AutenticacaoBean implements Serializable {
 	private Administrador admLogado;
 
 	private ControladorAcesso controladorAcesso;
-	private ControladorAdministrativo controladorFuncionario;
+	private ControladorAcessoEmpresa controladorFuncionario;
 
 	public Empresa getEmpresa() {
 		return empresa;
@@ -75,7 +75,7 @@ public class AutenticacaoBean implements Serializable {
 		return controladorAcesso;
 	}
 
-	public ControladorAdministrativo getControladorFuncionario() {
+	public ControladorAcessoEmpresa getControladorFuncionario() {
 		return controladorFuncionario;
 	}
 
@@ -85,7 +85,7 @@ public class AutenticacaoBean implements Serializable {
 		adm = new Administrador();
 
 		controladorAcesso = new ControladorAcesso();
-		controladorFuncionario = new ControladorAdministrativo();
+		controladorFuncionario = new ControladorAcessoEmpresa();
 	}
 
 	public void autenticar() {
@@ -152,4 +152,4 @@ public class AutenticacaoBean implements Serializable {
 		ec.invalidateSession();
 		ec.redirect(ec.getRequestContextPath() + "/paginas/autenticacao.xhtml?faces-redirect=true");
 	}
-}
+}*/

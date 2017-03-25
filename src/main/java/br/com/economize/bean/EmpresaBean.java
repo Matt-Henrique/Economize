@@ -1,6 +1,6 @@
 package br.com.economize.bean;
 
-import java.io.Serializable;
+/*import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -186,4 +186,4 @@ public class EmpresaBean implements Serializable {
 			erro.printStackTrace();
 		}
 	}
-}
+}*/

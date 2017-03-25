@@ -2,15 +2,17 @@ package br.com.economize.enumerate;
 
 public enum TipoUsuario {
 
-	ADMINISTRADOR, EMPRESA;
+	ADMINISTRADOR, GERENTE, USUARIO;
 
 	@Override
 	public String toString() {
 		switch (this) {
 		case ADMINISTRADOR:
-			return "Administtrador";
-		case EMPRESA:
-			return "Empresa";
+			return "Administrador";
+		case GERENTE:
+			return "Gerente";
+		case USUARIO:
+			return "Usuário";
 		default:
 			return null;
 		}
