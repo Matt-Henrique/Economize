@@ -32,22 +32,13 @@
 						</div>
 					</f:facet>
 
-					<p:column headerText="Nome Fantasia" sortBy="#{empresa.nome}"
-						filterBy="#{empresa.nome}" filterMatchMode="contains" width="25%">
-						<h:outputText value="#{empresa.nome}" />
+					<p:column headerText="Nome Fantasia"
+						sortBy="#{empresa.nomeFantasia}"
+						filterBy="#{empresa.nomeFantasia}" filterMatchMode="contains">
+						<h:outputText value="#{empresa.nomeFantasia}" />
 					</p:column>
 
-					<p:column headerText="CNPJ" sortBy="#{empresa.cpf}"
-						filterBy="#{empresa.cpf}" filterMatchMode="contains" width="25%">
-						<h:outputText value="#{empresa.cpf}" />
-					</p:column>
-
-					<p:column headerText="E-mail" sortBy="#{empresa.email}"
-						filterBy="#{empresa.email}" filterMatchMode="contains" width="30%">
-						<h:outputText value="#{empresa.email}" />
-					</p:column>
-
-					<p:column headerText="Opções" sortBy="#{empresa.ativo}" width="20%">
+					<p:column headerText="Opções" width="90">
 						<p:commandButton icon="fa fa-trash-o" title="Excluir"
 							actionListener="#{empresaBean.excluir}"
 							update=":mensagem :formListagem:tabela">
@@ -108,7 +99,8 @@
 							<p:messages closable="true" />
 							<h:panelGrid columns="1" id="empresa">
 								<p:outputLabel value="Nome Fantasia:" for="nomeFant" />
-								<p:inputText id="nomeFant" value="#{empresaBean.empresa.nome}"
+								<p:inputText id="nomeFant"
+									value="#{empresaBean.empresa.nomeFantasia}"
 									style="width:350px;" title="Nome Fantasia" required="true"
 									requiredMessage="Informe o Nome Fantasia"
 									placeholder="Ex: Super Vendas" maxlength="50" />
@@ -121,7 +113,7 @@
 
 								<p:outputLabel value="CNPJ:" for="cnpj" />
 								<p:inputMask mask="99.999.999/9999-99" id="cnpj" title="CNPJ"
-									style="width:350px;" value="#{empresaBean.empresa.cpf}"
+									style="width:350px;" value="#{empresaBean.empresa.cnpj}"
 									required="true" requiredMessage="Informe o CPF"
 									placeholder="Somente números" />
 
@@ -234,262 +226,15 @@
 					<p:tab id="tabEmp4" title="Senha">
 						<p:panel header="Senha para Login">
 							<p:messages closable="true" />
-							<h:panelGrid columns="1" id="pass">
-								<p:outputLabel value="Senha:" for="senha" />
-								<p:password id="senha" style="width:350px;"
-									value="#{empresaBean.empresa.senhaSemCriptografia}"
-									promptLabel="Digite a senha" weakLabel="Força da senha : Fraca"
-									goodLabel="Força da senha : Média" required="true"
-									requiredMessage="Digite a nova senha"
-									strongLabel="Força da senha : Forte" match="confSenha"
-									validatorMessage="As duas senhas devem ser iguais"
-									maxlength="20" feedback="true" title="Senha até 20 dígitos"
-									placeholder="Digite sua senha">
-								</p:password>
-
-								<p:outputLabel value="Confirme a senha:" for="confSenha" />
-								<p:password id="confSenha" style="width:350px;"
-									value="#{empresaBean.empresa.senhaSemCriptografia}"
-									match="confSenha" title="Confirme sua senha"
-									validatorMessage="As duas senhas devem ser iguais"
-									maxlength="20" placeholder="Confirme sua senha">
-								</p:password>
+							<h:panelGrid columns="2">
+								<p:commandButton value="Confirmar" icon="fa fa-check"
+									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogo').hide()"
+									actionListener="#{empresaBean.salvar}"
+									update=":mensagem :formCadastro :formListagem:tabela" />
 							</h:panelGrid>
-							<p:separator />
-							<div align="right">
-								<h:panelGrid columns="2">
-									<p:commandButton value="Confirmar" icon="fa fa-check"
-										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogo').hide()"
-										actionListener="#{empresaBean.salvar}"
-										update=":mensagem :formCadastro :formListagem:tabela" />
-								</h:panelGrid>
-							</div>
 						</p:panel>
 					</p:tab>
 				</p:wizard>
-			</h:form>
-		</p:dialog>
-
-		<p:dialog header="Edição" widgetVar="edicao" maximizable="true"
-			resizable="false" modal="true" height="500" draggable="false"
-			responsive="true" showEffect="clip" hideEffect="fold">
-			<h:form id="formEdicao">
-				<p:tab id="tabEmp1" title="Empresa">
-					<p:panel header="Dados da Empresa">
-						<h:panelGrid columns="1" id="emp1">
-							<p:outputLabel value="Nome Fantasia:" for="nomeFant" />
-							<p:inputText id="nomeFant" value="#{empresaBean.empresa.nome}"
-								style="width:350px;" title="Nome Fantasia" required="true"
-								requiredMessage="Informe o Nome Fantasia"
-								placeholder="Ex: Super Vendas" maxlength="50" />
-
-							<p:outputLabel value="Razão Social:" for="razaoSocial" />
-							<p:inputText id="razaoSocial" title="Razão Social"
-								style="width:350px;" value="#{empresaBean.empresa.razaoSocial}"
-								required="true" requiredMessage="Informe a Razão Social"
-								placeholder="Ex: Comércio e Indústria Ltda" maxlength="50" />
-
-							<p:outputLabel value="CNPJ:" for="cnpj" />
-							<p:inputMask mask="99.999.999/9999-99" id="cnpj" title="CNPJ"
-								style="width:350px;" value="#{empresaBean.empresa.cpf}"
-								required="true" requiredMessage="Informe o CPF"
-								placeholder="Somente números" />
-
-							<p:outputLabel value="IE: " for="ie" />
-							<p:inputText id="ie" value="#{empresaBean.empresa.ie}"
-								style="width:350px;" title="Inscrição Estadual" required="true"
-								requiredMessage="Informe o IE"
-								placeholder="Ex: Inscrição Estadual" maxlength="15" />
-						</h:panelGrid>
-					</p:panel>
-				</p:tab>
-				<p:tab id="tabEmp2" title="Contato">
-					<p:panel header="Contatos da Empresa">
-						<h:panelGrid columns="1" id="emp2">
-							<p:outputLabel value="Telefone:" for="fone1" />
-							<p:inputMask mask="(99) 9999-9999" id="fone1"
-								style="width:350px;" title="Telefone"
-								value="#{empresaBean.empresa.fone1}" required="true"
-								requiredMessage="Informe o Telefone"
-								placeholder="(DDD) Telefone" />
-
-							<p:outputLabel value="Telefone (Opcional):" for="fone2" />
-							<p:inputMask mask="(99) 9999-9999" id="fone2"
-								style="width:350px;" title="Telefone"
-								value="#{empresaBean.empresa.fone2}"
-								placeholder="(DDD) Telefone" />
-
-							<p:outputLabel value="Celular:" for="celular" />
-							<p:inputMask mask="(99) 99999-9999" id="celular"
-								style="width:350px;" value="#{empresaBean.empresa.celular}"
-								title="Celular" required="true"
-								requiredMessage="Informe o Celular" placeholder="(DDD) Celular" />
-
-							<p:outputLabel value="E-mail:" for="email" />
-							<p:inputText id="email" value="#{empresaBean.empresa.email}"
-								style="width:350px;" title="E-mail" required="true"
-								requiredMessage="Informe o E-mail"
-								validatorMessage="Informe um E-mail válido"
-								placeholder="Ex: joaoSantos@email.com" maxlength="100">
-								<f:validateRegex
-									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-							</p:inputText>
-						</h:panelGrid>
-					</p:panel>
-				</p:tab>
-				<p:tab id="tabEmp3" title="Empresa">
-					<p:panel header="Endereço da Empresa">
-						<h:panelGrid columns="1" id="emp3">
-							<p:outputLabel value="CEP:" for="cep" />
-							<p:inputMask mask="99999-999" id="cep" title="CEP"
-								style="width:350px;" value="#{empresaBean.empresa.endereco.cep}"
-								required="true" requiredMessage="Informe o CEP"
-								placeholder="Somente números" />
-
-							<p:outputLabel value="UF:" for="estado" />
-							<p:inputText id="estado"
-								value="#{empresaBean.empresa.endereco.estado}"
-								style="width:350px;" title="Estado" required="true"
-								requiredMessage="Informe o Estado" placeholder="Ex: SP"
-								maxlength="2" />
-
-							<p:outputLabel value="Cidade:" for="cidade" />
-							<p:inputText id="cidade"
-								value="#{empresaBean.empresa.endereco.cidade}"
-								style="width:350px;" title="Cidade" required="true"
-								requiredMessage="Informe a Cidade" placeholder="Ex: Itapira"
-								maxlength="50" />
-
-							<p:outputLabel value="Bairro:" for="bairro" />
-							<p:inputText id="bairro"
-								value="#{empresaBean.empresa.endereco.bairro}"
-								style="width:350px;" title="Bairro" required="true"
-								requiredMessage="Informe o Bairro" placeholder="Ex: Centro"
-								maxlength="50" />
-
-							<p:outputLabel value="Tipo do Logradouro:" for="tipoLogradouro" />
-							<p:inputText id="tipoLogradouro"
-								value="#{empresaBean.empresa.endereco.tipoLogradouro}"
-								style="width:350px;" title="Tipo do Logradouro" required="true"
-								requiredMessage="Informe o Tipo do Logradouro"
-								placeholder="Ex: Avenida, Rua, Praça" maxlength="20" />
-
-							<p:outputLabel value="Logradouro:" for="logradouro" />
-							<p:inputText id="logradouro"
-								value="#{empresaBean.empresa.endereco.logradouro}"
-								style="width:350px;" title="Logradouro" required="true"
-								requiredMessage="Informe o Logradouro"
-								placeholder="Ex: Comendador João Cintra" maxlength="50" />
-
-							<p:outputLabel value="Número:" for="numero" />
-							<p:inputText id="numero"
-								value="#{empresaBean.empresa.endereco.numero}"
-								style="width:350px;" title="Número" required="true"
-								requiredMessage="Informe o Número" placeholder="Somente números"
-								maxlength="5" />
-
-							<p:outputLabel value="Complemento:" for="complemento" />
-							<p:inputText id="complemento" title="Complemento"
-								style="width:350px;"
-								value="#{empresaBean.empresa.endereco.complemento}"
-								placeholder="Ex: Ap. 10" maxlength="50" />
-						</h:panelGrid>
-					</p:panel>
-				</p:tab>
-				<p:separator />
-				<div align="left">
-					<h:panelGrid columns="2">
-						<p:commandButton value="Confirmar" icon="fa fa-check"
-							oncomplete="if (args &amp;&amp; !args.validationFailed) PF('edicao').hide()"
-							actionListener="#{empresaBean.salvarEdicao}"
-							update=":mensagem :formEdicao :formListagem:tabela" />
-						<p:commandButton value="Fechar" icon="fa fa-times"
-							oncomplete="PF('edicao').hide();">
-							<f:actionListener
-								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-						</p:commandButton>
-					</h:panelGrid>
-				</div>
-			</h:form>
-		</p:dialog>
-
-		<p:dialog header="Alteração" widgetVar="senha" resizable="false"
-			modal="true" draggable="false" responsive="true" showEffect="clip"
-			hideEffect="fold">
-			<h:form id="formSenha">
-				<p:tab id="tabSenha" title="Senha">
-					<p:panel header="Alterar a Senha">
-						<h:panelGrid columns="1" id="mudarSenha">
-							<p:outputLabel value="Nova senha:" for="senha" />
-							<p:password id="senha" style="width:350px;"
-								value="#{empresaBean.empresa.senhaSemCriptografia}"
-								promptLabel="Digite a senha" weakLabel="Força da senha : Fraca"
-								goodLabel="Força da senha : Média" required="true"
-								requiredMessage="Digite a nova senha"
-								strongLabel="Força da senha : Forte" match="confSenha"
-								validatorMessage="As duas senhas devem ser iguais"
-								maxlength="32" feedback="true" title="Senha até 15 dígitos"
-								placeholder="Digite sua senha">
-							</p:password>
-
-							<p:outputLabel value="Confirme a senha:" for="confSenha" />
-							<p:password id="confSenha" style="width:350px;"
-								value="#{empresaBean.empresa.senhaSemCriptografia}"
-								match="confSenha" title="Confirme sua senha"
-								validatorMessage="As duas senhas devem ser iguais"
-								maxlength="32" placeholder="Confirme sua senha">
-							</p:password>
-						</h:panelGrid>
-					</p:panel>
-				</p:tab>
-				<p:separator />
-				<div align="left">
-					<h:panelGrid columns="2">
-						<p:commandButton value="Confirmar" icon="fa fa-check"
-							oncomplete="if (args &amp;&amp; !args.validationFailed) PF('senha').hide()"
-							actionListener="#{empresaBean.mudarSenha}"
-							update=":mensagem :formSenha:mudarSenha :formListagem:tabela" />
-						<p:commandButton value="Fechar" icon="fa fa-times" process="@none"
-							oncomplete="PF('senha').hide();">
-							<f:actionListener
-								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-						</p:commandButton>
-					</h:panelGrid>
-				</div>
-			</h:form>
-		</p:dialog>
-
-		<p:dialog header="Status" widgetVar="status" resizable="false"
-			modal="true" draggable="false" responsive="true" showEffect="clip"
-			hideEffect="fold">
-			<h:form id="formAtivo">
-				<p:tab id="tabAtivo" title="Ativo">
-					<p:panel header="Status do Usuário">
-						<h:panelGrid columns="1" id="status">
-							<p:outputLabel for="ativo" value="Usuário Ativo:" />
-							<p:selectOneButton id="ativo" required="true"
-								value="#{empresaBean.empresa.ativo}"
-								requiredMessage="Escolha se o usuário é ou não Ativo">
-								<f:selectItem itemValue="SIM" itemLabel="Sim" />
-								<f:selectItem itemValue="NAO" itemLabel="Não" />
-							</p:selectOneButton>
-						</h:panelGrid>
-					</p:panel>
-				</p:tab>
-				<p:separator />
-				<div align="left">
-					<h:panelGrid columns="2">
-						<p:commandButton value="Confirmar" icon="fa fa-check"
-							oncomplete="if (args &amp;&amp; !args.validationFailed) PF('status').hide()"
-							actionListener="#{empresaBean.salvarStatus}"
-							update=":mensagem :formAtivo:status :formListagem:tabela" />
-						<p:commandButton value="Fechar" icon="fa fa-times" process="@none"
-							oncomplete="PF('status').hide();">
-							<f:actionListener
-								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-						</p:commandButton>
-					</h:panelGrid>
-				</div>
 			</h:form>
 		</p:dialog>
 	</ui:define>

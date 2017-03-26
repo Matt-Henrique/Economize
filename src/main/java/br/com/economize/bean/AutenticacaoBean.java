@@ -16,7 +16,6 @@ import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import br.com.economize.controller.ControladorAcessoUsuario;
-import br.com.economize.dao.EmpresaDAO;
 import br.com.economize.dao.UsuarioDAO;
 import br.com.economize.domain.Empresa;
 import br.com.economize.domain.Usuario;
@@ -82,34 +81,6 @@ public class AutenticacaoBean implements Serializable {
 	}
 
 	public void autenticar() {
-		try {
-			EmpresaDAO empresaDAO = new EmpresaDAO();
-			Empresa empresaLogada = empresaDAO.autenticar(empresa.getEmail(), empresa.getSenha(), empresa.getAtivo(),
-					empresa.getTipoUsuario());
-
-			if (empresaLogada == null) {
-				Messages.addGlobalError("Usuário Inválido ou Incorreto");
-				return;
-			}
-			sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-			sessao.setAttribute("USUARIO_SESSAO", empresaLogada);
-
-			controladorAcesso.configurarAcesso();
-
-			System.out.println("Sessão criada " + sessao.getId().toString());
-			String ultimoAcesso = (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"))
-					.format(new Date(sessao.getCreationTime()));
-
-			System.out.println("Sessão iniciada " + sessao.getId() + ". Ultimo Acesso = " + ultimoAcesso);
-
-			Faces.redirect("./paginas/inicio.xhtml");
-		} catch (IOException erro) {
-			erro.printStackTrace();
-			Messages.addGlobalError(erro.getMessage());
-		}
-	}
-
-	public void autenticarAdm() {
 		try {
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			Usuario admLogado = usuarioDAO.autenticar(adm.getEmail(), adm.getSenha(), adm.getAtivo(),

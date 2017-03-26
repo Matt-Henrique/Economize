@@ -9,15 +9,12 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.omnifaces.util.Messages;
 import org.primefaces.component.wizard.Wizard;
 import org.primefaces.context.RequestContext;
 
 import br.com.economize.dao.EmpresaDAO;
 import br.com.economize.domain.Empresa;
-import br.com.economize.enumerate.Ativo;
-import br.com.economize.enumerate.TipoUsuario;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -83,12 +80,7 @@ public class EmpresaBean implements Serializable {
 	public void salvar() {
 		try {
 
-			SimpleHash hash = new SimpleHash("md5", empresa.getSenhaSemCriptografia());
-			empresa.setSenha(hash.toHex());
-
 			EmpresaDAO empresaDAO = new EmpresaDAO();
-			empresa.setTipoUsuario(TipoUsuario.GERENTE);
-			empresa.setAtivo(Ativo.SIM);
 			empresaDAO.merge(empresa);
 
 			empresas = empresaDAO.listar("nome");
@@ -162,27 +154,6 @@ public class EmpresaBean implements Serializable {
 			Messages.addGlobalInfo("Empresa removida com sucesso");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar remover a empresa");
-			erro.printStackTrace();
-		}
-	}
-
-	public void mudarSenha() {
-		try {
-			SimpleHash hash = new SimpleHash("md5", empresa.getSenhaSemCriptografia());
-			empresa.setSenha(hash.toHex());
-
-			EmpresaDAO empresaDAO = new EmpresaDAO();
-			empresaDAO.merge(empresa);
-
-			empresas = empresaDAO.listar("nome");
-
-			if (success) {
-				RequestContext.getCurrentInstance().execute("PF('senha').hide()");
-			}
-
-			Messages.addGlobalInfo("Senha alterada com sucesso");
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao tentar alterar a senha");
 			erro.printStackTrace();
 		}
 	}
