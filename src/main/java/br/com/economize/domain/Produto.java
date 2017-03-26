@@ -12,37 +12,61 @@ import javax.persistence.Transient;
 @Entity
 public class Produto extends GenericDomain {
 
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Empresa empresa;
+
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Categoria categoria;
+
+	@Column(length = 20, nullable = false)
+	private String subCategoria;
+
 	@Column(length = 100, nullable = false)
 	private String descricao;
 
-	@Column(length = 50, nullable = false)
+	@Column(length = 30, nullable = false)
 	private String descricaoReduzida;
 
-	@Column(length = 10, nullable = false)
+	@Column(length = 15, nullable = false)
 	private String unidadeMedida;
 
 	@Column(length = 15, nullable = false)
 	private String embalagem;
-	
+
 	@Column(length = 15, nullable = false)
 	private Integer ean;
 
 	@Column(nullable = false, precision = 7, scale = 2)
 	private BigDecimal preco;
 
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Categoria categoria;
-	
-	@Column(length = 20, nullable = false)
-	private String subCategoria;
-	
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Empresa empresa;
-	
 	@Transient
 	private String caminho;
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	public String getSubCategoria() {
+		return subCategoria;
+	}
+
+	public void setSubCategoria(String subCategoria) {
+		this.subCategoria = subCategoria;
+	}
 
 	public String getDescricao() {
 		return descricao;
@@ -92,35 +116,15 @@ public class Produto extends GenericDomain {
 		this.preco = preco;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
-	
-	public String getSubCategoria() {
-		return subCategoria;
-	}
-	
-	public void setSubCategoria(String subCategoria) {
-		this.subCategoria = subCategoria;
-	}
-
-	public Empresa getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
-	}
-
 	public String getCaminho() {
 		return caminho;
 	}
 
 	public void setCaminho(String caminho) {
 		this.caminho = caminho;
+	}
+
+	public Produto() {
+		empresa = new Empresa();
 	}
 }

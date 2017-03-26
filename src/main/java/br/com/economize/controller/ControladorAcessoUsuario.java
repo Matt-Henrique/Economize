@@ -7,34 +7,48 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import br.com.economize.domain.Usuario;
+import br.com.economize.enumerate.TipoUsuario;
 
-public class ControladorAcesso {
+public class ControladorAcessoUsuario {
 
 	private boolean permissaoAdministrador;
-	private boolean permissaoEmpresa;
+	private boolean permissaoGerente;
+	private boolean permissaoUsuario;
 
 	public boolean isPermissaoAdministrador() {
 		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		Usuario usuarioSessao = (Usuario) sessao.getAttribute("USUARIO_SESSAO");
 
 		if (usuarioSessao != null) {
-			//permissaoAdministrador = (usuarioSessao.getTipoUsuario() == TipoUsuario.ADMINISTRADOR);
+			permissaoAdministrador = (usuarioSessao.getTipoUsuario() == TipoUsuario.ADMINISTRADOR);
 		} else {
 			permissaoAdministrador = false;
 		}
 		return permissaoAdministrador;
 	}
 
-	public boolean isPermissaoEmpresa() {
+	public boolean isPermissaoGerente() {
 		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		Usuario usuarioSessao = (Usuario) sessao.getAttribute("USUARIO_SESSAO");
 
 		if (usuarioSessao != null) {
-			//permissaoEmpresa = (usuarioSessao.getTipoUsuario() == TipoUsuario.EMPRESA);
+			permissaoGerente = (usuarioSessao.getTipoUsuario() == TipoUsuario.GERENTE);
 		} else {
-			permissaoEmpresa = false;
+			permissaoGerente = false;
 		}
-		return permissaoEmpresa;
+		return permissaoGerente;
+	}
+
+	public boolean isPermissaoUsuario() {
+		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		Usuario usuarioSessao = (Usuario) sessao.getAttribute("USUARIO_SESSAO");
+
+		if (usuarioSessao != null) {
+			permissaoUsuario = (usuarioSessao.getTipoUsuario() == TipoUsuario.USUARIO);
+		} else {
+			permissaoUsuario = false;
+		}
+		return permissaoUsuario;
 	}
 
 	// Configura o acesso do usuário logado às funcionalidades da aplicação.

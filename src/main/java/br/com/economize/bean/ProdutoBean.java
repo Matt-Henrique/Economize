@@ -1,6 +1,6 @@
 package br.com.economize.bean;
 
-/*import java.io.FileInputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -218,4 +218,4 @@ public class ProdutoBean implements Serializable {
 			erro.printStackTrace();
 		}
 	}
-}*/
+}

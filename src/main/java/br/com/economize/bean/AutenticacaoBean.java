@@ -1,6 +1,6 @@
 package br.com.economize.bean;
 
-/*import java.io.IOException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,12 +15,11 @@ import javax.servlet.http.HttpSession;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
-import br.com.economize.controller.ControladorAcesso;
-import br.com.economize.controller.ControladorAcessoEmpresa;
-import br.com.economize.dao.AdministradorDAO;
+import br.com.economize.controller.ControladorAcessoUsuario;
 import br.com.economize.dao.EmpresaDAO;
-import br.com.economize.domain.Administrador;
+import br.com.economize.dao.UsuarioDAO;
 import br.com.economize.domain.Empresa;
+import br.com.economize.domain.Usuario;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -33,11 +32,10 @@ public class AutenticacaoBean implements Serializable {
 	private Empresa empresa;
 	private Empresa empresaLogada;
 
-	private Administrador adm;
-	private Administrador admLogado;
+	private Usuario adm;
+	private Usuario admLogado;
 
-	private ControladorAcesso controladorAcesso;
-	private ControladorAcessoEmpresa controladorFuncionario;
+	private ControladorAcessoUsuario controladorAcesso;
 
 	public Empresa getEmpresa() {
 		return empresa;
@@ -55,37 +53,32 @@ public class AutenticacaoBean implements Serializable {
 		this.empresaLogada = empresaLogada;
 	}
 
-	public Administrador getAdm() {
+	public Usuario getAdm() {
 		return adm;
 	}
 
-	public void setAdm(Administrador adm) {
+	public void setAdm(Usuario adm) {
 		this.adm = adm;
 	}
 
-	public Administrador getAdmLogado() {
+	public Usuario getAdmLogado() {
 		return admLogado;
 	}
 
-	public void setAdmLogado(Administrador admLogado) {
+	public void setAdmLogado(Usuario admLogado) {
 		this.admLogado = admLogado;
 	}
 
-	public ControladorAcesso getControladorAcesso() {
+	public ControladorAcessoUsuario getControladorAcesso() {
 		return controladorAcesso;
-	}
-
-	public ControladorAcessoEmpresa getControladorFuncionario() {
-		return controladorFuncionario;
 	}
 
 	@PostConstruct
 	public void iniciar() {
 		empresa = new Empresa();
-		adm = new Administrador();
+		adm = new Usuario();
 
-		controladorAcesso = new ControladorAcesso();
-		controladorFuncionario = new ControladorAcessoEmpresa();
+		controladorAcesso = new ControladorAcessoUsuario();
 	}
 
 	public void autenticar() {
@@ -118,8 +111,8 @@ public class AutenticacaoBean implements Serializable {
 
 	public void autenticarAdm() {
 		try {
-			AdministradorDAO administradorDAO = new AdministradorDAO();
-			Administrador admLogado = administradorDAO.autenticar(adm.getEmail(), adm.getSenha(), adm.getAtivo(),
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
+			Usuario admLogado = usuarioDAO.autenticar(adm.getEmail(), adm.getSenha(), adm.getAtivo(),
 					adm.getTipoUsuario());
 
 			if (admLogado == null) {
@@ -152,4 +145,4 @@ public class AutenticacaoBean implements Serializable {
 		ec.invalidateSession();
 		ec.redirect(ec.getRequestContextPath() + "/paginas/autenticacao.xhtml?faces-redirect=true");
 	}
-}*/
+}

@@ -14,87 +14,86 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
 
-import br.com.economize.dao.EmpresaDAO;
-import br.com.economize.domain.Empresa;
+import br.com.economize.dao.UsuarioDAO;
 import br.com.economize.domain.Usuario;
 
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class EmpresaPerfilBean implements Serializable {
+public class UsuarioPerfilBean implements Serializable {
 
 	HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-	Usuario usuario = (Usuario) sessao.getAttribute("USUARIO_SESSAO");
+	Usuario usuarioSessao = (Usuario) sessao.getAttribute("USUARIO_SESSAO");
 
-	private Empresa empresa;
-	private List<Empresa> empresas;
+	private Usuario usuario;
+	private List<Usuario> usuarios;
 
 	private boolean success;
 
-	public Empresa getEmpresa() {
-		return empresa;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
-	public List<Empresa> getEmpresas() {
-		return empresas;
+	public List<Usuario> getUsuarios() {
+		return usuarios;
 	}
 
-	public void setEmpresas(List<Empresa> empresas) {
-		this.empresas = empresas;
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 
 	@PostConstruct
 	public void listar() {
 		try {
-			EmpresaDAO empresaDAO = new EmpresaDAO();
-			empresas = empresaDAO.buscaEmpresaLogada(usuario.getCodigo());
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
+			usuarios = usuarioDAO.buscaUsuarioLogado(usuarioSessao.getCodigo());
 
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao tentar listar as empresas");
+			Messages.addGlobalError("Ocorreu um erro ao tentar listar os usuarios");
 			erro.printStackTrace();
 		}
 	}
 
 	public void salvar() {
 		try {
-			EmpresaDAO empresaDAO = new EmpresaDAO();
-			empresaDAO.merge(empresa);
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
+			usuarioDAO.merge(usuario);
 
-			empresas = empresaDAO.buscaEmpresaLogada(usuario.getCodigo());
+			usuarios = usuarioDAO.buscaUsuarioLogado(usuarioSessao.getCodigo());
 
 			if (success) {
 				RequestContext.getCurrentInstance().execute("PF('pessoal').hide()");
 			}
 
-			Messages.addGlobalInfo("Empresa editada com sucesso");
+			Messages.addGlobalInfo("Usuario editado com sucesso");
 		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao tentar editar a empresa");
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar editar o usuario");
 			erro.printStackTrace();
 		}
 	}
 
 	public void editar(ActionEvent evento) {
 		try {
-			empresa = (Empresa) evento.getComponent().getAttributes().get("empresaSelecionada");
+			usuario = (Usuario) evento.getComponent().getAttributes().get("usuarioSelecionado");
 
 		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao tentar editar uma empresa");
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar editar um usuario");
 		}
 	}
 
 	public void mudarSenha() {
 		try {
-			SimpleHash hash = new SimpleHash("md5", empresa.getSenhaSemCriptografia());
-			empresa.setSenha(hash.toHex());
+			SimpleHash hash = new SimpleHash("md5", usuario.getSenhaSemCriptografia());
+			usuario.setSenha(hash.toHex());
 
-			EmpresaDAO empresaDAO = new EmpresaDAO();
-			empresaDAO.merge(empresa);
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
+			usuarioDAO.merge(usuario);
 
-			empresas = empresaDAO.buscaEmpresaLogada(usuario.getCodigo());
+			usuarios = usuarioDAO.buscaUsuarioLogado(usuarioSessao.getCodigo());
 
 			if (success) {
 				RequestContext.getCurrentInstance().execute("PF('senha').hide()");

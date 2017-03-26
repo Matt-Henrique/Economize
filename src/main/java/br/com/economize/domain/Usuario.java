@@ -23,11 +23,11 @@ public class Usuario extends GenericDomain {
 	@Column(length = 20, nullable = false)
 	private String cpf;
 
-	@Column(length = 15, nullable = true)
-	private String telefone;
+	@Column(length = 15, nullable = false)
+	private String fone1;
 
-	@Column(length = 14, nullable = false)
-	private String telefone2;
+	@Column(length = 14, nullable = true)
+	private String fone2;
 
 	@Column(length = 15, nullable = false)
 	private String celular;
@@ -69,20 +69,20 @@ public class Usuario extends GenericDomain {
 		this.cpf = cpf;
 	}
 
-	public String getTelefone() {
-		return telefone;
+	public String getFone1() {
+		return fone1;
 	}
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setFone1(String fone1) {
+		this.fone1 = fone1;
 	}
 
-	public String getTelefone2() {
-		return telefone2;
+	public String getFone2() {
+		return fone2;
 	}
 
-	public void setTelefone2(String telefone2) {
-		this.telefone2 = telefone2;
+	public void setFone2(String fone2) {
+		this.fone2 = fone2;
 	}
 
 	public String getCelular() {

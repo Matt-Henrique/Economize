@@ -13,8 +13,15 @@ import javax.persistence.TemporalType;
 @Entity
 public class Campanha extends GenericDomain {
 
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Empresa empresa;
+
 	@Column(length = 80, nullable = false)
 	private String titulo;
+
+	@Column(length = 15, nullable = true)
+	private String tipo;
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -27,12 +34,13 @@ public class Campanha extends GenericDomain {
 	@Column(length = 3, nullable = false)
 	private Integer vigencia;
 
-	@Column(length = 15, nullable = true)
-	private String tipo;
+	public Empresa getEmpresa() {
+		return empresa;
+	}
 
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Empresa empresa;
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 
 	public String getTitulo() {
 		return titulo;
@@ -40,6 +48,14 @@ public class Campanha extends GenericDomain {
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public Date getDataInicial() {
@@ -58,20 +74,12 @@ public class Campanha extends GenericDomain {
 		this.dataFinal = dataFinal;
 	}
 
-	public int getVigencia() {
+	public Integer getVigencia() {
 		return vigencia;
 	}
 
-	public void setVigencia(int vigencia) {
+	public void setVigencia(Integer vigencia) {
 		this.vigencia = vigencia;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
 	}
 
 	public Campanha() {

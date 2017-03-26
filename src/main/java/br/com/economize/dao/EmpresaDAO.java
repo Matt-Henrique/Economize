@@ -1,6 +1,6 @@
 package br.com.economize.dao;
 
-/*import java.util.List;
+import java.util.List;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.hibernate.Criteria;
@@ -25,7 +25,7 @@ public class EmpresaDAO extends GenericDAO<Empresa> {
 			SimpleHash hash = new SimpleHash("md5", senha);
 			consulta.add(Restrictions.eq("senha", hash.toHex()));
 			consulta.add(Restrictions.eq("ativo", ativo = Ativo.SIM));
-			consulta.add(Restrictions.eq("tipoUsuario", tipo = TipoUsuario.EMPRESA));
+			consulta.add(Restrictions.eq("tipoUsuario", tipo = TipoUsuario.GERENTE));
 
 			Empresa resultado = (Empresa) consulta.uniqueResult();
 
@@ -45,7 +45,7 @@ public class EmpresaDAO extends GenericDAO<Empresa> {
 			Criteria consulta = sessao.createCriteria(Empresa.class);
 			consulta.add(Restrictions.eq("cpf", cpf));
 			consulta.add(Restrictions.eq("email", email));
-			consulta.add(Restrictions.eq("tipoUsuario", tipo = TipoUsuario.EMPRESA));
+			consulta.add(Restrictions.eq("tipoUsuario", tipo = TipoUsuario.GERENTE));
 
 			Empresa resultado = (Empresa) consulta.uniqueResult();
 
@@ -75,4 +75,4 @@ public class EmpresaDAO extends GenericDAO<Empresa> {
 			sessao.close();
 		}
 	}
-}*/
+}

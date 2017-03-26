@@ -10,13 +10,13 @@
 		<h:form id="frmListagem">
 			<p:panel header="Itens da Campanha - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-					paginator="true" value="#{itemCampanhaBean.itensCampanha}"
-					var="itemCampanha" rows="10" paginatorPosition="top">
+					paginator="true" value="#{itensCampanhaBean.itensCampanha}"
+					var="itensCampanha" rows="10" paginatorPosition="top">
 
 					<f:facet name="header">
 						<p:button outcome="campanha" value="Voltar" />
 						<p:commandButton value="Novo"
-							actionListener="#{itemCampanhaBean.novo}"
+							actionListener="#{itensCampanhaBean.novo}"
 							oncomplete="PF('dialogo').show();"
 							update=":mensagem :frmCadastro:painel :frmCadastro:tabelaProduto">
 							<f:actionListener
@@ -25,19 +25,19 @@
 					</f:facet>
 
 					<p:column headerText="Campanha">
-						<h:outputText value="#{itemCampanha.campanha.titulo}" />
+						<h:outputText value="#{itensCampanha.campanha.titulo}" />
 					</p:column>
 					
 					<p:column headerText="Empresa">
-						<h:outputText value="#{itemCampanha.produto.empresa.nome}" />
+						<h:outputText value="#{itensCampanha.produto.empresa.nome}" />
 					</p:column>
 
 					<p:column headerText="Produto">
-						<h:outputText value="#{itemCampanha.produto.descricao}" />
+						<h:outputText value="#{itensCampanha.produto.descricao}" />
 					</p:column>
 
 					<p:column headerText="Preço">
-						<h:outputText value="#{itemCampanha.precoOferta}" />
+						<h:outputText value="#{itensCampanha.precoOferta}" />
 					</p:column>
 
 				</p:dataTable>
@@ -50,7 +50,7 @@
 			<h:form id="frmCadastro">
 				<p:panel header="Produtos">
 					<p:dataTable id="tabelaProduto" emptyMessage="Nenhum registro encontrado."
-						paginator="true" value="#{itemCampanhaBean.produtos}" var="produto"
+						paginator="true" value="#{itensCampanhaBean.produtos}" var="produto"
 						paginatorPosition="bottom" rowHover="true" rows="4">
 
 						<p:column headerText="Descrição" filterBy="#{produto.descricao}"
@@ -90,7 +90,7 @@
 
 						<p:column headerText="Opções" styleClass="colunaOpcoes" width="50">
 							<p:commandButton icon="ui-icon-plus"
-								actionListener="#{itemCampanhaBean.adicionar}" update=":frmCadastro:painel">
+								actionListener="#{itensCampanhaBean.adicionar}" update=":frmCadastro:painel">
 								<f:attribute name="produtoSelecionado" value="#{produto}" />
 							</p:commandButton>
 
@@ -101,16 +101,16 @@
 				<h:panelGrid id="painel" columns="2">
 					<p:outputLabel value="Preço" for="preco" />
 					<p:inputText id="preco"
-						value="#{itemCampanhaBean.itemCampanha.precoOferta}">
+						value="#{itensCampanhaBean.itensCampanha.precoOferta}">
 					</p:inputText>
 
 					<p:outputLabel for="produto" value="produto" />
 					<p:selectOneMenu id="produto" filter="true"
-						value="#{itemCampanhaBean.itemCampanha.produto}" required="true"
+						value="#{itensCampanhaBean.itensCampanhas.produto}" required="true"
 						converter="omnifaces.SelectItemsConverter">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione um produto..." />
-						<f:selectItems value="#{itemCampanhaBean.produtos}" var="produto"
+						<f:selectItems value="#{itensCampanhaBean.produtos}" var="produto"
 							itemValue="#{produto}"
 							itemLabel="#{produto.descricaoReduzida} - #{produto.categoria.categoria}" />
 					</p:selectOneMenu>
@@ -119,7 +119,7 @@
 				<div align="right">
 					<h:panelGrid columns="2">
 						<p:commandButton value="Salvar"
-							actionListener="#{itemCampanhaBean.salvar}"
+							actionListener="#{itensCampanhaBean.salvar}"
 							update=":mensagem :frmCadastro:painel :frmListagem:tabela" />
 						<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();">
 							<f:actionListener

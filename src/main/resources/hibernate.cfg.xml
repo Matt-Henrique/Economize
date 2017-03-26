@@ -30,12 +30,11 @@
 		<property name="hbm2ddl.auto">validate</property>
 
 		<!-- Mapeamento das entidades -->
-		<mapping class="br.com.economize.domain.Administrador" />
 		<mapping class="br.com.economize.domain.Campanha" />
 		<mapping class="br.com.economize.domain.Categoria" />
 		<mapping class="br.com.economize.domain.Empresa" />
 		<mapping class="br.com.economize.domain.Endereco" />
-		<mapping class="br.com.economize.domain.ItemCampanha" />
+		<mapping class="br.com.economize.domain.ItensCampanha" />
 		<mapping class="br.com.economize.domain.Produto" />
 		<mapping class="br.com.economize.domain.Usuario" />
 	</session-factory>

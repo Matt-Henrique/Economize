@@ -12,23 +12,29 @@ public class Endereco extends GenericDomain {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(length = 15, nullable = false)
+	@Column(length = 10, nullable = false)
 	private String cep = null;
 
-	@Column(length = 100, nullable = false)
+	@Column(length = 80, nullable = false)
 	private String logradouro;
 
-	@Column(length = 50, nullable = false)
+	@Column(length = 20, nullable = false)
 	private String tipoLogradouro;
 
-	@Column(length = 50, nullable = false)
+	@Column(length = 2, nullable = false)
 	private String estado;
 
-	@Column(length = 100, nullable = false)
+	@Column(length = 50, nullable = false)
 	private String cidade;
 
-	@Column(length = 100, nullable = false)
+	@Column(length = 80, nullable = false)
 	private String bairro;
+
+	@Column(nullable = false)
+	private Integer numero;
+
+	@Column(length = 50)
+	private String complemento;
 
 	public void encontraCEP() {
 		CepWebService cepWebService = new CepWebService(getCep());
@@ -92,5 +98,21 @@ public class Endereco extends GenericDomain {
 
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
+	}
+
+	public Integer getNumero() {
+		return numero;
+	}
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 }
