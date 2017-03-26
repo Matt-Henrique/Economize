@@ -8,7 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	<ui:define name="conteudo">
 		<h:form id="formListagem"
-			rendered="#{autenticacaoBean.controladorAcesso.permissaoEmpresa}">
+			rendered="#{autenticacaoBean.controladorAcesso.permissaoGerente}">
 			<p:panel header="Produtos - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 					paginator="true" rows="20" value="#{produtoBean.produtos}"

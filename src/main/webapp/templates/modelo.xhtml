@@ -27,14 +27,14 @@
 			<p:submenu label="Produto" icon="fa fa-shopping-cart">
 				<p:menuitem value="Lista de Produtos" url="produto.xhtml"
 					icon="fa fa-shopping-basket"
-					rendered="#{autenticacaoBean.controladorAcesso.permissaoEmpresa}" />
+					rendered="#{autenticacaoBean.controladorAcesso.permissaoGerente}" />
 				<p:menuitem value="Lista de Categorias" url="categoria.xhtml"
 					icon="fa fa-book"
 					rendered="#{autenticacaoBean.controladorAcesso.permissaoAdministrador}" />
 			</p:submenu>
 
 			<p:submenu label="Campanha" icon="fa fa-tags"
-				rendered="#{autenticacaoBean.controladorAcesso.permissaoEmpresa}">
+				rendered="#{autenticacaoBean.controladorAcesso.permissaoGerente}">
 				<p:submenu label="Lista de Campanhas" icon="fa fa-calendar">
 					<p:menuitem value="Campanha Comum" url="campanha.xhtml"
 						icon="fa fa-calendar-plus-o" />
@@ -54,7 +54,7 @@
 			</p:submenu>
 			<p:submenu styleClass="Logout" label="Conta" icon="fa fa-gear">
 				<p:menuitem value="Meu Perfil" icon="fa fa-building"
-					rendered="#{autenticacaoBean.controladorAcesso.permissaoEmpresa}"
+					rendered="#{autenticacaoBean.controladorAcesso.permissaoGerente}"
 					url="empresa-perfil.xhtml">
 					<f:attribute name="usuarioSelecionado" value="#{usuario.codigo}" />
 				</p:menuitem>

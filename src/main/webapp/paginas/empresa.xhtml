@@ -37,10 +37,9 @@
 						<h:outputText value="#{empresa.nome}" />
 					</p:column>
 
-					<p:column headerText="CNPJ" sortBy="#{empresa.cpf_cnpj}"
-						filterBy="#{empresa.cpf_cnpj}" filterMatchMode="contains"
-						width="25%">
-						<h:outputText value="#{empresa.cpf_cnpj}" />
+					<p:column headerText="CNPJ" sortBy="#{empresa.cpf}"
+						filterBy="#{empresa.cpf}" filterMatchMode="contains" width="25%">
+						<h:outputText value="#{empresa.cpf}" />
 					</p:column>
 
 					<p:column headerText="E-mail" sortBy="#{empresa.email}"
@@ -122,7 +121,7 @@
 
 								<p:outputLabel value="CNPJ:" for="cnpj" />
 								<p:inputMask mask="99.999.999/9999-99" id="cnpj" title="CNPJ"
-									style="width:350px;" value="#{empresaBean.empresa.cpf_cnpj}"
+									style="width:350px;" value="#{empresaBean.empresa.cpf}"
 									required="true" requiredMessage="Informe o CPF"
 									placeholder="Somente números" />
 
@@ -138,17 +137,17 @@
 						<p:panel header="Contatos da Empresa">
 							<p:messages closable="true" />
 							<h:panelGrid columns="1" id="contato">
-								<p:outputLabel value="Telefone:" for="telefone" />
-								<p:inputMask mask="(99) 9999-9999" id="telefone"
+								<p:outputLabel value="Telefone:" for="fone1" />
+								<p:inputMask mask="(99) 9999-9999" id="fone1"
 									style="width:350px;" title="Telefone"
-									value="#{empresaBean.empresa.telefone}" required="true"
+									value="#{empresaBean.empresa.fone1}" required="true"
 									requiredMessage="Informe o Telefone"
 									placeholder="(DDD) Telefone" />
 
-								<p:outputLabel value="Telefone (Opcional):" for="telefone2" />
-								<p:inputMask mask="(99) 9999-9999" id="telefone2"
+								<p:outputLabel value="Telefone (Opcional):" for="fone2" />
+								<p:inputMask mask="(99) 9999-9999" id="fone2"
 									style="width:350px;" title="Telefone"
-									value="#{empresaBean.empresa.telefone2}"
+									value="#{empresaBean.empresa.fone2}"
 									placeholder="(DDD) Telefone" />
 
 								<p:outputLabel value="Celular:" for="celular" />
@@ -218,14 +217,16 @@
 									placeholder="Ex: Comendador João Cintra" maxlength="50" />
 
 								<p:outputLabel value="Número:" for="numero" />
-								<p:inputText id="numero" value="#{empresaBean.empresa.numero}"
+								<p:inputText id="numero"
+									value="#{empresaBean.empresa.endereco.numero}"
 									style="width:350px;" title="Número" required="true"
 									requiredMessage="Informe o Número"
 									placeholder="Somente números" maxlength="5" />
 
 								<p:outputLabel value="Complemento:" for="complemento" />
 								<p:inputText id="complemento" title="Complemento"
-									style="width:350px;" value="#{empresaBean.empresa.complemento}"
+									style="width:350px;"
+									value="#{empresaBean.empresa.endereco.complemento}"
 									placeholder="Ex: Ap. 10" maxlength="50" />
 							</h:panelGrid>
 						</p:panel>
@@ -290,7 +291,7 @@
 
 							<p:outputLabel value="CNPJ:" for="cnpj" />
 							<p:inputMask mask="99.999.999/9999-99" id="cnpj" title="CNPJ"
-								style="width:350px;" value="#{empresaBean.empresa.cpf_cnpj}"
+								style="width:350px;" value="#{empresaBean.empresa.cpf}"
 								required="true" requiredMessage="Informe o CPF"
 								placeholder="Somente números" />
 
@@ -305,17 +306,17 @@
 				<p:tab id="tabEmp2" title="Contato">
 					<p:panel header="Contatos da Empresa">
 						<h:panelGrid columns="1" id="emp2">
-							<p:outputLabel value="Telefone:" for="telefone" />
-							<p:inputMask mask="(99) 9999-9999" id="telefone"
+							<p:outputLabel value="Telefone:" for="fone1" />
+							<p:inputMask mask="(99) 9999-9999" id="fone1"
 								style="width:350px;" title="Telefone"
-								value="#{empresaBean.empresa.telefone}" required="true"
+								value="#{empresaBean.empresa.fone1}" required="true"
 								requiredMessage="Informe o Telefone"
 								placeholder="(DDD) Telefone" />
 
-							<p:outputLabel value="Telefone (Opcional):" for="telefone2" />
-							<p:inputMask mask="(99) 9999-9999" id="telefone2"
+							<p:outputLabel value="Telefone (Opcional):" for="fone2" />
+							<p:inputMask mask="(99) 9999-9999" id="fone2"
 								style="width:350px;" title="Telefone"
-								value="#{empresaBean.empresa.telefone2}"
+								value="#{empresaBean.empresa.fone2}"
 								placeholder="(DDD) Telefone" />
 
 							<p:outputLabel value="Celular:" for="celular" />
@@ -381,14 +382,16 @@
 								placeholder="Ex: Comendador João Cintra" maxlength="50" />
 
 							<p:outputLabel value="Número:" for="numero" />
-							<p:inputText id="numero" value="#{empresaBean.empresa.numero}"
+							<p:inputText id="numero"
+								value="#{empresaBean.empresa.endereco.numero}"
 								style="width:350px;" title="Número" required="true"
 								requiredMessage="Informe o Número" placeholder="Somente números"
 								maxlength="5" />
 
 							<p:outputLabel value="Complemento:" for="complemento" />
 							<p:inputText id="complemento" title="Complemento"
-								style="width:350px;" value="#{empresaBean.empresa.complemento}"
+								style="width:350px;"
+								value="#{empresaBean.empresa.endereco.complemento}"
 								placeholder="Ex: Ap. 10" maxlength="50" />
 						</h:panelGrid>
 					</p:panel>
