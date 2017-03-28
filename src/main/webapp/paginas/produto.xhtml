@@ -64,13 +64,6 @@
 						<h:outputText value="#{produto.embalagem}" />
 					</p:column>
 
-					<p:column headerText="Empresa"
-						sortBy="#{produto.empresa.nome}"
-						filterBy="#{produto.empresa.nome}"
-						filterMatchMode="contains">
-						<h:outputText value="#{produto.empresa.nome}" />
-					</p:column>
-
 					<p:column headerText="Opções">
 						<p:commandButton icon="fa fa-trash" title="Excluir"
 							actionListener="#{produtoBean.excluir}"
@@ -221,7 +214,7 @@
 									<f:selectItem noSelectionOption="true"
 										itemLabel="Selecione uma empresa..." />
 									<f:selectItems value="#{produtoBean.empresas}" var="empresa"
-										itemValue="#{empresa}" itemLabel="#{empresa.nome}" />
+										itemValue="#{empresa}" itemLabel="#{empresa.nomeFantasia}" />
 								</p:selectOneMenu>
 							</h:panelGrid>
 						</p:panel>

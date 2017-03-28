@@ -18,14 +18,6 @@
 		<h:form>
 			<p:fieldset style="padding:0px 30px 20px 30px;" styleClass="login">
 				<h4>LOGIN</h4>
-				<p:commandButton value="Empresa" title="Login"
-					icon="fa fa-building" update=":formLogin1"
-					oncomplete="PF('empresa').show();"
-					style="width:200px">
-					<f:actionListener
-						type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-				</p:commandButton>
-				<p:separator />
 				<p:commandButton value="Administrativo" title="Login"
 					icon="fa fa-user" update=":formLogin2"
 					oncomplete="PF('adm').show();"
@@ -42,31 +34,6 @@
 			<p:link href="../index.html" value="Voltar para a Página Inicial"
 				style="color:black; text-decoration: underline" />
 		</h:form>
-
-		<p:dialog header="Empresa" widgetVar="empresa" modal="true"
-			resizable="false" draggable="false" responsive="true"
-			showEffect="clip" hideEffect="clip" closeOnEscape="true">
-			<h:form id="formLogin1">
-				<h:panelGrid columns="1">
-					<p:inputText id="email" title="E-mail" maxlength="100"
-						placeholder="Digite seu E-mail" required="true"
-						requiredMessage="Informe o E-mail" style="width:210px;"
-						value="#{autenticacaoBean.empresa.email}">
-					</p:inputText>
-					<p:password id="senha" maxlength="20"
-						placeholder="Digite sua Senha" required="true"
-						requiredMessage="Informe a Senha"
-						value="#{autenticacaoBean.empresa.senha}"
-						style="margin-top:15px; width:210px" />
-					<p:commandButton value="Entrar" update=":mensagem"
-						style="width:215px; margin-top:15px"
-						icon="fa fa-unlock-alt" action="#{autenticacaoBean.autenticar}" />
-				</h:panelGrid>
-				<p:separator />
-				<p:link outcome="autenticacao" value="Esqueci minha senha"
-					style="color:black; text-decoration: underline" />
-			</h:form>
-		</p:dialog>
 
 		<p:dialog header="Administrativo" widgetVar="adm" modal="true"
 			resizable="false" draggable="false" responsive="true"
