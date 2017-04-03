@@ -7,6 +7,8 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<title>E-conomize</title>
 	<link href='../resources/images/house.png' rel='icon'
 		type='image/x-icon' />
@@ -18,46 +20,20 @@
 		<h:form>
 			<p:fieldset style="padding:0px 30px 20px 30px;" styleClass="login">
 				<h4>LOGIN</h4>
-				<p:commandButton value="Administrativo" title="Login"
-					icon="fa fa-user" update=":formLogin2"
-					oncomplete="PF('adm').show();"
-					style="width:200px">
-					<f:actionListener
-						type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-				</p:commandButton>
-				<h4>Não tem uma conta?</h4>
-				<p:button outcome="autenticacao" id="prof" value="Cadastre-se"
-					icon="fa fa-home" style="width:200px">
-				</p:button>
-			</p:fieldset>
-			<br />
-			<p:link href="../index.html" value="Voltar para a Página Inicial"
-				style="color:black; text-decoration: underline" />
-		</h:form>
-
-		<p:dialog header="Administrativo" widgetVar="adm" modal="true"
-			resizable="false" draggable="false" responsive="true"
-			showEffect="clip" hideEffect="clip" closeOnEscape="true">
-			<h:form id="formLogin2">
-				<h:panelGrid columns="1">
-					<p:inputText id="email" title="E-mail" maxlength="100"
-						placeholder="Digite seu E-mail" required="true"
-						requiredMessage="Informe o E-mail" style="width:210px;"
-						value="#{autenticacaoBean.adm.email}" />
-					<p:password id="senha" maxlength="20"
-						placeholder="Digite sua Senha" required="true"
-						requiredMessage="Informe a Senha"
-						value="#{autenticacaoBean.adm.senha}"
-						style="margin-top:15px; width:210px" />
-					<p:commandButton value="Entrar" update=":mensagem"
-						style="width:215px; margin-top:15px"
-						icon="fa fa-unlock-alt" action="#{autenticacaoBean.autenticar}" />
-				</h:panelGrid>
+				<p:inputText id="email" title="E-mail" maxlength="100"
+					placeholder="Digite seu E-mail" required="true"
+					requiredMessage="Informe o E-mail" style="width:250px;"
+					value="#{autenticacaoBean.usuario.email}" />
+				<p:password id="senha" maxlength="20" placeholder="Digite sua Senha"
+					required="true" requiredMessage="Informe a Senha"
+					value="#{autenticacaoBean.usuario.senha}"
+					style="margin-top:15px; width:250px" />
 				<p:separator />
-				<p:link outcome="autenticacao" value="Esqueci minha senha"
-					style="color:black; text-decoration: underline" />
-			</h:form>
-		</p:dialog>
+				<p:commandButton value="Entrar" update=":mensagem"
+					style="width:260px; margin-top:10px" icon="fa fa-unlock-alt"
+					action="#{autenticacaoBean.autenticar}" />
+			</p:fieldset>
+		</h:form>
 	</div>
 </h:body>
 </html>

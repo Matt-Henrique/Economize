@@ -15,15 +15,14 @@
 </h:head>
 <h:body>
 	<p:growl id="mensagem" />
+	<h:outputStylesheet library="css" name="estilo.css"></h:outputStylesheet>
 	<div id="header" align="left">
 		<a href="inicio.xhtml"><p:graphicImage library="imagens"
 				name="econologo.png" height="100" width="300" /></a>
 	</div>
 	<h:form id="formMenu">
-		<h:outputStylesheet library="css" name="estilo.css"></h:outputStylesheet>
 		<p:menubar id="menu">
-			<p:menuitem value="Home" url="inicio.xhtml" icon="fa fa-home">
-			</p:menuitem>
+			<p:menuitem value="Home" url="inicio.xhtml" icon="fa fa-home" />
 			<p:submenu label="Produto" icon="fa fa-shopping-cart">
 				<p:menuitem value="Lista de Produtos" url="produto.xhtml"
 					icon="fa fa-shopping-basket"
@@ -44,23 +43,14 @@
 			</p:submenu>
 			<p:submenu label="Usuarios" icon="fa fa-group"
 				rendered="#{autenticacaoBean.controladorAcesso.permissaoAdministrador}">
-				<p:menuitem value="Administrador" url="administrador.xhtml"
-					icon="fa fa-user" />
-				<p:menuitem value="Empresa" url="empresa.xhtml"
-					icon="fa fa-building" />
+				<p:menuitem value="Usuário" url="usuario.xhtml" icon="fa fa-user" />
 			</p:submenu>
 			<p:submenu label="Ajuda" icon="fa fa-flag">
 				<p:menuitem value="Sobre" icon="fa fa-info" />
 			</p:submenu>
 			<p:submenu styleClass="Logout" label="Conta" icon="fa fa-gear">
-				<p:menuitem value="Meu Perfil" icon="fa fa-building"
-					rendered="#{autenticacaoBean.controladorAcesso.permissaoGerente}"
-					url="empresa-perfil.xhtml">
-					<f:attribute name="usuarioSelecionado" value="#{usuario.codigo}" />
-				</p:menuitem>
 				<p:menuitem value="Meu Perfil" icon="fa fa-user"
-					rendered="#{autenticacaoBean.controladorAcesso.permissaoAdministrador}"
-					url="adm-perfil.xhtml">
+					url="usuario-perfil.xhtml">
 					<f:attribute name="usuarioSelecionado" value="#{usuario.codigo}" />
 				</p:menuitem>
 				<p:menuitem value="Sair" icon="fa fa-power-off"

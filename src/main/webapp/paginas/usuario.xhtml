@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/templates/modelo.xhtml"
+<ui:composition template="/WEB-INF/templates/modelo.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -9,87 +9,79 @@
 	<ui:define name="conteudo">
 		<h:form id="formListagem"
 			rendered="#{autenticacaoBean.controladorAcesso.permissaoAdministrador}">
-			<p:panel header="Administrador - Listagem">
+			<p:panel header="Usuário - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-					paginator="true" rows="20"
-					value="#{administradorBean.administradores}" var="administrador"
-					paginatorPosition="bottom" rowHover="true" rowExpandMode="true"
-					widgetVar="admTable" multiViewState="true" reflow="true">
+					paginator="true" rows="20" value="#{usuarioBean.usuarios}"
+					var="usuario" paginatorPosition="bottom" rowHover="true"
+					rowExpandMode="true" widgetVar="usuTable" multiViewState="true"
+					reflow="true">
 					<f:facet name="header">
 						<div align="left">
 							<p:commandButton value="Novo" icon="fa fa-file-o"
 								oncomplete="PF('dialogo').show();"
-								actionListener="#{administradorBean.novo}" update="formCadastro">
+								actionListener="#{usuarioBean.novo}" update="formCadastro">
 								<f:actionListener
 									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 							</p:commandButton>
 						</div>
 						<div align="right">
 							<p:outputLabel value="Pesquisar Campos: " />
-							<p:inputText id="globalFilter" onkeyup="PF('admTable').filter()"
+							<p:inputText id="globalFilter" onkeyup="PF('usuTable').filter()"
 								placeholder="Faça uma busca" style="width: 150px" />
 						</div>
 					</f:facet>
 
-					<p:column headerText="Nome" sortBy="#{administrador.nome}"
-						filterBy="#{administrador.nome}" filterMatchMode="contains"
+					<p:column headerText="Nome" sortBy="#{usuario.nome}"
+						filterBy="#{usuario.nome}" filterMatchMode="contains" width="25%">
+						<h:outputText value="#{usuario.nome}" />
+					</p:column>
+
+					<p:column headerText="Tipo" sortBy="#{usuario.tipoUsuario}"
+						filterBy="#{usuario.tipoUsuario}" filterMatchMode="contains"
 						width="25%">
-						<h:outputText value="#{administrador.nome}" />
+						<h:outputText value="#{usuario.tipoUsuario.toString()}" />
 					</p:column>
 
-					<p:column headerText="Setor"
-						sortBy="#{administrador.setor.toString()}"
-						filterBy="#{administrador.setor.toString()}"
-						filterMatchMode="contains" width="25%">
-						<h:outputText value="#{administrador.setor.toString()}" />
+					<p:column headerText="E-mail" sortBy="#{usuario.email}"
+						filterBy="#{usuario.email}" filterMatchMode="contains" width="30%">
+						<h:outputText value="#{usuario.email}" />
 					</p:column>
 
-					<p:column headerText="E-mail" sortBy="#{administrador.email}"
-						filterBy="#{administrador.email}" filterMatchMode="contains"
-						width="30%">
-						<h:outputText value="#{administrador.email}" />
-					</p:column>
-
-					<p:column headerText="Opções" sortBy="#{administrador.ativo}"
-						width="20%">
+					<p:column headerText="Opções" sortBy="#{usuario.ativo}" width="20%">
 						<p:commandButton icon="fa fa-trash-o" title="Excluir"
-							actionListener="#{administradorBean.excluir}"
+							actionListener="#{usuarioBean.excluir}"
 							update=":mensagem :formListagem:tabela">
 							<p:confirm header="Confirmação"
-								message="Deseja excluir o administrador?"
+								message="Deseja excluir o usuário?"
 								icon="fa fa-exclamation-triangle" />
-							<f:attribute name="administradorSelecionado"
-								value="#{administrador}" />
+							<f:attribute name="usuarioSelecionado" value="#{usuario}" />
 						</p:commandButton>
 
 						<p:commandButton icon="fa fa-pencil" title="Editar"
-							actionListener="#{administradorBean.editar}"
-							update=":mensagem :formEdicao:adm"
+							actionListener="#{usuarioBean.editar}"
+							update=":mensagem :formEdicao:usu"
 							oncomplete="PF('edicao').show();">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-							<f:attribute name="administradorSelecionado"
-								value="#{administrador}" />
+							<f:attribute name="usuarioSelecionado" value="#{usuario}" />
 						</p:commandButton>
 
 						<p:commandButton icon="fa fa-check" title="Ativo"
-							actionListener="#{administradorBean.editar}"
+							actionListener="#{usuarioBean.editar}"
 							update=":mensagem :formAtivo:status"
 							oncomplete="PF('status').show();">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-							<f:attribute name="administradorSelecionado"
-								value="#{administrador}" />
+							<f:attribute name="usuarioSelecionado" value="#{usuario}" />
 						</p:commandButton>
 
 						<p:commandButton icon="fa fa-key" title="Mudar Senha"
-							actionListener="#{administradorBean.editar}"
+							actionListener="#{usuarioBean.editar}"
 							update=":mensagem :formSenha:mudarSenha"
 							oncomplete="PF('senha').show();">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-							<f:attribute name="administradorSelecionado"
-								value="#{administrador}" />
+							<f:attribute name="usuarioSelecionado" value="#{usuario}" />
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>
@@ -118,7 +110,7 @@
 							<h:panelGrid columns="1" id="pessoal">
 								<p:outputLabel value="Nome Completo:" for="nome" />
 								<p:inputText id="nome"
-									value="#{administradorBean.administrador.nome}"
+									value="#{usuarioBean.usuario.nome}"
 									style="width:350px;" title="Nome" required="true"
 									requiredMessage="Informe o Nome"
 									placeholder="Ex: Mateus Henrique Neto" maxlength="50" />
@@ -126,18 +118,15 @@
 								<p:outputLabel value="CPF:" for="cpf" />
 								<p:inputMask mask="999.999.999-99" id="cpf" title="CPF"
 									style="width:350px;"
-									value="#{administradorBean.administrador.cpf_cnpj}"
+									value="#{usuarioBean.usuario.cpf}"
 									required="true" requiredMessage="Informe o CPF"
 									placeholder="Somente números" />
 
-								<p:outputLabel for="setor" value="Setor:" />
-								<p:selectOneButton id="setor" required="true"
-									value="#{administradorBean.administrador.setor}"
-									requiredMessage="Informe o Setor">
-									<f:selectItem itemValue="ADMINISTRATIVO"
-										itemLabel="Administrativo" />
-									<f:selectItem itemValue="CADASTRO" itemLabel="Cadastro" />
-								</p:selectOneButton>
+								<p:outputLabel value="Tipo de Usuário:" for="tipoUsuario" />
+								<p:inputText id="tipoUsuario"
+									value="#{usuarioBean.usuario.tipoUsuario}" style="width:350px;"
+									title="Nome" required="true" requiredMessage="Informe o Nome"
+									placeholder="Ex: Mateus Henrique Neto" maxlength="50" />
 							</h:panelGrid>
 						</p:panel>
 					</p:tab>
@@ -148,26 +137,26 @@
 								<p:outputLabel value="Telefone:" for="telefone" />
 								<p:inputMask mask="(99) 9999-9999" id="telefone"
 									style="width:350px;" title="Telefone"
-									value="#{administradorBean.administrador.telefone}"
+									value="#{usuarioBean.usuario.fone1}"
 									required="true" requiredMessage="Informe o Telefone"
 									placeholder="(DDD) Telefone" />
 
 								<p:outputLabel value="Telefone (Opcional):" for="telefone2" />
 								<p:inputMask mask="(99) 9999-9999" id="telefone2"
 									style="width:350px;" title="Telefone"
-									value="#{administradorBean.administrador.telefone2}"
+									value="#{usuarioBean.usuario.fone2}"
 									placeholder="(DDD) Telefone" />
 
 								<p:outputLabel value="Celular:" for="celular" />
 								<p:inputMask mask="(99) 99999-9999" id="celular"
 									style="width:350px;"
-									value="#{administradorBean.administrador.celular}"
+									value="#{usuarioBean.usuario.celular}"
 									title="Celular" required="true"
 									requiredMessage="Informe o Celular" placeholder="(DDD) Celular" />
 
 								<p:outputLabel value="E-mail:" for="email" />
 								<p:inputText id="email"
-									value="#{administradorBean.administrador.email}"
+									value="#{usuarioBean.usuario.email}"
 									style="width:350px;" title="E-mail" required="true"
 									requiredMessage="Informe o E-mail"
 									validatorMessage="Informe o E-mail"
@@ -184,7 +173,7 @@
 							<h:panelGrid columns="1" id="pass">
 								<p:outputLabel value="Nova senha:" for="senha" />
 								<p:password id="senha" style="width:350px;"
-									value="#{administradorBean.administrador.senhaSemCriptografia}"
+									value="#{usuarioBean.usuario.senhaSemCriptografia}"
 									promptLabel="Digite a senha" weakLabel="Força da senha : Fraca"
 									goodLabel="Força da senha : Média" required="true"
 									requiredMessage="Digite a nova senha"
@@ -195,7 +184,7 @@
 
 								<p:outputLabel value="Confirme a senha:" for="confSenha" />
 								<p:password id="confSenha" style="width:350px;"
-									value="#{administradorBean.administrador.senhaSemCriptografia}"
+									value="#{usuarioBean.usuario.senhaSemCriptografia}"
 									match="confSenha" title="Confirme sua senha"
 									validatorMessage="As duas senhas devem ser iguais"
 									maxlength="20" placeholder="Confirme sua senha" />
@@ -205,7 +194,7 @@
 								<h:panelGrid columns="2">
 									<p:commandButton value="Confirmar" icon="fa fa-check"
 										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogo').hide()"
-										actionListener="#{administradorBean.salvar}"
+										actionListener="#{usuarioBean.salvar}"
 										update=":mensagem :formCadastro :formListagem:tabela" />
 								</h:panelGrid>
 							</div>
@@ -221,10 +210,10 @@
 			<h:form id="formEdicao">
 				<p:tab id="tabAdm" title="Administrador">
 					<p:panel header="Dados do Administrador">
-						<h:panelGrid columns="1" id="adm">
+						<h:panelGrid columns="1" id="usu">
 							<p:outputLabel value="Nome Completo:" for="nome" />
 							<p:inputText id="nome"
-								value="#{administradorBean.administrador.nome}"
+								value="#{usuarioBean.usuario.nome}"
 								style="width:350px;" title="Nome" required="true"
 								requiredMessage="Informe o Nome"
 								placeholder="Ex: João Oliveira Santos">
@@ -233,7 +222,7 @@
 							<p:outputLabel value="CPF:" for="cpf" />
 							<p:inputMask mask="999.999.999-99" id="cpf" title="CPF"
 								style="width:350px;"
-								value="#{administradorBean.administrador.cpf_cnpj}"
+								value="#{usuarioBean.usuario.cpf}"
 								required="true" requiredMessage="Informe o CPF"
 								placeholder="Somente números">
 							</p:inputMask>
@@ -241,7 +230,7 @@
 							<p:outputLabel value="Telefone:" for="telefone" />
 							<p:inputMask mask="(99) 9999-9999" id="telefone"
 								style="width:350px;" title="Telefone"
-								value="#{administradorBean.administrador.telefone}"
+								value="#{usuarioBean.usuario.fone1}"
 								required="true" requiredMessage="Informe o Telefone"
 								placeholder="(DDD) Telefone">
 							</p:inputMask>
@@ -249,21 +238,21 @@
 							<p:outputLabel value="Telefone (Opcional):" for="telefone2" />
 							<p:inputMask mask="(99) 9999-9999" id="telefone2"
 								style="width:350px;" title="Telefone"
-								value="#{administradorBean.administrador.telefone2}"
+								value="#{usuarioBean.usuario.fone2}"
 								placeholder="(DDD) Telefone">
 							</p:inputMask>
 
 							<p:outputLabel value="Celular:" for="celular" />
 							<p:inputMask mask="(99) 99999-9999" id="celular"
 								style="width:350px;"
-								value="#{administradorBean.administrador.celular}"
+								value="#{usuarioBean.usuario.celular}"
 								title="Celular" required="true"
 								requiredMessage="Informe o Celular" placeholder="(DDD) Celular">
 							</p:inputMask>
 
 							<p:outputLabel value="E-mail:" for="email" />
 							<p:inputText id="email"
-								value="#{administradorBean.administrador.email}"
+								value="#{usuarioBean.usuario.email}"
 								style="width:350px;" title="E-mail" required="true"
 								requiredMessage="Informe o E-mail"
 								validatorMessage="Informe o E-mail"
@@ -271,15 +260,6 @@
 								<f:validateRegex
 									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 							</p:inputText>
-
-							<p:outputLabel for="setor" value="Setor:" />
-							<p:selectOneButton id="setor" required="true"
-								value="#{administradorBean.administrador.setor}"
-								requiredMessage="Informe o Setor">
-								<f:selectItem itemValue="ADMINISTRATIVO"
-									itemLabel="Administrativo" />
-								<f:selectItem itemValue="CADASTRO" itemLabel="Cadastro" />
-							</p:selectOneButton>
 						</h:panelGrid>
 					</p:panel>
 				</p:tab>
@@ -288,8 +268,8 @@
 					<h:panelGrid columns="2">
 						<p:commandButton value="Confirmar" icon="fa fa-check"
 							oncomplete="if (args &amp;&amp; !args.validationFailed) PF('edicao').hide()"
-							actionListener="#{administradorBean.salvarEdicao}"
-							update=":mensagem :formEdicao:adm :formListagem:tabela" />
+							actionListener="#{usuarioBean.salvarEdicao}"
+							update=":mensagem :formEdicao:usu :formListagem:tabela" />
 						<p:commandButton value="Fechar" icon="fa fa-times"
 							oncomplete="PF('edicao').hide();">
 							<f:actionListener
@@ -309,7 +289,7 @@
 						<h:panelGrid columns="1" id="mudarSenha">
 							<p:outputLabel value="Nova senha:" for="senha" />
 							<p:password id="senha" style="width:350px;"
-								value="#{administradorBean.administrador.senhaSemCriptografia}"
+								value="#{usuarioBean.usuario.senhaSemCriptografia}"
 								promptLabel="Digite a senha" weakLabel="Força da senha : Fraca"
 								goodLabel="Força da senha : Média" required="true"
 								requiredMessage="Digite a nova senha"
@@ -321,7 +301,7 @@
 
 							<p:outputLabel value="Confirme a senha:" for="confSenha" />
 							<p:password id="confSenha" style="width:350px;"
-								value="#{administradorBean.administrador.senhaSemCriptografia}"
+								value="#{usuarioBean.usuario.senhaSemCriptografia}"
 								match="confSenha" title="Confirme sua senha"
 								validatorMessage="As duas senhas devem ser iguais"
 								maxlength="32" placeholder="Confirme sua senha">
@@ -334,7 +314,7 @@
 					<h:panelGrid columns="2">
 						<p:commandButton value="Confirmar" icon="fa fa-check"
 							oncomplete="if (args &amp;&amp; !args.validationFailed) PF('senha').hide()"
-							actionListener="#{administradorBean.mudarSenha}"
+							actionListener="#{usuarioBean.mudarSenha}"
 							update=":mensagem :formSenha:mudarSenha :formListagem:tabela" />
 						<p:commandButton value="Fechar" icon="fa fa-times"
 							oncomplete="PF('senha').hide();">
@@ -355,7 +335,7 @@
 						<h:panelGrid columns="1" id="status">
 							<p:outputLabel for="ativo" value="Usuário Ativo:" />
 							<p:selectOneButton id="ativo" required="true"
-								value="#{administradorBean.administrador.ativo}"
+								value="#{usuarioBean.usuario.ativo}"
 								requiredMessage="Escolha se o usuário é ou não Ativo">
 								<f:selectItem itemValue="SIM" itemLabel="Sim" />
 								<f:selectItem itemValue="NAO" itemLabel="Não" />
@@ -368,7 +348,7 @@
 					<h:panelGrid columns="2">
 						<p:commandButton value="Confirmar" icon="fa fa-check"
 							oncomplete="if (args &amp;&amp; !args.validationFailed) PF('status').hide()"
-							actionListener="#{administradorBean.salvarStatus}"
+							actionListener="#{usuarioBean.salvarStatus}"
 							update=":mensagem :formAtivo:status :formListagem:tabela" />
 						<p:commandButton value="Fechar" icon="fa fa-times" process="@none"
 							oncomplete="PF('status').hide();">

@@ -38,10 +38,11 @@ body {
 	box-shadow: 1px 1px 1px;
 }
 
+/* ================= Fieldset Login ================= */
 .login {
 	background: transparent;
 	padding: 100px 0 0 0px;
-	width: 205px;
+	width: 260px;
 	margin: auto;
 	position: relative;
 	margin-top: 150px;
@@ -49,6 +50,7 @@ body {
 	border-radius: 0.3em;
 	box-shadow: black 0.3em 0.3em 0.3em;
 }
+/* ====================== End ====================== */
 
 .ui-menu .ui-menuitem-text {
 	margin-left: 10px;

@@ -15,7 +15,7 @@ import br.com.economize.util.HibernateUtil;
 
 public class UsuarioDAO extends GenericDAO<Usuario> {
 
-	public Usuario autenticar(String email, String senha, Ativo ativo, TipoUsuario tipo) {
+	public Usuario autenticar(String email, String senha, Ativo ativo) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 
 		try {
@@ -24,7 +24,6 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 			SimpleHash hash = new SimpleHash("md5", senha);
 			consulta.add(Restrictions.eq("senha", hash.toHex()));
 			consulta.add(Restrictions.eq("ativo", ativo = Ativo.SIM));
-			consulta.add(Restrictions.eq("tipoUsuario", tipo = TipoUsuario.ADMINISTRADOR));
 
 			Usuario resultado = (Usuario) consulta.uniqueResult();
 
@@ -44,7 +43,6 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 			Criteria consulta = sessao.createCriteria(Usuario.class);
 			consulta.add(Restrictions.eq("cpf", cpf));
 			consulta.add(Restrictions.eq("email", email));
-			consulta.add(Restrictions.eq("tipoUsuario", tipo = TipoUsuario.ADMINISTRADOR));
 
 			Usuario resultado = (Usuario) consulta.uniqueResult();
 
@@ -56,7 +54,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 		}
 	}
 
-	// AdministradprPerfilBean
+	// UsuárioPerfilBean
 	@SuppressWarnings("unchecked")
 	public List<Usuario> buscaUsuarioLogado(Long codigo) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();

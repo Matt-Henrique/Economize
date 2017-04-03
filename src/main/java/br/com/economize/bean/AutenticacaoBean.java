@@ -17,7 +17,6 @@ import org.omnifaces.util.Messages;
 
 import br.com.economize.controller.ControladorAcessoUsuario;
 import br.com.economize.dao.UsuarioDAO;
-import br.com.economize.domain.Empresa;
 import br.com.economize.domain.Usuario;
 
 @SuppressWarnings("serial")
@@ -28,44 +27,25 @@ public class AutenticacaoBean implements Serializable {
 	public static final String USUARIO_SESSAO = "usuario";
 	HttpSession sessao;
 
-	private Empresa empresa;
-	private Empresa empresaLogada;
-
-	private Usuario adm;
-	private Usuario admLogado;
+	private Usuario usuario;
+	private Usuario usuarioLogado;
 
 	private ControladorAcessoUsuario controladorAcesso;
 
-	public Empresa getEmpresa() {
-		return empresa;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
-	public Empresa getEmpresaLogada() {
-		return empresaLogada;
+	public Usuario getUsuarioLogado() {
+		return usuarioLogado;
 	}
 
-	public void setEmpresaLogada(Empresa empresaLogada) {
-		this.empresaLogada = empresaLogada;
-	}
-
-	public Usuario getAdm() {
-		return adm;
-	}
-
-	public void setAdm(Usuario adm) {
-		this.adm = adm;
-	}
-
-	public Usuario getAdmLogado() {
-		return admLogado;
-	}
-
-	public void setAdmLogado(Usuario admLogado) {
-		this.admLogado = admLogado;
+	public void setUsuarioLogado(Usuario usuarioLogado) {
+		this.usuarioLogado = usuarioLogado;
 	}
 
 	public ControladorAcessoUsuario getControladorAcesso() {
@@ -74,32 +54,28 @@ public class AutenticacaoBean implements Serializable {
 
 	@PostConstruct
 	public void iniciar() {
-		empresa = new Empresa();
-		adm = new Usuario();
-
+		usuario = new Usuario();
 		controladorAcesso = new ControladorAcessoUsuario();
 	}
 
 	public void autenticar() {
 		try {
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
-			Usuario admLogado = usuarioDAO.autenticar(adm.getEmail(), adm.getSenha(), adm.getAtivo(),
-					adm.getTipoUsuario());
+			Usuario usuarioLogado = usuarioDAO.autenticar(usuario.getEmail(), usuario.getSenha(), usuario.getAtivo());
 
-			if (admLogado == null) {
+			if (usuarioLogado == null) {
 				Messages.addGlobalError("Usuário Inválido ou Incorreto");
 				return;
 			}
 			sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-			sessao.setAttribute("USUARIO_SESSAO", admLogado);
+			sessao.setAttribute("USUARIO_SESSAO", usuarioLogado);
 
 			controladorAcesso.configurarAcesso();
 
-			System.out.println("Sessão criada " + sessao.getId().toString());
 			String ultimoAcesso = (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"))
 					.format(new Date(sessao.getCreationTime()));
 
-			System.out.println("Sessão iniciada " + sessao.getId() + ". Ultimo Acesso = " + ultimoAcesso);
+			System.out.println("Sessão iniciada: " + sessao.getId() + ". Acesso em: " + ultimoAcesso);
 
 			Faces.redirect("./paginas/inicio.xhtml");
 		} catch (IOException erro) {
@@ -111,7 +87,7 @@ public class AutenticacaoBean implements Serializable {
 	public void logout() throws IOException {
 		String ultimoAcesso = (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"))
 				.format(new Date(sessao.getLastAccessedTime()));
-		System.out.println("Sessão expirada " + sessao.getId() + ". Ultimo Acesso: " + ultimoAcesso);
+		System.out.println("Sessão " + sessao.getId() + " expirada. Último Acesso em: " + ultimoAcesso);
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 		ec.invalidateSession();
 		ec.redirect(ec.getRequestContextPath() + "/paginas/autenticacao.xhtml?faces-redirect=true");
