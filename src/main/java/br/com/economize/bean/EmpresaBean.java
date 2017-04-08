@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpSession;
 
 import org.omnifaces.util.Messages;
 import org.primefaces.component.wizard.Wizard;
@@ -15,11 +16,15 @@ import org.primefaces.context.RequestContext;
 
 import br.com.economize.dao.EmpresaDAO;
 import br.com.economize.domain.Empresa;
+import br.com.economize.domain.Usuario;
 
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
 public class EmpresaBean implements Serializable {
+
+	HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+	Usuario usuario = (Usuario) sessao.getAttribute("USUARIO_SESSAO");
 
 	private Empresa empresa;
 	private List<Empresa> empresas;
@@ -55,7 +60,7 @@ public class EmpresaBean implements Serializable {
 	public void listar() {
 		try {
 			EmpresaDAO empresaDAO = new EmpresaDAO();
-			empresas = empresaDAO.listar("nome");
+			empresas = empresaDAO.buscaEmpresaPorUsuario(usuario.getCodigo());
 
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar listar as empresas");
@@ -81,9 +86,10 @@ public class EmpresaBean implements Serializable {
 		try {
 
 			EmpresaDAO empresaDAO = new EmpresaDAO();
+			empresa.setUsuario(usuario);
 			empresaDAO.merge(empresa);
 
-			empresas = empresaDAO.listar("nome");
+			empresas = empresaDAO.buscaEmpresaPorUsuario(usuario.getCodigo());
 
 			if (success) {
 				RequestContext.getCurrentInstance().execute("PF('dialogo').hide()");
@@ -110,24 +116,6 @@ public class EmpresaBean implements Serializable {
 			Messages.addGlobalInfo("Empresa editada com sucesso");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar editar a empresa");
-			erro.printStackTrace();
-		}
-	}
-
-	public void salvarStatus() {
-		try {
-			EmpresaDAO empresaDAO = new EmpresaDAO();
-			empresaDAO.merge(empresa);
-
-			empresas = empresaDAO.listar("nome");
-
-			if (success) {
-				RequestContext.getCurrentInstance().execute("PF('status').hide()");
-			}
-
-			Messages.addGlobalInfo("Status editado com sucesso");
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao tentar editar o status");
 			erro.printStackTrace();
 		}
 	}

@@ -31,7 +31,7 @@ public class ImagemBean {
 
 	public StreamedContent getFoto() throws IOException {
 		if(caminho == null || caminho.isEmpty()){
-			Path path = Paths.get("C:/workspace-eco/Imagens/branco.png");
+			Path path = Paths.get("C:/Users/Mateus/workspace-economize/Imagens/branco.png");
 			InputStream stream = Files.newInputStream(path);
 			foto = new DefaultStreamedContent(stream);
 		}else{

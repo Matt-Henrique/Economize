@@ -54,7 +54,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 		}
 	}
 
-	// UsuárioPerfilBean
+	// UsuarioPerfilBean
 	@SuppressWarnings("unchecked")
 	public List<Usuario> buscaUsuarioLogado(Long codigo) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();

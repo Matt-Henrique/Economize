@@ -51,7 +51,6 @@ body {
 	box-shadow: black 0.3em 0.3em 0.3em;
 }
 /* ====================== End ====================== */
-
 .ui-menu .ui-menuitem-text {
 	margin-left: 10px;
 }
@@ -128,10 +127,24 @@ body {
 	opacity: .5;
 }
 
-@media only screen and (max-width: 640px) {
-	/* Visibilidade da ordenação crescente & decrescente */
-	.ui-datatable-reflow .ui-reflow-label, .ui-datatable-reflow .ui-reflow-dropdown
-		{
-		display: none;
-	}
+@media
+only
+screen
+and
+(max-width:
+640px)
+{
+/* Visibilidade da ordenação crescente & decrescente */
+.ui-datatable-reflow .ui-reflow-label, .ui-datatable-reflow .ui-reflow-dropdown
+	{
+	display: none;
 }
+
+}
+
+/* ================= SelectOneRadio ================= */
+.one-radio label {
+	margin-top: -5px;
+	margin-left: 5px;
+}
+/* ====================== End ======================= */

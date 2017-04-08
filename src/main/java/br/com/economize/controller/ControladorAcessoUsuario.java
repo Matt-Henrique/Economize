@@ -32,7 +32,13 @@ public class ControladorAcessoUsuario {
 		Usuario usuarioSessao = (Usuario) sessao.getAttribute("USUARIO_SESSAO");
 
 		if (usuarioSessao != null) {
-			permissaoGerente = (usuarioSessao.getTipoUsuario() == TipoUsuario.GERENTE);
+			permissaoAdministrador = (usuarioSessao.getTipoUsuario() == TipoUsuario.ADMINISTRADOR);
+
+			if (permissaoAdministrador) {
+				permissaoGerente = true;
+			} else {
+				permissaoGerente = (usuarioSessao.getTipoUsuario() == TipoUsuario.GERENTE);
+			}
 		} else {
 			permissaoGerente = false;
 		}

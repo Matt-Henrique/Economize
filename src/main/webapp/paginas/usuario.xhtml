@@ -8,7 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	<ui:define name="conteudo">
 		<h:form id="formListagem"
-			rendered="#{autenticacaoBean.controladorAcesso.permissaoAdministrador}">
+			rendered="#{autenticacaoBean.controladorAcesso.permissaoGerente}">
 			<p:panel header="Usuário - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 					paginator="true" rows="20" value="#{usuarioBean.usuarios}"
@@ -104,29 +104,33 @@
 			<h:form id="formCadastro">
 				<p:wizard nextLabel="Próximo" backLabel="Voltar" widgetVar="wiz"
 					id="w">
-					<p:tab id="tabAdm1" title="Administrador">
-						<p:panel header="Dados do Administrador">
+					<p:tab id="tabAdm1" title="Usuário">
+						<p:panel header="Dados do Usuário">
 							<p:messages closable="true" />
 							<h:panelGrid columns="1" id="pessoal">
 								<p:outputLabel value="Nome Completo:" for="nome" />
-								<p:inputText id="nome"
-									value="#{usuarioBean.usuario.nome}"
+								<p:inputText id="nome" value="#{usuarioBean.usuario.nome}"
 									style="width:350px;" title="Nome" required="true"
 									requiredMessage="Informe o Nome"
 									placeholder="Ex: Mateus Henrique Neto" maxlength="50" />
 
 								<p:outputLabel value="CPF:" for="cpf" />
 								<p:inputMask mask="999.999.999-99" id="cpf" title="CPF"
-									style="width:350px;"
-									value="#{usuarioBean.usuario.cpf}"
+									style="width:350px;" value="#{usuarioBean.usuario.cpf}"
 									required="true" requiredMessage="Informe o CPF"
 									placeholder="Somente números" />
 
 								<p:outputLabel value="Tipo de Usuário:" for="tipoUsuario" />
-								<p:inputText id="tipoUsuario"
-									value="#{usuarioBean.usuario.tipoUsuario}" style="width:350px;"
-									title="Nome" required="true" requiredMessage="Informe o Nome"
-									placeholder="Ex: Mateus Henrique Neto" maxlength="50" />
+								<p:selectOneRadio id="tipoUsuario"
+									value="#{usuarioBean.usuario.tipoUsuario}" required="true"
+									layout="pageDirection" styleClass="one-radio">
+									<f:selectItem itemLabel="Administrador"
+										itemValue="ADMINISTRADOR"
+										itemDisabled="#{!autenticacaoBean.controladorAcesso.permissaoAdministrador}" />
+									<f:selectItem itemLabel="Gerente" itemValue="GERENTE"
+										itemDisabled="#{!autenticacaoBean.controladorAcesso.permissaoAdministrador}" />
+									<f:selectItem itemLabel="Usuário" itemValue="USUARIO" />
+								</p:selectOneRadio>
 							</h:panelGrid>
 						</p:panel>
 					</p:tab>
@@ -134,29 +138,21 @@
 						<p:panel header="Contatos da Empresa">
 							<p:messages closable="true" />
 							<h:panelGrid columns="1" id="contato">
-								<p:outputLabel value="Telefone:" for="telefone" />
-								<p:inputMask mask="(99) 9999-9999" id="telefone"
+								<p:outputLabel value="Telefone:" for="fone1 " />
+								<p:inputMask mask="(99) 9999-9999" id="fone1"
 									style="width:350px;" title="Telefone"
-									value="#{usuarioBean.usuario.fone1}"
-									required="true" requiredMessage="Informe o Telefone"
+									value="#{usuarioBean.usuario.fone1}" required="true"
+									requiredMessage="Informe o Telefone"
 									placeholder="(DDD) Telefone" />
 
-								<p:outputLabel value="Telefone (Opcional):" for="telefone2" />
-								<p:inputMask mask="(99) 9999-9999" id="telefone2"
+								<p:outputLabel value="Telefone (Opcional):" for="fone2" />
+								<p:inputMask mask="(99) 9999-9999" id="fone2"
 									style="width:350px;" title="Telefone"
 									value="#{usuarioBean.usuario.fone2}"
 									placeholder="(DDD) Telefone" />
 
-								<p:outputLabel value="Celular:" for="celular" />
-								<p:inputMask mask="(99) 99999-9999" id="celular"
-									style="width:350px;"
-									value="#{usuarioBean.usuario.celular}"
-									title="Celular" required="true"
-									requiredMessage="Informe o Celular" placeholder="(DDD) Celular" />
-
 								<p:outputLabel value="E-mail:" for="email" />
-								<p:inputText id="email"
-									value="#{usuarioBean.usuario.email}"
+								<p:inputText id="email" value="#{usuarioBean.usuario.email}"
 									style="width:350px;" title="E-mail" required="true"
 									requiredMessage="Informe o E-mail"
 									validatorMessage="Informe o E-mail"
@@ -208,12 +204,11 @@
 			resizable="false" modal="true" height="500" draggable="false"
 			responsive="true" showEffect="clip" hideEffect="fold">
 			<h:form id="formEdicao">
-				<p:tab id="tabAdm" title="Administrador">
-					<p:panel header="Dados do Administrador">
+				<p:tab id="tabAdm" title="Usuário">
+					<p:panel header="DadUsuáriotrador">
 						<h:panelGrid columns="1" id="usu">
 							<p:outputLabel value="Nome Completo:" for="nome" />
-							<p:inputText id="nome"
-								value="#{usuarioBean.usuario.nome}"
+							<p:inputText id="nome" value="#{usuarioBean.usuario.nome}"
 								style="width:350px;" title="Nome" required="true"
 								requiredMessage="Informe o Nome"
 								placeholder="Ex: João Oliveira Santos">
@@ -221,38 +216,38 @@
 
 							<p:outputLabel value="CPF:" for="cpf" />
 							<p:inputMask mask="999.999.999-99" id="cpf" title="CPF"
-								style="width:350px;"
-								value="#{usuarioBean.usuario.cpf}"
+								style="width:350px;" value="#{usuarioBean.usuario.cpf}"
 								required="true" requiredMessage="Informe o CPF"
 								placeholder="Somente números">
 							</p:inputMask>
 
-							<p:outputLabel value="Telefone:" for="telefone" />
-							<p:inputMask mask="(99) 9999-9999" id="telefone"
+							<p:outputLabel value="Tipo de Usuário:" for="tipoUsuario" />
+							<p:selectOneRadio id="tipoUsuario"
+								value="#{usuarioBean.usuario.tipoUsuario}"
+								layout="pageDirection" styleClass="one-radio">
+								<f:selectItem itemLabel="Administrador"
+									itemValue="ADMINISTRADOR" />
+								<f:selectItem itemLabel="Gerente" itemValue="GERENTE" />
+								<f:selectItem itemLabel="Usuário" itemValue="USUARIO" />
+							</p:selectOneRadio>
+
+							<p:outputLabel value="Telefone:" for="fone1" />
+							<p:inputMask mask="(99) 9999-9999" id="fone1"
 								style="width:350px;" title="Telefone"
-								value="#{usuarioBean.usuario.fone1}"
-								required="true" requiredMessage="Informe o Telefone"
+								value="#{usuarioBean.usuario.fone1}" required="true"
+								requiredMessage="Informe o Telefone"
 								placeholder="(DDD) Telefone">
 							</p:inputMask>
 
-							<p:outputLabel value="Telefone (Opcional):" for="telefone2" />
-							<p:inputMask mask="(99) 9999-9999" id="telefone2"
+							<p:outputLabel value="Telefone (Opcional):" for="fone2" />
+							<p:inputMask mask="(99) 9999-9999" id="fone2"
 								style="width:350px;" title="Telefone"
 								value="#{usuarioBean.usuario.fone2}"
 								placeholder="(DDD) Telefone">
 							</p:inputMask>
 
-							<p:outputLabel value="Celular:" for="celular" />
-							<p:inputMask mask="(99) 99999-9999" id="celular"
-								style="width:350px;"
-								value="#{usuarioBean.usuario.celular}"
-								title="Celular" required="true"
-								requiredMessage="Informe o Celular" placeholder="(DDD) Celular">
-							</p:inputMask>
-
 							<p:outputLabel value="E-mail:" for="email" />
-							<p:inputText id="email"
-								value="#{usuarioBean.usuario.email}"
+							<p:inputText id="email" value="#{usuarioBean.usuario.email}"
 								style="width:350px;" title="E-mail" required="true"
 								requiredMessage="Informe o E-mail"
 								validatorMessage="Informe o E-mail"

@@ -16,6 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpSession;
 
 import org.omnifaces.util.Messages;
 import org.primefaces.component.wizard.Wizard;
@@ -31,13 +32,17 @@ import br.com.economize.dao.ProdutoDAO;
 import br.com.economize.domain.Categoria;
 import br.com.economize.domain.Empresa;
 import br.com.economize.domain.Produto;
+import br.com.economize.domain.Usuario;
 
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class ProdutoBean implements Serializable {
+public class ProdutoEmpresaBean implements Serializable {
 
 	String pathDefault = "C:/Users/Mateus/workspace-economize/Imagens/";
+	
+	HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+	Usuario usuario = (Usuario) sessao.getAttribute("USUARIO_SESSAO");
 
 	private Produto produto;
 	private Produto selectedProduto;
@@ -45,7 +50,7 @@ public class ProdutoBean implements Serializable {
 	private List<Produto> produtos;
 
 	EmpresaDAO empresaDAO = new EmpresaDAO();
-	private List<Empresa> empresas = empresaDAO.listar("nome");
+	private List<Empresa> empresas = empresaDAO.buscaEmpresaPorUsuario(usuario.getCodigo());
 
 	CategoriaDAO categoriaDAO = new CategoriaDAO();
 	private List<Categoria> categorias = categoriaDAO.listar("categoria");
@@ -106,7 +111,7 @@ public class ProdutoBean implements Serializable {
 	public void listar() {
 		try {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
-			produtos = produtoDAO.listar("descricao");
+			produtos = produtoDAO.buscaProdutoPorEmpresa(empresas);
 
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar listar os produtos");

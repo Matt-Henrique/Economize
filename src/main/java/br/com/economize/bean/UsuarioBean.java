@@ -17,7 +17,6 @@ import org.primefaces.context.RequestContext;
 import br.com.economize.dao.UsuarioDAO;
 import br.com.economize.domain.Usuario;
 import br.com.economize.enumerate.Ativo;
-import br.com.economize.enumerate.TipoUsuario;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -87,7 +86,6 @@ public class UsuarioBean implements Serializable {
 			usuario.setSenha(hash.toHex());
 
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
-			usuario.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
 			usuario.setAtivo(Ativo.SIM);
 			usuarioDAO.merge(usuario);
 

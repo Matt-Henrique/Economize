@@ -26,11 +26,8 @@ public class Usuario extends GenericDomain {
 	@Column(length = 15, nullable = false)
 	private String fone1;
 
-	@Column(length = 14, nullable = true)
-	private String fone2;
-
 	@Column(length = 15, nullable = false)
-	private String celular;
+	private String fone2;
 
 	@Column(length = 100, nullable = false, unique = true)
 	private String email;
@@ -83,14 +80,6 @@ public class Usuario extends GenericDomain {
 
 	public void setFone2(String fone2) {
 		this.fone2 = fone2;
-	}
-
-	public String getCelular() {
-		return celular;
-	}
-
-	public void setCelular(String celular) {
-		this.celular = celular;
 	}
 
 	public String getEmail() {

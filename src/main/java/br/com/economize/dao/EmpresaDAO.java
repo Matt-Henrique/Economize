@@ -11,11 +11,12 @@ import br.com.economize.util.HibernateUtil;
 public class EmpresaDAO extends GenericDAO<Empresa> {
 
 	@SuppressWarnings("unchecked")
-	public List<Empresa> buscaEmpresaLogada(Long codigo) {
+	public List<Empresa> buscaEmpresaPorUsuario(Long codigo) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 
 		try {
-			Query query = sessao.createQuery("from Empresa where codigo = :codigo ").setParameter("codigo", codigo);
+			Query query = sessao.createQuery("from Empresa where usuario_codigo = :codigo ").setParameter("codigo",
+					codigo);
 			List<Empresa> resultado = query.list();
 
 			return resultado;

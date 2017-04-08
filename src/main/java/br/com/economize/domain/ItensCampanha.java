@@ -2,7 +2,6 @@ package br.com.economize.domain;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -18,8 +17,6 @@ public class ItensCampanha extends GenericDomain {
 
 	@OneToMany
 	private List<Produto> produtos;
-
-	@Column(nullable = true, precision = 7, scale = 2)
 
 	public Campanha getCampanha() {
 		return campanha;

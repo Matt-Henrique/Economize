@@ -30,13 +30,13 @@ public class Empresa extends GenericDomain {
 	@Column(length = 15, nullable = false)
 	private String fone1;
 
-	@Column(length = 14, nullable = true)
+	@Column(length = 15, nullable = true)
 	private String fone2;
 
 	@Column(length = 15, nullable = false)
-	private String celular;
+	private String fone3;
 
-	@Column(length = 100, nullable = false, unique = true)
+	@Column(length = 100, nullable = false)
 	private String email;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -99,12 +99,12 @@ public class Empresa extends GenericDomain {
 		this.fone2 = fone2;
 	}
 
-	public String getCelular() {
-		return celular;
+	public String getFone3() {
+		return fone3;
 	}
 
-	public void setCelular(String celular) {
-		this.celular = celular;
+	public void setFone3(String fone3) {
+		this.fone3 = fone3;
 	}
 
 	public String getEmail() {

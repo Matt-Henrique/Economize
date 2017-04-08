@@ -8,7 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	<ui:define name="conteudo">
 		<h:form id="formListagem"
-			rendered="#{autenticacaoBean.controladorAcesso.permissaoAdministrador}">
+			rendered="#{autenticacaoBean.controladorAcesso.permissaoGerente}">
 			<p:panel header="Empresa - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 					paginator="true" rows="20" value="#{empresaBean.empresas}"
@@ -50,25 +50,7 @@
 
 						<p:commandButton icon="fa fa-pencil" title="Editar"
 							actionListener="#{empresaBean.editar}"
-							update=":mensagem :formEdicao" oncomplete="PF('edicao').show();">
-							<f:actionListener
-								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-							<f:attribute name="empresaSelecionada" value="#{empresa}" />
-						</p:commandButton>
-
-						<p:commandButton icon="fa fa-check" title="Ativo"
-							actionListener="#{empresaBean.editar}"
-							update=":mensagem :formAtivo:status"
-							oncomplete="PF('status').show();">
-							<f:actionListener
-								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-							<f:attribute name="empresaSelecionada" value="#{empresa}" />
-						</p:commandButton>
-
-						<p:commandButton icon="fa fa-key" title="Mudar Senha"
-							actionListener="#{empresaBean.editar}"
-							update=":mensagem :formSenha:mudarSenha"
-							oncomplete="PF('senha').show();">
+							update=":mensagem :formCadastro" oncomplete="PF('dialogo').show();">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 							<f:attribute name="empresaSelecionada" value="#{empresa}" />
@@ -142,11 +124,11 @@
 									value="#{empresaBean.empresa.fone2}"
 									placeholder="(DDD) Telefone" />
 
-								<p:outputLabel value="Celular:" for="celular" />
-								<p:inputMask mask="(99) 99999-9999" id="celular"
-									style="width:350px;" value="#{empresaBean.empresa.celular}"
-									title="Celular" required="true"
-									requiredMessage="Informe o Celular" placeholder="(DDD) Celular" />
+								<p:outputLabel value="Telefone (Opcional):" for="fone3" />
+								<p:inputMask mask="(99) 9?9999-9999" id="fone3"
+									style="width:350px;" title="Telefone"
+									value="#{empresaBean.empresa.fone3}"
+									placeholder="(DDD) Telefone" />
 
 								<p:outputLabel value="E-mail:" for="email" />
 								<p:inputText id="email" value="#{empresaBean.empresa.email}"
