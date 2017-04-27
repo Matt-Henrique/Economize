@@ -38,33 +38,17 @@
 						<h:outputText value="#{produto.descricao}" />
 					</p:column>
 
-					<p:column headerText="Descrição Reduzida"
-						sortBy="#{produto.descricaoReduzida}"
-						filterBy="#{produto.descricaoReduzida}" filterMatchMode="contains">
-						<h:outputText value="#{produto.descricaoReduzida}" />
-					</p:column>
-
-					<p:column headerText="Unidade" sortBy="#{produto.unidadeMedida}"
-						filterBy="#{produto.unidadeMedida}" filterMatchMode="contains">
-						<h:outputText value="#{produto.unidadeMedida}" />
-					</p:column>
-
 					<p:column headerText="Preço" sortBy="#{produto.preco}"
-						filterBy="#{produto.preco}" filterMatchMode="contains">
+						filterBy="#{produto.preco}" filterMatchMode="contains" width="130">
 						<h:outputText value="#{produto.preco}" />
 					</p:column>
 
 					<p:column headerText="Ean" sortBy="#{produto.ean}"
-						filterBy="#{produto.ean}" filterMatchMode="contains">
+						filterBy="#{produto.ean}" filterMatchMode="contains" width="130">
 						<h:outputText value="#{produto.ean}" />
 					</p:column>
 
-					<p:column headerText="Embalagem" sortBy="#{produto.embalagem}"
-						filterBy="#{produto.embalagem}" filterMatchMode="contains">
-						<h:outputText value="#{produto.embalagem}" />
-					</p:column>
-
-					<p:column headerText="Opções">
+					<p:column headerText="Opções" width="180">
 						<p:commandButton icon="fa fa-trash" title="Excluir"
 							actionListener="#{produtoEmpresaBean.excluir}"
 							update=":mensagem :formListagem:tabela">
@@ -91,9 +75,8 @@
 							actionListener="#{produtoEmpresaBean.editar}">
 							<f:setPropertyActionListener value="#{produto}"
 								target="#{produtoEmpresaBean.selectedProduto}" />
-								<f:attribute name="produtoSelecionado" value="#{produto}" />
+							<f:attribute name="produtoSelecionado" value="#{produto}" />
 						</p:commandButton>
-
 					</p:column>
 				</p:dataTable>
 
@@ -118,12 +101,14 @@
 					<f:facet name="header">
 						<p:graphicImage id="foto" value="#{imagemBean.foto}" width="300"
 							height="200">
-							<f:param name="caminho" value="#{produtoEmpresaBean.selectedProduto.caminho}" />
+							<f:param name="caminho"
+								value="#{produtoEmpresaBean.selectedProduto.caminho}" />
 						</p:graphicImage>
 					</f:facet>
 
 					<h:outputText value="Descrição" />
-					<h:outputText value="#{produtoEmpresaBean.selectedProduto.descricao}" />
+					<h:outputText
+						value="#{produtoEmpresaBean.selectedProduto.descricao}" />
 
 					<h:outputText value="Desc. Reduzida" />
 					<h:outputText
@@ -133,7 +118,8 @@
 					<h:outputText value="#{produtoEmpresaBean.selectedProduto.ean}" />
 
 					<h:outputText value="Embalagem" />
-					<h:outputText value="#{produtoEmpresaBean.selectedProduto.embalagem}" />
+					<h:outputText
+						value="#{produtoEmpresaBean.selectedProduto.embalagem}" />
 				</p:panelGrid>
 			</p:outputPanel>
 		</p:dialog>
@@ -167,8 +153,8 @@
 
 								<p:outputLabel value="Unidade de Medida:" for="un" />
 								<p:inputText id="un" maxlength="10" title="Unidade de Medida"
-									value="#{produtoEmpresaBean.produto.unidadeMedida}" required="true"
-									requiredMessage="Informe a Unidade de Medida"
+									value="#{produtoEmpresaBean.produto.unidadeMedida}"
+									required="true" requiredMessage="Informe a Unidade de Medida"
 									style="width:350px;" />
 
 								<p:outputLabel value="Preço:" for="preco" />
@@ -177,7 +163,7 @@
 									requiredMessage="Informe o Valor" style="width:350px;" />
 
 								<p:outputLabel value="Ean:" for="ean" />
-								<p:inputText id="ean" maxlength="50" title="Ean"
+								<p:inputText id="ean" maxlength="10" title="Ean"
 									value="#{produtoEmpresaBean.produto.ean}" required="true"
 									requiredMessage="Informe o Ean" style="width:350px;" />
 							</h:panelGrid>
@@ -189,8 +175,8 @@
 							<h:panelGrid id="painel2" columns="1">
 								<p:outputLabel value="Categoria:" for="categ" />
 								<p:selectOneMenu id="categ" filter="true"
-									value="#{produtoEmpresaBean.produto.categoria}" style="width:325px;"
-									autoWidth="325" required="true"
+									value="#{produtoEmpresaBean.produto.categoria}"
+									style="width:325px;" autoWidth="325" required="true"
 									requiredMessage="Informe a Categoria"
 									converter="omnifaces.SelectItemsConverter">
 									<f:selectItem noSelectionOption="true"
@@ -199,22 +185,24 @@
 										var="categoria" itemValue="#{categoria}"
 										itemLabel="#{categoria.categoria}" />
 								</p:selectOneMenu>
-								
+
 								<p:outputLabel value="Sub-Categoria:" for="subcateg" />
 								<p:inputText id="subcateg" maxlength="50" title="Sub-Categoria"
-									value="#{produtoEmpresaBean.produto.subCategoria}" required="true"
-									requiredMessage="Informe a Sub-Categoria" style="width:350px;" />
+									value="#{produtoEmpresaBean.produto.subCategoria}"
+									required="true" requiredMessage="Informe a Sub-Categoria"
+									style="width:350px;" />
 
 								<p:outputLabel value="Empresa:" for="empresa" />
 								<p:selectOneMenu id="empresa" filter="true"
-									value="#{produtoEmpresaBean.produto.empresa}" style="width:325px;"
-									autoWidth="325" required="true"
+									value="#{produtoEmpresaBean.produto.empresa}"
+									style="width:325px;" autoWidth="325" required="true"
 									requiredMessage="Informe a Empresa"
 									converter="omnifaces.SelectItemsConverter">
 									<f:selectItem noSelectionOption="true"
 										itemLabel="Selecione uma empresa..." />
-									<f:selectItems value="#{produtoEmpresaBean.empresas}" var="empresa"
-										itemValue="#{empresa}" itemLabel="#{empresa.nomeFantasia}" />
+									<f:selectItems value="#{produtoEmpresaBean.empresas}"
+										var="empresa" itemValue="#{empresa}"
+										itemLabel="#{empresa.nomeFantasia}" />
 								</p:selectOneMenu>
 							</h:panelGrid>
 						</p:panel>
@@ -232,7 +220,8 @@
 								<p:outputLabel for="foto" />
 								<p:graphicImage id="foto" value="#{imagemBean.foto}" width="400"
 									height="300">
-									<f:param name="caminho" value="#{produtoEmpresaBean.produto.caminho}" />
+									<f:param name="caminho"
+										value="#{produtoEmpresaBean.produto.caminho}" />
 								</p:graphicImage>
 							</h:panelGrid>
 							<p:separator />

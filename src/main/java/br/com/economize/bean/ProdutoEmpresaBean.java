@@ -40,7 +40,7 @@ import br.com.economize.domain.Usuario;
 public class ProdutoEmpresaBean implements Serializable {
 
 	String pathDefault = "C:/Users/Mateus/workspace-economize/Imagens/";
-	
+
 	HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 	Usuario usuario = (Usuario) sessao.getAttribute("USUARIO_SESSAO");
 
@@ -111,7 +111,7 @@ public class ProdutoEmpresaBean implements Serializable {
 	public void listar() {
 		try {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
-			produtos = produtoDAO.buscaProdutoPorEmpresa(empresas);
+			produtos = produtoDAO.listar();
 
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar listar os produtos");
@@ -153,7 +153,7 @@ public class ProdutoEmpresaBean implements Serializable {
 			Path destino = Paths.get(pathDefault + produtoRetorno.getCodigo() + ".png");
 			Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
 
-			produtos = produtoDAO.listar("descricao");
+			produtos = produtoDAO.listar();
 
 			if (success) {
 				RequestContext.getCurrentInstance().execute("PF('dialogo').hide()");
