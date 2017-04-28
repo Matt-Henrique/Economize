@@ -38,9 +38,11 @@
 						<h:outputText value="#{produto.descricao}" />
 					</p:column>
 
-					<p:column headerText="Preço" sortBy="#{produto.preco}"
-						filterBy="#{produto.preco}" filterMatchMode="contains" width="130">
-						<h:outputText value="#{produto.preco}" />
+					<p:column headerText="Categoria"
+						sortBy="#{produto.categoria.categoria}"
+						filterBy="#{produto.categoria.categoria}"
+						filterMatchMode="contains" width="130">
+						<h:outputText value="#{produto.categoria.categoria}" />
 					</p:column>
 
 					<p:column headerText="Ean" sortBy="#{produto.ean}"
@@ -71,7 +73,7 @@
 						</p:commandButton>
 
 						<p:commandButton update="view" oncomplete="PF('view').show()"
-							icon="ui-icon-search" title="Visualizar"
+							icon="fa fa-camera-retro" title="Visualizar"
 							actionListener="#{produtoEmpresaBean.editar}">
 							<f:setPropertyActionListener value="#{produto}"
 								target="#{produtoEmpresaBean.selectedProduto}" />
@@ -98,26 +100,36 @@
 				<p:panelGrid columns="2"
 					rendered="#{not empty produtoEmpresaBean.selectedProduto}"
 					columnClasses="label,value">
+
 					<f:facet name="header">
-						<p:graphicImage id="foto" value="#{imagemBean.foto}" width="300"
-							height="200">
-							<f:param name="caminho"
-								value="#{produtoEmpresaBean.selectedProduto.caminho}" />
-						</p:graphicImage>
+						<div style="background-color: white">
+							<p:graphicImage id="foto" value="#{imagemBean.foto}">
+								<f:param name="caminho"
+									value="#{produtoEmpresaBean.selectedProduto.caminho}" />
+							</p:graphicImage>
+						</div>
 					</f:facet>
 
-					<h:outputText value="Descrição" />
-					<h:outputText
-						value="#{produtoEmpresaBean.selectedProduto.descricao}" />
-
-					<h:outputText value="Desc. Reduzida" />
+					<h:outputText value="Descrição" style="font-weight: bold" />
 					<h:outputText
 						value="#{produtoEmpresaBean.selectedProduto.descricaoReduzida}" />
 
-					<h:outputText value="Ean" />
+					<h:outputText value="Ean" style="font-weight: bold" />
 					<h:outputText value="#{produtoEmpresaBean.selectedProduto.ean}" />
 
-					<h:outputText value="Embalagem" />
+					<h:outputText value="Categoria" style="font-weight: bold" />
+					<h:outputText
+						value="#{produtoEmpresaBean.selectedProduto.categoria.categoria}" />
+
+					<h:outputText value="Sub-categoria" style="font-weight: bold" />
+					<h:outputText
+						value="#{produtoEmpresaBean.selectedProduto.subCategoria}" />
+
+					<h:outputText value="Unid. Medida" style="font-weight: bold" />
+					<h:outputText
+						value="#{produtoEmpresaBean.selectedProduto.unidadeMedida}" />
+
+					<h:outputText value="Embalagem" style="font-weight: bold" />
 					<h:outputText
 						value="#{produtoEmpresaBean.selectedProduto.embalagem}" />
 				</p:panelGrid>
