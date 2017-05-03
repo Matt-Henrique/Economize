@@ -27,10 +27,8 @@ import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import br.com.economize.dao.CategoriaDAO;
-import br.com.economize.dao.EmpresaDAO;
 import br.com.economize.dao.ProdutoDAO;
 import br.com.economize.domain.Categoria;
-import br.com.economize.domain.Empresa;
 import br.com.economize.domain.Produto;
 import br.com.economize.domain.Usuario;
 
@@ -47,10 +45,8 @@ public class ProdutoEmpresaBean implements Serializable {
 	private Produto produto;
 	private Produto selectedProduto;
 
-	private List<Produto> produtos;
-
-	EmpresaDAO empresaDAO = new EmpresaDAO();
-	private List<Empresa> empresas = empresaDAO.buscaEmpresaPorUsuario(usuario.getCodigo());
+	ProdutoDAO produtoDAO = new ProdutoDAO();
+	private List<Produto> produtos = produtoDAO.buscaProdutoPorEmpresa(usuario.getEmpresa().getCodigo());
 
 	CategoriaDAO categoriaDAO = new CategoriaDAO();
 	private List<Categoria> categorias = categoriaDAO.listar("categoria");
@@ -83,14 +79,6 @@ public class ProdutoEmpresaBean implements Serializable {
 		this.produtos = produtos;
 	}
 
-	public List<Empresa> getEmpresas() {
-		return empresas;
-	}
-
-	public void setEmpresas(List<Empresa> empresas) {
-		this.empresas = empresas;
-	}
-
 	public List<Categoria> getCategorias() {
 		return categorias;
 	}
@@ -111,7 +99,7 @@ public class ProdutoEmpresaBean implements Serializable {
 	public void listar() {
 		try {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
-			produtos = produtoDAO.listar();
+			produtos = produtoDAO.buscaProdutoPorEmpresa(usuario.getEmpresa().getCodigo());
 
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar listar os produtos");
@@ -147,13 +135,14 @@ public class ProdutoEmpresaBean implements Serializable {
 			}
 
 			ProdutoDAO produtoDAO = new ProdutoDAO();
+			produto.getEmpresa().setCodigo(usuario.getEmpresa().getCodigo());
 			Produto produtoRetorno = produtoDAO.merge(produto);
 
 			Path origem = Paths.get(produto.getCaminho());
 			Path destino = Paths.get(pathDefault + produtoRetorno.getCodigo() + ".png");
 			Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
 
-			produtos = produtoDAO.listar();
+			produtos = produtoDAO.buscaProdutoPorEmpresa(usuario.getEmpresa().getCodigo());
 
 			if (success) {
 				RequestContext.getCurrentInstance().execute("PF('dialogo').hide()");
@@ -188,7 +177,7 @@ public class ProdutoEmpresaBean implements Serializable {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtoDAO.excluir(produto);
 
-			produtos = produtoDAO.listar();
+			produtos = produtoDAO.buscaProdutoPorEmpresa(usuario.getEmpresa().getCodigo());
 
 			Messages.addGlobalInfo("Produto excluído com sucesso");
 		} catch (RuntimeException erro) {

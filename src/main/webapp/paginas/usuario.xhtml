@@ -131,6 +131,19 @@
 										itemDisabled="#{!autenticacaoBean.controladorAcesso.permissaoAdministrador}" />
 									<f:selectItem itemLabel="Usuário" itemValue="USUARIO" />
 								</p:selectOneRadio>
+
+								<p:outputLabel value="Empresa:" for="empresa" />
+								<p:selectOneMenu id="empresa" filter="true"
+									value="#{usuarioBean.usuario.empresa}"
+									style="width:325px;" autoWidth="325" required="true"
+									requiredMessage="Informe a Empresa"
+									converter="omnifaces.SelectItemsConverter">
+									<f:selectItem noSelectionOption="true"
+										itemLabel="Selecione uma empresa..." />
+									<f:selectItems value="#{usuarioBean.empresas}"
+										var="empresa" itemValue="#{empresa}"
+										itemLabel="#{empresa.nomeFantasia}" />
+								</p:selectOneMenu>
 							</h:panelGrid>
 						</p:panel>
 					</p:tab>

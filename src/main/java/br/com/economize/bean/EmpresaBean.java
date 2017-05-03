@@ -60,7 +60,7 @@ public class EmpresaBean implements Serializable {
 	public void listar() {
 		try {
 			EmpresaDAO empresaDAO = new EmpresaDAO();
-			empresas = empresaDAO.buscaEmpresaPorUsuario(usuario.getCodigo());
+			empresas = empresaDAO.listar();
 
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar listar as empresas");
@@ -86,10 +86,9 @@ public class EmpresaBean implements Serializable {
 		try {
 
 			EmpresaDAO empresaDAO = new EmpresaDAO();
-			empresa.setUsuario(usuario);
 			empresaDAO.merge(empresa);
 
-			empresas = empresaDAO.buscaEmpresaPorUsuario(usuario.getCodigo());
+			empresas = empresaDAO.listar("nomeFantasia");
 
 			if (success) {
 				RequestContext.getCurrentInstance().execute("PF('dialogo').hide()");

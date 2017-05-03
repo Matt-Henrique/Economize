@@ -14,7 +14,9 @@ import org.omnifaces.util.Messages;
 import org.primefaces.component.wizard.Wizard;
 import org.primefaces.context.RequestContext;
 
+import br.com.economize.dao.EmpresaDAO;
 import br.com.economize.dao.UsuarioDAO;
+import br.com.economize.domain.Empresa;
 import br.com.economize.domain.Usuario;
 import br.com.economize.enumerate.Ativo;
 
@@ -27,6 +29,9 @@ public class UsuarioBean implements Serializable {
 	private List<Usuario> usuarios;
 	private List<Usuario> filteredAdms;
 
+	EmpresaDAO empresaDAO = new EmpresaDAO();
+	private List<Empresa> empresas = empresaDAO.listar();
+	
 	private boolean success;
 
 	public Usuario getUsuario() {
@@ -51,6 +56,14 @@ public class UsuarioBean implements Serializable {
 
 	public void setFilteredAdms(List<Usuario> filteredAdms) {
 		this.filteredAdms = filteredAdms;
+	}
+	
+	public List<Empresa> getEmpresas() {
+		return empresas;
+	}
+	
+	public void setEmpresas(List<Empresa> empresas) {
+		this.empresas = empresas;
 	}
 
 	@PostConstruct

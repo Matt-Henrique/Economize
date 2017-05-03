@@ -4,16 +4,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @SuppressWarnings("serial")
 @Entity
 public class Empresa extends GenericDomain {
-
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Usuario usuario;
 
 	@Column(length = 50, nullable = false)
 	private String nomeFantasia;
@@ -42,14 +37,6 @@ public class Empresa extends GenericDomain {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	private Endereco endereco;
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
 
 	public String getNomeFantasia() {
 		return nomeFantasia;

@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 import br.com.economize.enumerate.Ativo;
@@ -12,6 +14,10 @@ import br.com.economize.enumerate.TipoUsuario;
 @SuppressWarnings("serial")
 @Entity
 public class Usuario extends GenericDomain {
+	
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Empresa empresa;
 
 	@Column(length = 15, nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -41,6 +47,14 @@ public class Usuario extends GenericDomain {
 
 	@Transient
 	private String senhaSemCriptografia;
+	
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+	
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 
 	public TipoUsuario getTipoUsuario() {
 		return tipoUsuario;

@@ -10,7 +10,6 @@ import org.hibernate.criterion.Restrictions;
 
 import br.com.economize.domain.Usuario;
 import br.com.economize.enumerate.Ativo;
-import br.com.economize.enumerate.TipoUsuario;
 import br.com.economize.util.HibernateUtil;
 
 public class UsuarioDAO extends GenericDAO<Usuario> {
@@ -35,25 +34,6 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 		}
 	}
 
-	// EsqueciSenhaBean
-	public Usuario verificarUsuario(String cpf, String email, TipoUsuario tipo) {
-		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
-
-		try {
-			Criteria consulta = sessao.createCriteria(Usuario.class);
-			consulta.add(Restrictions.eq("cpf", cpf));
-			consulta.add(Restrictions.eq("email", email));
-
-			Usuario resultado = (Usuario) consulta.uniqueResult();
-
-			return resultado;
-		} catch (RuntimeException erro) {
-			throw erro;
-		} finally {
-			sessao.close();
-		}
-	}
-
 	// UsuarioPerfilBean
 	@SuppressWarnings("unchecked")
 	public List<Usuario> buscaUsuarioLogado(Long codigo) {
@@ -61,6 +41,24 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 
 		try {
 			Query query = sessao.createQuery("from Usuario where codigo = :codigo ").setParameter("codigo", codigo);
+			List<Usuario> resultado = query.list();
+
+			return resultado;
+
+		} catch (RuntimeException erro) {
+			throw erro;
+		} finally {
+			sessao.close();
+		}
+	}
+
+	// UsuarioEmpresaBean
+	@SuppressWarnings("unchecked")
+	public List<Usuario> buscaUsuarioPorEmpresa(Long codigo) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+
+		try {
+			Query query = sessao.createQuery("from Usuario where empresa_codigo = :codigo ").setParameter("codigo", codigo);
 			List<Usuario> resultado = query.list();
 
 			return resultado;

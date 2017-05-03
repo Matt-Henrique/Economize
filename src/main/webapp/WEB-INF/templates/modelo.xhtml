@@ -26,7 +26,7 @@
 			<p:submenu label="Produto" icon="fa fa-shopping-cart">
 				<p:menuitem value="Lista de Produtos" url="produto-empresa.xhtml"
 					icon="fa fa-shopping-basket"
-					rendered="#{autenticacaoBean.controladorAcesso.permissaoGerente}" />
+					rendered="#{autenticacaoBean.controladorAcesso.permissaoUsuario}" />
 				<p:menuitem value="Lista de Categorias" url="categoria.xhtml"
 					icon="fa fa-book"
 					rendered="#{autenticacaoBean.controladorAcesso.permissaoAdministrador}" />
@@ -42,7 +42,7 @@
 				</p:submenu>
 			</p:submenu>
 			<p:submenu label="Empresas" icon="fa fa-building"
-				rendered="#{autenticacaoBean.controladorAcesso.permissaoGerente}">
+				rendered="#{autenticacaoBean.controladorAcesso.permissaoAdministrador}">
 				<p:menuitem value="Empresa" url="empresa.xhtml"
 					icon="fa fa-building" />
 			</p:submenu>

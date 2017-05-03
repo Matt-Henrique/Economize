@@ -10,29 +10,45 @@
 		<h:form id="frmListagem">
 			<p:panel header="Campanha - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-					paginator="true" value="#{campanhaBean.campanhas}" var="campanha"
-					rows="8" paginatorPosition="top">
+					paginator="true" rows="20" value="#{campanhaEmpresaBean.campanhas}"
+					var="campanha" paginatorPosition="bottom" rowHover="true"
+					rowExpandMode="true" widgetVar="campanhaTable"
+					multiViewState="true" reflow="true">
 					<f:facet name="header">
-						<p:commandButton value="Novo"
-							actionListener="#{campanhaBean.novo}"
-							oncomplete="PF('dialogo').show();"
-							update=":mensagem :frmCadastro:painel">
-							<f:actionListener
-								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-						</p:commandButton>
+						<div align="left">
+							<p:commandButton value="Novo" icon="fa fa-file-o"
+								oncomplete="PF('dialogo').show();"
+								actionListener="#{campanhaEmpresaBean.novo}"
+								update="formCadastro:painel">
+								<f:actionListener
+									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							</p:commandButton>
+						</div>
+						<div align="right">
+							<p:outputLabel value="Pesquisar Campos: " />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('campanhaTable').filter()"
+								placeholder="Faça uma busca" style="width: 150px" />
+						</div>
 					</f:facet>
-					<p:column headerText="Título Campanha">
+
+					<p:column headerText="Título Campanha" sortBy="#{campanha.titulo}"
+						filterBy="#{campanha.titulo}" filterMatchMode="contains">
 						<h:outputText value="#{campanha.titulo}" />
 					</p:column>
+
 					<p:column headerText="Data Inicial">
 						<h:outputText value="#{campanha.dataInicial}" />
 					</p:column>
+					
 					<p:column headerText="Data Final">
 						<h:outputText value="#{campanha.dataFinal}" />
 					</p:column>
+					
 					<p:column headerText="Vigência">
 						<h:outputText value="#{campanha.vigencia}" />
 					</p:column>
+					
 					<p:column headerText="Adicionar Itens">
 						<p:commandButton icon="ui-icon-folder-open"
 							title="Adicionar Itens"
