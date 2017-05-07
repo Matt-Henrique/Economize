@@ -34,21 +34,18 @@
 
 			<p:submenu label="Campanha" icon="fa fa-tags"
 				rendered="#{autenticacaoBean.controladorAcesso.permissaoGerente}">
-				<p:submenu label="Lista de Campanhas" icon="fa fa-calendar">
-					<p:menuitem value="Campanha Comum" url="campanha.xhtml"
-						icon="fa fa-calendar-plus-o" />
-					<p:menuitem value="Campanha Premium" url="premium.xhtml"
-						icon="fa fa-calendar-plus-o" />
-				</p:submenu>
+				<p:menuitem value="Lista de Campanhas" url="campanha.xhtml"
+					icon="fa fa-calendar" />
 			</p:submenu>
-			<p:submenu label="Empresas" icon="fa fa-building"
+			<p:submenu label="Empresa" icon="fa fa-building"
 				rendered="#{autenticacaoBean.controladorAcesso.permissaoAdministrador}">
-				<p:menuitem value="Empresa" url="empresa.xhtml"
+				<p:menuitem value="Lista de Empresas" url="empresa.xhtml"
 					icon="fa fa-building" />
 			</p:submenu>
-			<p:submenu label="Usuarios" icon="fa fa-group"
+			<p:submenu label="Usuário" icon="fa fa-group"
 				rendered="#{autenticacaoBean.controladorAcesso.permissaoGerente}">
-				<p:menuitem value="Usuário" url="usuario.xhtml" icon="fa fa-user" />
+				<p:menuitem value="Lista de Usuários" url="usuario.xhtml"
+					icon="fa fa-user" />
 			</p:submenu>
 			<p:submenu label="Ajuda" icon="fa fa-flag">
 				<p:menuitem value="Sobre" icon="fa fa-info" />

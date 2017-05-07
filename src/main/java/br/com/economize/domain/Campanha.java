@@ -1,13 +1,22 @@
 package br.com.economize.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import br.com.economize.enumerate.TipoCampanha;
 
 @SuppressWarnings("serial")
 @Entity
@@ -20,8 +29,9 @@ public class Campanha extends GenericDomain {
 	@Column(length = 80, nullable = false)
 	private String titulo;
 
-	@Column(length = 15, nullable = true)
-	private String tipo;
+	@Column(length = 15, nullable = false)
+	@Enumerated(EnumType.STRING)
+	private TipoCampanha tipo;
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -32,7 +42,10 @@ public class Campanha extends GenericDomain {
 	private Date dataFinal;
 
 	@Column(length = 3, nullable = false)
-	private Integer vigencia;
+	private Short vigencia;
+
+	@OneToMany(mappedBy = "campanha", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private List<ItemCampanha> itensCampanha = new ArrayList<>();
 
 	public Empresa getEmpresa() {
 		return empresa;
@@ -50,11 +63,11 @@ public class Campanha extends GenericDomain {
 		this.titulo = titulo;
 	}
 
-	public String getTipo() {
+	public TipoCampanha getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(TipoCampanha tipo) {
 		this.tipo = tipo;
 	}
 
@@ -74,12 +87,20 @@ public class Campanha extends GenericDomain {
 		this.dataFinal = dataFinal;
 	}
 
-	public Integer getVigencia() {
+	public Short getVigencia() {
 		return vigencia;
 	}
 
-	public void setVigencia(Integer vigencia) {
+	public void setVigencia(Short vigencia) {
 		this.vigencia = vigencia;
+	}
+
+	public List<ItemCampanha> getItensCampanha() {
+		return itensCampanha;
+	}
+
+	public void setItensCampanha(List<ItemCampanha> itensCampanha) {
+		this.itensCampanha = itensCampanha;
 	}
 
 	public Campanha() {

@@ -148,3 +148,11 @@ and
 	margin-left: 5px;
 }
 /* ====================== End ======================= */
+
+/* ============== Listagem de Usuários ============== */
+@media only screen and ( min-width : 641px) and ( max-width : 975px) {
+	.coluna-opcoes {
+		width: 90px !important;
+	}
+}
+/* ================================================== */

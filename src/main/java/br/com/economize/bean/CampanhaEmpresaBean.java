@@ -81,6 +81,7 @@ public class CampanhaEmpresaBean implements Serializable {
 	public void salvar() {
 		try {
 			CampanhaDAO campanhaDAO = new CampanhaDAO();
+			campanha.getEmpresa().setCodigo(usuario.getEmpresa().getCodigo());
 			campanhaDAO.merge(campanha);
 			
 			campanhas = campanhaDAO.buscaCampanhaPorEmpresa(usuario.getEmpresa().getCodigo());
@@ -96,7 +97,7 @@ public class CampanhaEmpresaBean implements Serializable {
 		try {
 			sessao.setAttribute("CAMPANHA_SESSAO", evento.getComponent().getAttributes().get("campanhaSelecionada"));
 
-			Faces.redirect("./paginas/itemCampanha.xhtml");
+			Faces.redirect("./paginas/itens-campanha.xhtml");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao carregar a tela de itens da campanha");
 			erro.printStackTrace();
