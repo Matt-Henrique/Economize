@@ -34,11 +34,11 @@ public class Campanha extends GenericDomain {
 	private TipoCampanha tipo;
 
 	@Column(nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date dataInicial;
 
 	@Column(nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date dataFinal;
 
 	@Column(length = 3, nullable = false)

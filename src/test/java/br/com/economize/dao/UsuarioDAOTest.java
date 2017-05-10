@@ -19,14 +19,14 @@ public class UsuarioDAOTest {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		Usuario usuario = new Usuario();
 		
-		SimpleHash hash = new SimpleHash("md5", "mateus09h");
+		SimpleHash hash = new SimpleHash("md5", "mateus");
 		
 		usuario.setEmpresa(empresa);
 		usuario.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
 		usuario.setNome("Mateus Henrique");
-		usuario.setCpf("466.174.588-42");
-		usuario.setFone1("(19) 3863-8362");
-		usuario.setFone2("(19) 99488-0457");
+		usuario.setCpf("111.111.111-11");
+		usuario.setFone1("(19) 1111-1111");
+		usuario.setFone2("(19) 11111-1111");
 		usuario.setEmail("mateus09h@gmail.com");
 		usuario.setAtivo(Ativo.SIM);
 		usuario.setSenha(hash.toHex());

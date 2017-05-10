@@ -2,6 +2,7 @@ package br.com.economize.bean;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -82,6 +83,12 @@ public class CampanhaEmpresaBean implements Serializable {
 		try {
 			CampanhaDAO campanhaDAO = new CampanhaDAO();
 			campanha.getEmpresa().setCodigo(usuario.getEmpresa().getCodigo());
+			
+			Date dataInicial = campanha.getDataInicial();
+			Date dataFinal = campanha.getDataFinal();
+			
+			calculaDiasEntreDatas(dataInicial, dataFinal);
+			
 			campanhaDAO.merge(campanha);
 			
 			campanhas = campanhaDAO.buscaCampanhaPorEmpresa(usuario.getEmpresa().getCodigo());
@@ -102,5 +109,10 @@ public class CampanhaEmpresaBean implements Serializable {
 			Messages.addFlashGlobalError("Ocorreu um erro ao carregar a tela de itens da campanha");
 			erro.printStackTrace();
 		}
+	}
+	
+	public Short calculaDiasEntreDatas(Date dataInicial, Date dataFinal) {
+		
+		return null;
 	}
 }

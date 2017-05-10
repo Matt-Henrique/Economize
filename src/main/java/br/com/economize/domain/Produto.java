@@ -36,7 +36,7 @@ public class Produto extends GenericDomain {
 	private String embalagem;
 
 	@Column(length = 15, nullable = false)
-	private Integer ean;
+	private String ean;
 
 	@Column(nullable = false, precision = 7, scale = 2)
 	private BigDecimal preco;
@@ -100,11 +100,11 @@ public class Produto extends GenericDomain {
 		this.embalagem = embalagem;
 	}
 
-	public Integer getEan() {
+	public String getEan() {
 		return ean;
 	}
-
-	public void setEan(Integer ean) {
+	
+	public void setEan(String ean) {
 		this.ean = ean;
 	}
 
