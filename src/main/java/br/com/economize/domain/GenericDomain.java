@@ -1,5 +1,10 @@
 package br.com.economize.domain;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.io.Serializable;
 
 import javax.persistence.GeneratedValue;

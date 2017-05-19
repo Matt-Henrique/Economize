@@ -1,5 +1,10 @@
 package br.com.economize.geocode;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;

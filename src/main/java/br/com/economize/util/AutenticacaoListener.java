@@ -1,5 +1,10 @@
 package br.com.economize.util;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;

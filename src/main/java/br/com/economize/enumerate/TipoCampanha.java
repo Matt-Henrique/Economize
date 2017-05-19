@@ -1,5 +1,10 @@
 package br.com.economize.enumerate;
 
+/**
+ * @author Mateus Henrique Tofanello
+ * 
+ */
+
 public enum TipoCampanha {
 
 	COMUM, PREMIUM;

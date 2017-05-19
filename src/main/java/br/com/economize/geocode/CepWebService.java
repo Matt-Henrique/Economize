@@ -1,5 +1,10 @@
 package br.com.economize.geocode;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.net.URL;
 import java.util.Iterator;
 

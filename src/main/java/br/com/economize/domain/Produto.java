@@ -1,6 +1,9 @@
 package br.com.economize.domain;
 
-import java.math.BigDecimal;
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,9 +40,6 @@ public class Produto extends GenericDomain {
 
 	@Column(length = 15, nullable = false)
 	private String ean;
-
-	@Column(nullable = false, precision = 7, scale = 2)
-	private BigDecimal preco;
 
 	@Transient
 	private String caminho;
@@ -103,17 +103,9 @@ public class Produto extends GenericDomain {
 	public String getEan() {
 		return ean;
 	}
-	
+
 	public void setEan(String ean) {
 		this.ean = ean;
-	}
-
-	public BigDecimal getPreco() {
-		return preco;
-	}
-
-	public void setPreco(BigDecimal preco) {
-		this.preco = preco;
 	}
 
 	public String getCaminho() {

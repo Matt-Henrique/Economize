@@ -1,5 +1,10 @@
 package br.com.economize.domain;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;

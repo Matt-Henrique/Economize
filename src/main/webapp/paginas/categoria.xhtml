@@ -26,6 +26,7 @@
 									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 							</p:commandButton>
 						</div>
+						
 						<div align="right">
 							<p:outputLabel value="Pesquisar Campos: " />
 							<p:inputText id="globalFilter"
@@ -34,8 +35,7 @@
 						</div>
 					</f:facet>
 
-					<p:column headerText="Categoria" sortBy="#{categoria.categoria}"
-						>
+					<p:column headerText="Categoria" sortBy="#{categoria.categoria}">
 						<h:outputText value="#{categoria.categoria}" />
 					</p:column>
 

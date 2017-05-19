@@ -127,19 +127,12 @@ body {
 	opacity: .5;
 }
 
-@media
-only
-screen
-and
-(max-width:
-640px)
-{
-/* Visibilidade da ordenação crescente & decrescente */
-.ui-datatable-reflow .ui-reflow-label, .ui-datatable-reflow .ui-reflow-dropdown
-	{
-	display: none;
-}
-
+@media only screen and (max-width: 640px) {
+	/* Visibilidade da ordenação crescente & decrescente */
+	.ui-datatable-reflow .ui-reflow-label, .ui-datatable-reflow .ui-reflow-dropdown
+		{
+		display: none;
+	}
 }
 
 /* ================= SelectOneRadio ================= */
@@ -147,7 +140,7 @@ and
 	margin-top: -5px;
 	margin-left: 5px;
 }
-/* ====================== End ======================= */
+/* ================================================== */
 
 /* ============== Listagem de Usuários ============== */
 @media only screen and ( min-width : 641px) and ( max-width : 975px) {

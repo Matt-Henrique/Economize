@@ -1,5 +1,10 @@
 package br.com.economize.dao;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.util.List;
 
 import org.hibernate.Query;

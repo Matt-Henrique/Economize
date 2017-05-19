@@ -1,5 +1,10 @@
 package br.com.economize.domain;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -20,7 +25,10 @@ public class ItemCampanha extends GenericDomain {
 	private Produto produto;
 
 	@Column(nullable = false, precision = 10, scale = 2)
-	private BigDecimal valorOferta = BigDecimal.ZERO;
+	private BigDecimal precoOferta = BigDecimal.ZERO;
+
+	@Column(nullable = true, precision = 10, scale = 2)
+	private BigDecimal precoNormal = BigDecimal.ZERO;
 
 	public Campanha getCampanha() {
 		return campanha;
@@ -38,14 +46,22 @@ public class ItemCampanha extends GenericDomain {
 		this.produto = produto;
 	}
 
-	public BigDecimal getValorOferta() {
-		return valorOferta;
+	public BigDecimal getPrecoOferta() {
+		return precoOferta;
 	}
 
-	public void setValorOferta(BigDecimal valorOferta) {
-		this.valorOferta = valorOferta;
+	public void setPrecoOferta(BigDecimal precoOferta) {
+		this.precoOferta = precoOferta;
 	}
-	
+
+	public BigDecimal getPrecoNormal() {
+		return precoNormal;
+	}
+
+	public void setPrecoNormal(BigDecimal precoNormal) {
+		this.precoNormal = precoNormal;
+	}
+
 	public ItemCampanha() {
 		campanha = new Campanha();
 	}

@@ -33,7 +33,7 @@
 					</p:column>
 
 					<p:column headerText="Preço">
-						<h:outputText value="#{itemCampanha.valorOferta}" />
+						<h:outputText value="#{itemCampanha.precoOferta}" />
 					</p:column>
 
 				</p:dataTable>
@@ -47,7 +47,7 @@
 				<h:panelGrid id="painel" columns="2">
 					<p:outputLabel value="Preço" for="preco" />
 					<p:inputText id="preco"
-						value="#{itensCampanhaBean.itemCampanha.valorOferta}">
+						value="#{itensCampanhaBean.itemCampanha.precoOferta}">
 					</p:inputText>
 
 					<p:outputLabel for="produto" value="produto" />

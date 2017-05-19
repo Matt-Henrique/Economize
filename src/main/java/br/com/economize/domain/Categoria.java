@@ -1,5 +1,10 @@
 package br.com.economize.domain;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -9,7 +14,7 @@ public class Categoria extends GenericDomain {
 
 	@Column(length = 25, nullable = false)
 	private String categoria;
-	
+
 	public String getCategoria() {
 		return categoria;
 	}

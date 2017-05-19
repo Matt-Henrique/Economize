@@ -49,11 +49,6 @@
 						<h:outputText value="#{produto.unidadeMedida}" />
 					</p:column>
 
-					<p:column headerText="Preço" sortBy="#{produto.preco}"
-						filterBy="#{produto.preco}" filterMatchMode="contains">
-						<h:outputText value="#{produto.preco}" />
-					</p:column>
-
 					<p:column headerText="Ean" sortBy="#{produto.ean}"
 						filterBy="#{produto.ean}" filterMatchMode="contains">
 						<h:outputText value="#{produto.ean}" />
@@ -91,7 +86,7 @@
 							actionListener="#{produtoBean.editar}">
 							<f:setPropertyActionListener value="#{produto}"
 								target="#{produtoBean.selectedProduto}" />
-								<f:attribute name="produtoSelecionado" value="#{produto}" />
+							<f:attribute name="produtoSelecionado" value="#{produto}" />
 						</p:commandButton>
 
 					</p:column>
@@ -118,7 +113,8 @@
 					<f:facet name="header">
 						<p:graphicImage id="foto" value="#{imagemBean.foto}" width="300"
 							height="200">
-							<f:param name="caminho" value="#{produtoBean.selectedProduto.caminho}" />
+							<f:param name="caminho"
+								value="#{produtoBean.selectedProduto.caminho}" />
 						</p:graphicImage>
 					</f:facet>
 
@@ -171,11 +167,6 @@
 									requiredMessage="Informe a Unidade de Medida"
 									style="width:350px;" />
 
-								<p:outputLabel value="Preço:" for="preco" />
-								<p:inputText id="preco" maxlength="7" title="Preço"
-									value="#{produtoBean.produto.preco}" required="true"
-									requiredMessage="Informe o Valor" style="width:350px;" />
-
 								<p:outputLabel value="Ean:" for="ean" />
 								<p:inputText id="ean" maxlength="50" title="Ean"
 									value="#{produtoBean.produto.ean}" required="true"
@@ -199,7 +190,7 @@
 										var="categoria" itemValue="#{categoria}"
 										itemLabel="#{categoria.categoria}" />
 								</p:selectOneMenu>
-								
+
 								<p:outputLabel value="Sub-Categoria:" for="subcateg" />
 								<p:inputText id="subcateg" maxlength="50" title="Sub-Categoria"
 									value="#{produtoBean.produto.subCategoria}" required="true"

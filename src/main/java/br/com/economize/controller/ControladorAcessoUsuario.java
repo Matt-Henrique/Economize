@@ -1,5 +1,10 @@
 package br.com.economize.controller;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

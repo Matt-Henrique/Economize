@@ -1,5 +1,10 @@
 package br.com.economize.domain;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.Column;

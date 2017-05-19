@@ -1,5 +1,10 @@
 package br.com.economize.domain;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,7 +19,7 @@ import br.com.economize.enumerate.TipoUsuario;
 @SuppressWarnings("serial")
 @Entity
 public class Usuario extends GenericDomain {
-	
+
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Empresa empresa;
@@ -47,11 +52,11 @@ public class Usuario extends GenericDomain {
 
 	@Transient
 	private String senhaSemCriptografia;
-	
+
 	public Empresa getEmpresa() {
 		return empresa;
 	}
-	
+
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}

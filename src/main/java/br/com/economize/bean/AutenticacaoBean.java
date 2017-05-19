@@ -1,5 +1,10 @@
 package br.com.economize.bean;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;

@@ -1,5 +1,10 @@
 package br.com.economize.bean;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -31,7 +36,7 @@ public class UsuarioBean implements Serializable {
 
 	EmpresaDAO empresaDAO = new EmpresaDAO();
 	private List<Empresa> empresas = empresaDAO.listar();
-	
+
 	private boolean success;
 
 	public Usuario getUsuario() {
@@ -57,11 +62,11 @@ public class UsuarioBean implements Serializable {
 	public void setFilteredAdms(List<Usuario> filteredAdms) {
 		this.filteredAdms = filteredAdms;
 	}
-	
+
 	public List<Empresa> getEmpresas() {
 		return empresas;
 	}
-	
+
 	public void setEmpresas(List<Empresa> empresas) {
 		this.empresas = empresas;
 	}

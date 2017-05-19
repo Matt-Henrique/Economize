@@ -1,5 +1,10 @@
 package br.com.economize.dao;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.util.List;
 
 import org.hibernate.Query;
@@ -16,8 +21,8 @@ public class ItensCampanhaDAO extends GenericDAO<ItemCampanha> {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 
 		try {
-			Query query = sessao.createQuery("from ItemCampanha where campanha_codigo = :codigo ").setParameter("codigo",
-					codigo);
+			Query query = sessao.createQuery("from ItemCampanha where campanha_codigo = :codigo ")
+					.setParameter("codigo", codigo);
 			List<ItemCampanha> resultado = query.list();
 
 			return resultado;

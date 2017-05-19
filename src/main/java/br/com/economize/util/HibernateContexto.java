@@ -1,5 +1,10 @@
 package br.com.economize.util;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 

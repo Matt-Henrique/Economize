@@ -1,5 +1,10 @@
 package br.com.economize.bean;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;

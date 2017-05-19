@@ -40,14 +40,15 @@
 						filterBy="#{usuario.email}" filterMatchMode="contains">
 						<h:outputText value="#{usuario.email}" />
 					</p:column>
-					
+
 					<p:column headerText="Tipo" sortBy="#{usuario.tipoUsuario}"
 						filterBy="#{usuario.tipoUsuario}" filterMatchMode="contains"
 						width="140">
 						<h:outputText value="#{usuario.tipoUsuario.toString()}" />
 					</p:column>
 
-					<p:column headerText="Opções" sortBy="#{usuario.ativo}" width="176" styleClass="coluna-opcoes">
+					<p:column headerText="Opções" sortBy="#{usuario.ativo}" width="176"
+						styleClass="coluna-opcoes">
 						<p:commandButton icon="fa fa-trash-o" title="Excluir"
 							actionListener="#{usuarioBean.excluir}"
 							update=":mensagem :formListagem:tabela">
@@ -134,15 +135,14 @@
 
 								<p:outputLabel value="Empresa:" for="empresa" />
 								<p:selectOneMenu id="empresa" filter="true"
-									value="#{usuarioBean.usuario.empresa}"
-									style="width:325px;" autoWidth="325" required="true"
+									value="#{usuarioBean.usuario.empresa}" style="width:325px;"
+									autoWidth="325" required="true"
 									requiredMessage="Informe a Empresa"
 									converter="omnifaces.SelectItemsConverter">
 									<f:selectItem noSelectionOption="true"
 										itemLabel="Selecione uma empresa..." />
-									<f:selectItems value="#{usuarioBean.empresas}"
-										var="empresa" itemValue="#{empresa}"
-										itemLabel="#{empresa.nomeFantasia}" />
+									<f:selectItems value="#{usuarioBean.empresas}" var="empresa"
+										itemValue="#{empresa}" itemLabel="#{empresa.nomeFantasia}" />
 								</p:selectOneMenu>
 							</h:panelGrid>
 						</p:panel>
@@ -218,7 +218,7 @@
 			responsive="true" showEffect="clip" hideEffect="fold">
 			<h:form id="formEdicao">
 				<p:tab id="tabAdm" title="Usuário">
-					<p:panel header="DadUsuáriotrador">
+					<p:panel header="Dados do Usuário">
 						<h:panelGrid columns="1" id="usu">
 							<p:outputLabel value="Nome Completo:" for="nome" />
 							<p:inputText id="nome" value="#{usuarioBean.usuario.nome}"

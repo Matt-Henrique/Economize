@@ -1,5 +1,10 @@
 package br.com.economize.domain;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

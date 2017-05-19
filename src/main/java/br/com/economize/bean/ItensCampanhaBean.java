@@ -1,5 +1,10 @@
 package br.com.economize.bean;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -35,19 +40,19 @@ public class ItensCampanhaBean implements Serializable {
 	public ItemCampanha getItemCampanha() {
 		return itemCampanha;
 	}
-	
+
 	public void setItemCampanha(ItemCampanha itemCampanha) {
 		this.itemCampanha = itemCampanha;
 	}
-	
+
 	public List<ItemCampanha> getItensCampanha() {
 		return itensCampanha;
 	}
-	
+
 	public void setItensCampanha(List<ItemCampanha> itensCampanha) {
 		this.itensCampanha = itensCampanha;
 	}
-	
+
 	public List<Produto> getProdutos() {
 		return produtos;
 	}
@@ -70,7 +75,7 @@ public class ItensCampanhaBean implements Serializable {
 			erro.printStackTrace();
 		}
 	}
-	
+
 	public void novo() {
 		try {
 			itemCampanha = new ItemCampanha();
@@ -84,7 +89,6 @@ public class ItensCampanhaBean implements Serializable {
 		}
 	}
 
-
 	public void salvar() {
 		try {
 			ItensCampanhaDAO itensCampanhaDAO = new ItensCampanhaDAO();
@@ -93,7 +97,7 @@ public class ItensCampanhaBean implements Serializable {
 
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtos = produtoDAO.buscaProdutoPorEmpresa(usuario.getEmpresa().getCodigo());
-			
+
 			itensCampanha = itensCampanhaDAO.buscaItemPorCampanha(campanha);
 
 			Messages.addGlobalInfo("Campanha salva com sucesso");

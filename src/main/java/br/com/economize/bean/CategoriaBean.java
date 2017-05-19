@@ -1,5 +1,10 @@
 package br.com.economize.bean;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -55,7 +60,7 @@ public class CategoriaBean implements Serializable {
 	public List<Categoria> getFilteredCategorias() {
 		return filteredCategorias;
 	}
-	
+
 	public void setFilteredCategorias(List<Categoria> filteredCategorias) {
 		this.filteredCategorias = filteredCategorias;
 	}

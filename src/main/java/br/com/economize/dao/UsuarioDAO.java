@@ -1,5 +1,10 @@
 package br.com.economize.dao;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.util.List;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -58,7 +63,8 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 
 		try {
-			Query query = sessao.createQuery("from Usuario where empresa_codigo = :codigo ").setParameter("codigo", codigo);
+			Query query = sessao.createQuery("from Usuario where empresa_codigo = :codigo ").setParameter("codigo",
+					codigo);
 			List<Usuario> resultado = query.list();
 
 			return resultado;

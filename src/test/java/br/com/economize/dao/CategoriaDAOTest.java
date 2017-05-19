@@ -1,5 +1,10 @@
 package br.com.economize.dao;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import org.junit.Test;
 
 import br.com.economize.domain.Categoria;

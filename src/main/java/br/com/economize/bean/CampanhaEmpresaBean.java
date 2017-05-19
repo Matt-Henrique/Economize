@@ -1,5 +1,10 @@
 package br.com.economize.bean;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
@@ -11,7 +16,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
-
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
@@ -23,7 +27,7 @@ import br.com.economize.domain.Usuario;
 @ManagedBean
 @ViewScoped
 public class CampanhaEmpresaBean implements Serializable {
-	
+
 	HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 	Usuario usuario = (Usuario) sessao.getAttribute("USUARIO_SESSAO");
 
@@ -32,31 +36,31 @@ public class CampanhaEmpresaBean implements Serializable {
 
 	CampanhaDAO campanhaDAO = new CampanhaDAO();
 	private List<Campanha> campanhas = campanhaDAO.buscaCampanhaPorEmpresa(usuario.getEmpresa().getCodigo());
-		
+
 	public Campanha getCampanha() {
 		return campanha;
 	}
-	
+
 	public void setCampanha(Campanha campanha) {
 		this.campanha = campanha;
 	}
-	
+
 	public Campanha getSelectedCampanha() {
 		return selectedCampanha;
 	}
-	
+
 	public void setSelectedCampanha(Campanha selectedCampanha) {
 		this.selectedCampanha = selectedCampanha;
 	}
-	
+
 	public List<Campanha> getCampanhas() {
 		return campanhas;
 	}
-	
+
 	public void setCampanhas(List<Campanha> campanhas) {
 		this.campanhas = campanhas;
 	}
-	
+
 	@PostConstruct
 	public void listar() {
 		try {
@@ -68,7 +72,7 @@ public class CampanhaEmpresaBean implements Serializable {
 			erro.printStackTrace();
 		}
 	}
-	
+
 	public void novo() {
 		try {
 			campanha = new Campanha();
@@ -83,14 +87,23 @@ public class CampanhaEmpresaBean implements Serializable {
 		try {
 			CampanhaDAO campanhaDAO = new CampanhaDAO();
 			campanha.getEmpresa().setCodigo(usuario.getEmpresa().getCodigo());
-			
+
 			Date dataInicial = campanha.getDataInicial();
 			Date dataFinal = campanha.getDataFinal();
-			
-			calculaDiasEntreDatas(dataInicial, dataFinal);
-			
+
+			Long segDataInicial = dataInicial.getTime();
+			Long segDataFinal = dataFinal.getTime();
+
+			Long diferencaSegundos = segDataFinal - segDataInicial;
+
+			Long diferencaDias = diferencaSegundos / (1000 * 60 * 60 * 24);
+
+			Short vigencia = diferencaDias.shortValue();
+
+			campanha.setVigencia(vigencia);
+
 			campanhaDAO.merge(campanha);
-			
+
 			campanhas = campanhaDAO.buscaCampanhaPorEmpresa(usuario.getEmpresa().getCodigo());
 
 			Messages.addGlobalInfo("Campanha salva com sucesso");
@@ -99,7 +112,7 @@ public class CampanhaEmpresaBean implements Serializable {
 			erro.printStackTrace();
 		}
 	}
-	
+
 	public void adcionarItem(ActionEvent evento) throws IOException {
 		try {
 			sessao.setAttribute("CAMPANHA_SESSAO", evento.getComponent().getAttributes().get("campanhaSelecionada"));
@@ -110,9 +123,22 @@ public class CampanhaEmpresaBean implements Serializable {
 			erro.printStackTrace();
 		}
 	}
-	
+
 	public Short calculaDiasEntreDatas(Date dataInicial, Date dataFinal) {
-		
-		return null;
+
+		Long segDataInicial = dataInicial.getTime();
+		Long segDataFinal = dataFinal.getTime();
+
+		Long diferencaSegundos = segDataFinal - segDataInicial;
+
+		Long diferencaDias = diferencaSegundos / (1000 * 60 * 60 * 24);
+
+		System.out.println(String.format("Diferença em Dias: ", diferencaDias));
+
+		Short vigencia = diferencaDias.shortValue();
+
+		System.out.println(vigencia);
+
+		return vigencia;
 	}
 }

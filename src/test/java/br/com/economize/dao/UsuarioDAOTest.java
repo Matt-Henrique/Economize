@@ -1,5 +1,10 @@
 package br.com.economize.dao;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.junit.Test;
 
@@ -12,15 +17,15 @@ public class UsuarioDAOTest {
 
 	@Test
 	public void salvarUsuario() {
-		
+
 		EmpresaDAO empresaDAO = new EmpresaDAO();
 		Empresa empresa = empresaDAO.buscar(1L);
 
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		Usuario usuario = new Usuario();
-		
+
 		SimpleHash hash = new SimpleHash("md5", "mateus");
-		
+
 		usuario.setEmpresa(empresa);
 		usuario.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
 		usuario.setNome("Mateus Henrique");
@@ -30,7 +35,7 @@ public class UsuarioDAOTest {
 		usuario.setEmail("mateus09h@gmail.com");
 		usuario.setAtivo(Ativo.SIM);
 		usuario.setSenha(hash.toHex());
-		
+
 		usuarioDAO.merge(usuario);
 	}
 }

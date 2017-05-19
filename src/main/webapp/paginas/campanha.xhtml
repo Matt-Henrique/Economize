@@ -51,7 +51,7 @@
 
 					<p:column headerText="Adicionar Itens">
 						<p:commandButton icon="ui-icon-folder-open"
-							title="Adicionar Itens"
+							title="Listar Itens da Campanha"
 							actionListener="#{campanhaEmpresaBean.adcionarItem}"
 							update=":mensagem">
 							<f:attribute name="campanhaSelecionada"
@@ -78,10 +78,6 @@
 					<p:calendar id="dataFinal" locale="pt_BR"
 						value="#{campanhaEmpresaBean.campanha.dataFinal}"
 						pattern="dd/MM/yyyy" mask="true" />
-
-					<p:outputLabel for="vigencia" value="Vigência:" />
-					<p:inputText id="vigencia"
-						value="#{campanhaEmpresaBean.campanha.vigencia}" />
 
 					<p:outputLabel value="Tipo de Campanha:" for="tipo" />
 					<p:selectOneRadio id="tipo" required="true"

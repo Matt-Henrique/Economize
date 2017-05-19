@@ -1,5 +1,10 @@
 package br.com.economize.bean;
 
+/**
+* @author Mateus Henrique Tofanello
+* 
+*/
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -30,11 +35,11 @@ public class ImagemBean {
 	}
 
 	public StreamedContent getFoto() throws IOException {
-		if(caminho == null || caminho.isEmpty()){
+		if (caminho == null || caminho.isEmpty()) {
 			Path path = Paths.get("C:/Users/Mateus/workspace-economize/Imagens/branco.png");
 			InputStream stream = Files.newInputStream(path);
 			foto = new DefaultStreamedContent(stream);
-		}else{
+		} else {
 			Path path = Paths.get(caminho);
 			InputStream stream = Files.newInputStream(path);
 			foto = new DefaultStreamedContent(stream);
