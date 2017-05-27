@@ -21,6 +21,7 @@ import org.primefaces.model.StreamedContent;
 @ManagedBean
 @RequestScoped
 public class ImagemBean {
+
 	@ManagedProperty("#{param.caminho}")
 	private String caminho;
 

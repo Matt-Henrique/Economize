@@ -24,16 +24,12 @@ public class Usuario extends GenericDomain {
 	@JoinColumn(nullable = false)
 	private Empresa empresa;
 
-	@Column(length = 15, nullable = false)
-	@Enumerated(EnumType.STRING)
-	private TipoUsuario tipoUsuario;
-
 	@Column(length = 100, nullable = false)
 	private String nome;
 
-	@Column(length = 20, nullable = false)
+	@Column(length = 15, nullable = false)
 	private String cpf;
-
+	
 	@Column(length = 15, nullable = false)
 	private String fone1;
 
@@ -42,6 +38,10 @@ public class Usuario extends GenericDomain {
 
 	@Column(length = 100, nullable = false, unique = true)
 	private String email;
+
+	@Column(length = 15, nullable = false)
+	@Enumerated(EnumType.STRING)
+	private TipoUsuario tipoUsuario;
 
 	@Column(length = 3, nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -59,14 +59,6 @@ public class Usuario extends GenericDomain {
 
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
-	}
-
-	public TipoUsuario getTipoUsuario() {
-		return tipoUsuario;
-	}
-
-	public void setTipoUsuario(TipoUsuario tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
 	}
 
 	public String getNome() {
@@ -107,6 +99,14 @@ public class Usuario extends GenericDomain {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public TipoUsuario getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(TipoUsuario tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
 	}
 
 	public Ativo getAtivo() {

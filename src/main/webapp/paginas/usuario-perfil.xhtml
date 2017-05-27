@@ -7,47 +7,44 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	<ui:define name="conteudo">
-		<p:panel>
+		<p:panel header="Meu Perfil">
 			<div align="center">
 				<h:form id="formListagem">
-					<p:carousel numVisible="1" effect="easeInStrong" responsive="true"
-						headerText="Meu Perfil" autoPlayInterval="10000"
-						style="margin-bottom:0">
-						<h:panelGrid columns="2" width="100%">
-							<p:repeat id="pessoal" var="usuario"
-								value="#{usuarioPerfilBean.usuarios}">
-								<p:panel header="Dados Pessoais">
-									<p:panelGrid columns="2" layout="grid">
-										<h:outputText value="Nome Completo:" style="font-weight: bold" />
-										<h:outputText value="#{usuario.nome}" />
 
-										<h:outputText value="CPF:" style="font-weight: bold" />
-										<h:outputText value="#{usuario.cpf}" />
+					<h:panelGrid columns="2" width="100%">
+						<p:repeat id="pessoal" var="usuario"
+							value="#{usuarioPerfilBean.usuarios}">
+							<p:panel header="Dados Pessoais">
+								<p:panelGrid columns="2" layout="grid">
+									<h:outputText value="Nome Completo:" style="font-weight: bold" />
+									<h:outputText value="#{usuario.nome}" />
 
-										<h:outputText value="Setor:" style="font-weight: bold" />
-										<h:outputText value="#{usuario.tipoUsuario.toString()}" />
-									</p:panelGrid>
-								</p:panel>
-							</p:repeat>
-						</h:panelGrid>
-						<h:panelGrid columns="2" width="100%">
-							<p:repeat id="contato" var="usuario"
-								value="#{usuarioPerfilBean.usuarios}">
-								<p:panel header="Contatos">
-									<p:panelGrid columns="2" cellpadding="10" layout="grid">
-										<h:outputText value="Telefone:" style="font-weight: bold" />
-										<h:outputText value="#{usuario.fone1}" />
+									<h:outputText value="CPF:" style="font-weight: bold" />
+									<h:outputText value="#{usuario.cpf}" />
 
-										<h:outputText value="Telefone:" style="font-weight: bold" />
-										<h:outputText value="#{usuario.fone2}" />
+									<h:outputText value="Setor:" style="font-weight: bold" />
+									<h:outputText value="#{usuario.tipoUsuario.toString()}" />
+								</p:panelGrid>
+							</p:panel>
+						</p:repeat>
+					</h:panelGrid>
+					<h:panelGrid columns="2" width="100%">
+						<p:repeat id="contato" var="usuario"
+							value="#{usuarioPerfilBean.usuarios}">
+							<p:panel header="Contatos">
+								<p:panelGrid columns="2" cellpadding="10" layout="grid">
+									<h:outputText value="Telefone:" style="font-weight: bold" />
+									<h:outputText value="#{usuario.fone1}" />
 
-										<h:outputText value="E-mail:" style="font-weight: bold" />
-										<h:outputText value="#{usuario.email}" />
-									</p:panelGrid>
-								</p:panel>
-							</p:repeat>
-						</h:panelGrid>
-					</p:carousel>
+									<h:outputText value="Telefone:" style="font-weight: bold" />
+									<h:outputText value="#{usuario.fone2}" />
+
+									<h:outputText value="E-mail:" style="font-weight: bold" />
+									<h:outputText value="#{usuario.email}" />
+								</p:panelGrid>
+							</p:panel>
+						</p:repeat>
+					</h:panelGrid>
 					<p:repeat id="dados" var="usuario"
 						value="#{usuarioPerfilBean.usuarios}">
 						<h:panelGrid columns="2" width="100%">

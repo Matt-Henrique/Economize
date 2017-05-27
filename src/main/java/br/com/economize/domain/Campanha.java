@@ -5,19 +5,14 @@ package br.com.economize.domain;
 * 
 */
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -31,7 +26,7 @@ public class Campanha extends GenericDomain {
 	@JoinColumn(nullable = false)
 	private Empresa empresa;
 
-	@Column(length = 80, nullable = false)
+	@Column(length = 50, nullable = false)
 	private String titulo;
 
 	@Column(length = 15, nullable = false)
@@ -48,9 +43,6 @@ public class Campanha extends GenericDomain {
 
 	@Column(length = 3, nullable = false)
 	private Short vigencia;
-
-	@OneToMany(mappedBy = "campanha", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	private List<ItemCampanha> itensCampanha = new ArrayList<>();
 
 	public Empresa getEmpresa() {
 		return empresa;
@@ -98,14 +90,6 @@ public class Campanha extends GenericDomain {
 
 	public void setVigencia(Short vigencia) {
 		this.vigencia = vigencia;
-	}
-
-	public List<ItemCampanha> getItensCampanha() {
-		return itensCampanha;
-	}
-
-	public void setItensCampanha(List<ItemCampanha> itensCampanha) {
-		this.itensCampanha = itensCampanha;
 	}
 
 	public Campanha() {

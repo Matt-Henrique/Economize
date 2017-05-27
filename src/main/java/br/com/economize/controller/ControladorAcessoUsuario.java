@@ -69,7 +69,10 @@ public class ControladorAcessoUsuario {
 		return permissaoUsuario;
 	}
 
-	// Configura o acesso do usuário logado às funcionalidades da aplicação.
+	/**
+	 * Configura o acesso do usuário logado às funcionalidades da aplicação
+	 * 
+	 */
 	public void configurarAcesso() {
 		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		Usuario usuarioSessao = (Usuario) sessao.getAttribute("USUARIO_SESSAO");

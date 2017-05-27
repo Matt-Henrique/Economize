@@ -33,7 +33,7 @@ public class Empresa extends GenericDomain {
 	@Column(length = 15, nullable = true)
 	private String fone2;
 
-	@Column(length = 15, nullable = false)
+	@Column(length = 15, nullable = true)
 	private String fone3;
 
 	@Column(length = 100, nullable = false)

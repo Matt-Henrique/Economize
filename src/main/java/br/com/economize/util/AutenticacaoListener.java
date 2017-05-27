@@ -44,14 +44,9 @@ public class AutenticacaoListener implements PhaseListener {
 				Faces.navigate("/paginas/autenticacao.xhtml");
 				return;
 			}
-			System.out.println("Verificando se o usuário está na sessão");
+
 			HttpSession sessao = (HttpSession) context.getExternalContext().getSession(false);
 			Usuario usuario = (Usuario) sessao.getAttribute("USUARIO_SESSAO");
-
-			if (usuario != null)
-				System.out.println(usuario.getNome());
-			else
-				System.out.println("Usuario não está logado");
 
 			if (usuario == null) {
 				Faces.navigate("/paginas/autenticacao.xhtml");

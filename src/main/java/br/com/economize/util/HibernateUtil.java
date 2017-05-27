@@ -16,6 +16,7 @@ import org.hibernate.jdbc.ReturningWork;
 import org.hibernate.service.ServiceRegistry;
 
 public class HibernateUtil {
+
 	private static SessionFactory fabricaDeSessoes = criarFabricaDeSessoes();
 
 	public static SessionFactory getFabricaDeSessoes() {

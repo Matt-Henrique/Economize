@@ -7,7 +7,6 @@ package br.com.economize.bean;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -88,19 +87,12 @@ public class CampanhaEmpresaBean implements Serializable {
 			CampanhaDAO campanhaDAO = new CampanhaDAO();
 			campanha.getEmpresa().setCodigo(usuario.getEmpresa().getCodigo());
 
-			Date dataInicial = campanha.getDataInicial();
-			Date dataFinal = campanha.getDataFinal();
+			Long dataInicial = campanha.getDataInicial().getTime();
+			Long dataFinal = campanha.getDataFinal().getTime();
 
-			Long segDataInicial = dataInicial.getTime();
-			Long segDataFinal = dataFinal.getTime();
+			Long vigencia = (dataFinal - dataInicial) / (1000 * 60 * 60 * 24);
 
-			Long diferencaSegundos = segDataFinal - segDataInicial;
-
-			Long diferencaDias = diferencaSegundos / (1000 * 60 * 60 * 24);
-
-			Short vigencia = diferencaDias.shortValue();
-
-			campanha.setVigencia(vigencia);
+			campanha.setVigencia(vigencia.shortValue());
 
 			campanhaDAO.merge(campanha);
 
@@ -122,23 +114,5 @@ public class CampanhaEmpresaBean implements Serializable {
 			Messages.addFlashGlobalError("Ocorreu um erro ao carregar a tela de itens da campanha");
 			erro.printStackTrace();
 		}
-	}
-
-	public Short calculaDiasEntreDatas(Date dataInicial, Date dataFinal) {
-
-		Long segDataInicial = dataInicial.getTime();
-		Long segDataFinal = dataFinal.getTime();
-
-		Long diferencaSegundos = segDataFinal - segDataInicial;
-
-		Long diferencaDias = diferencaSegundos / (1000 * 60 * 60 * 24);
-
-		System.out.println(String.format("Diferença em Dias: ", diferencaDias));
-
-		Short vigencia = diferencaDias.shortValue();
-
-		System.out.println(vigencia);
-
-		return vigencia;
 	}
 }

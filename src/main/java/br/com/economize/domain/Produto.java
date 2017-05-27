@@ -26,7 +26,7 @@ public class Produto extends GenericDomain {
 	@Column(length = 20, nullable = false)
 	private String subCategoria;
 
-	@Column(length = 100, nullable = false)
+	@Column(length = 150, nullable = false)
 	private String descricao;
 
 	@Column(length = 30, nullable = false)

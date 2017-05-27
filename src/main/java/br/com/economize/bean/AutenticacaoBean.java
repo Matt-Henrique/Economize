@@ -7,8 +7,6 @@ package br.com.economize.bean;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -77,11 +75,6 @@ public class AutenticacaoBean implements Serializable {
 
 			controladorAcesso.configurarAcesso();
 
-			String ultimoAcesso = (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"))
-					.format(new Date(sessao.getCreationTime()));
-
-			System.out.println("Sessão iniciada: " + sessao.getId() + ". Acesso em: " + ultimoAcesso);
-
 			Faces.redirect("./paginas/inicio.xhtml");
 		} catch (IOException erro) {
 			erro.printStackTrace();
@@ -90,9 +83,6 @@ public class AutenticacaoBean implements Serializable {
 	}
 
 	public void logout() throws IOException {
-		String ultimoAcesso = (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"))
-				.format(new Date(sessao.getLastAccessedTime()));
-		System.out.println("Sessão " + sessao.getId() + " expirada. Último Acesso em: " + ultimoAcesso);
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 		ec.invalidateSession();
 		ec.redirect(ec.getRequestContextPath() + "/paginas/autenticacao.xhtml?faces-redirect=true");

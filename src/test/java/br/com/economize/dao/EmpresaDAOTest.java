@@ -21,9 +21,9 @@ public class EmpresaDAOTest {
 		empresa.setNomeFantasia("WeSix");
 		empresa.setCnpj("75.285.488/0001-40");
 		empresa.setIe("475.370.945.772");
-		empresa.setFone1("(19) 3863-3863");
-		empresa.setFone2("(19) 99999-9999");
-		empresa.setFone3("(19) 99999-0000");
+		empresa.setFone1("(19) 9999-1111");
+		empresa.setFone2("(19) 99999-2222");
+		empresa.setFone3("(19) 99999-3333");
 		empresa.setEmail("wesix@mail.com");
 
 		empresa.getEndereco().setCep("13970-080");
@@ -33,7 +33,6 @@ public class EmpresaDAOTest {
 		empresa.getEndereco().setTipoLogradouro("Avenida");
 		empresa.getEndereco().setLogradouro("dos Italianos");
 		empresa.getEndereco().setNumero(100);
-		empresa.getEndereco().setComplemento("Ap. 123");
 
 		empresaDAO.merge(empresa);
 	}
