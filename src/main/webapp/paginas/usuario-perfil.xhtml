@@ -8,47 +8,33 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	<ui:define name="conteudo">
 		<p:panel header="Meu Perfil">
-			<div align="center">
-				<h:form id="formListagem">
-
-					<h:panelGrid columns="2" width="100%">
-						<p:repeat id="pessoal" var="usuario"
-							value="#{usuarioPerfilBean.usuarios}">
-							<p:panel header="Dados Pessoais">
-								<p:panelGrid columns="2" layout="grid">
-									<h:outputText value="Nome Completo:" style="font-weight: bold" />
-									<h:outputText value="#{usuario.nome}" />
-
-									<h:outputText value="CPF:" style="font-weight: bold" />
-									<h:outputText value="#{usuario.cpf}" />
-
-									<h:outputText value="Setor:" style="font-weight: bold" />
-									<h:outputText value="#{usuario.tipoUsuario.toString()}" />
-								</p:panelGrid>
-							</p:panel>
-						</p:repeat>
-					</h:panelGrid>
-					<h:panelGrid columns="2" width="100%">
-						<p:repeat id="contato" var="usuario"
-							value="#{usuarioPerfilBean.usuarios}">
-							<p:panel header="Contatos">
-								<p:panelGrid columns="2" cellpadding="10" layout="grid">
-									<h:outputText value="Telefone:" style="font-weight: bold" />
-									<h:outputText value="#{usuario.fone1}" />
-
-									<h:outputText value="Telefone:" style="font-weight: bold" />
-									<h:outputText value="#{usuario.fone2}" />
-
-									<h:outputText value="E-mail:" style="font-weight: bold" />
-									<h:outputText value="#{usuario.email}" />
-								</p:panelGrid>
-							</p:panel>
-						</p:repeat>
-					</h:panelGrid>
-					<p:repeat id="dados" var="usuario"
+			<h:form id="formListagem">
+				<h:panelGrid columns="2" width="100%">
+					<p:repeat id="pessoal" var="usuario"
 						value="#{usuarioPerfilBean.usuarios}">
-						<h:panelGrid columns="2" width="100%">
-							<p:panel header="Editar Perfil">
+						<p:panel header="Dados Pessoais">
+							<p:panelGrid columns="2" layout="grid">
+								<h:outputText value="Nome Completo:" style="font-weight: bold" />
+								<h:outputText value="#{usuario.nome}" />
+
+								<h:outputText value="Tipo de Usuário:" style="font-weight: bold" />
+								<h:outputText value="#{usuario.tipoUsuario.toString()}" />
+
+								<h:outputText value="E-mail:" style="font-weight: bold" />
+								<h:outputText value="#{usuario.email}" />
+
+								<h:outputText value="Fone 1:" style="font-weight: bold" />
+								<h:outputText value="#{usuario.fone1}" />
+
+								<h:outputText value="Fone 2:" style="font-weight: bold" />
+								<h:outputText value="#{usuario.fone2}" />
+
+								<h:outputText value="CPF:" style="font-weight: bold" />
+								<h:outputText value="#{usuario.cpf}" />
+							</p:panelGrid>
+						</p:panel>
+						<p:panel header="Opções">
+							<p:panelGrid columns="2" layout="grid">
 								<p:commandButton value="Editar Dados" icon="fa fa-pencil"
 									title="Editar" actionListener="#{usuarioPerfilBean.editar}"
 									update=":mensagem :formCadastro"
@@ -65,11 +51,11 @@
 										type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 									<f:attribute name="usuarioSelecionado" value="#{usuario}" />
 								</p:commandButton>
-							</p:panel>
-						</h:panelGrid>
+							</p:panelGrid>
+						</p:panel>
 					</p:repeat>
-				</h:form>
-			</div>
+				</h:panelGrid>
+			</h:form>
 
 			<p:dialog header="Meus Dados" widgetVar="usuario" maximizable="true"
 				resizable="false" modal="true" height="550" draggable="false"
@@ -98,14 +84,14 @@
 						<p:panel header="Contatos do Administrador">
 							<h:panelGrid columns="1" id="contato">
 								<p:outputLabel value="Telefone:" for="fone" />
-								<p:inputMask mask="(99) 9999-9999" id="fone"
+								<p:inputMask mask="(99) 9?99999999" id="fone"
 									style="width:350px;" title="Telefone"
 									value="#{usuarioPerfilBean.usuario.fone1}" required="true"
 									requiredMessage="Informe o Telefone"
 									placeholder="(DDD) Telefone" />
 
 								<p:outputLabel value="Telefone (Opcional):" for="fone2" />
-								<p:inputMask mask="(99) 9999-9999" id="fone2"
+								<p:inputMask mask="(99) 9?9999999" id="fone2"
 									style="width:350px;" title="Telefone"
 									value="#{usuarioPerfilBean.usuario.fone2}"
 									placeholder="(DDD) Telefone" />

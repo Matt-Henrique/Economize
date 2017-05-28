@@ -86,7 +86,7 @@ public class CampanhaEmpresaBean implements Serializable {
 		try {
 			CampanhaDAO campanhaDAO = new CampanhaDAO();
 			campanha.getEmpresa().setCodigo(usuario.getEmpresa().getCodigo());
-
+			
 			Long dataInicial = campanha.getDataInicial().getTime();
 			Long dataFinal = campanha.getDataFinal().getTime();
 

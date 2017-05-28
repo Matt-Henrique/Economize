@@ -32,25 +32,39 @@
 						</div>
 					</f:facet>
 
-					<p:column headerText="Título Campanha" sortBy="#{campanha.titulo}"
+					<p:column headerText="Título" sortBy="#{campanha.titulo}"
 						filterBy="#{campanha.titulo}" filterMatchMode="contains">
 						<h:outputText value="#{campanha.titulo}" />
 					</p:column>
 
-					<p:column headerText="Data Inicial">
-						<h:outputText value="#{campanha.dataInicial}" />
+					<p:column headerText="Data Inicial"
+						sortBy="#{campanha.dataInicial}"
+						filterBy="#{campanha.dataInicialFormatada}" width="115">
+						<h:outputText value="#{campanha.dataInicial}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Data Final">
-						<h:outputText value="#{campanha.dataFinal}" />
+					<p:column headerText="Data Final" sortBy="#{campanha.dataFinal}"
+						filterBy="#{campanha.dataFinalFormatada}" width="110">
+						<h:outputText value="#{campanha.dataFinal}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Vigência">
+					<p:column headerText="Vigência" sortBy="#{campanha.vigencia}"
+						filterBy="#{campanha.vigencia}" width="110"
+						styleClass="col-vigencia">
 						<h:outputText value="#{campanha.vigencia}" />
 					</p:column>
 
-					<p:column headerText="Adicionar Itens">
-						<p:commandButton icon="ui-icon-folder-open"
+					<p:column headerText="Tipo" sortBy="#{campanha.tipo}"
+						filterBy="#{campanha.tipo}" width="110" styleClass="col-tipo">
+						<h:outputText value="#{campanha.tipo.toString()}" />
+					</p:column>
+
+					<p:column headerText="Itens" width="45">
+						<p:commandButton icon="fa fa-shopping-cart"
 							title="Listar Itens da Campanha"
 							actionListener="#{campanhaEmpresaBean.adcionarItem}"
 							update=":mensagem">
@@ -65,19 +79,19 @@
 			draggable="false" resizable="false" modal="true" closable="false">
 			<h:form id="formCadastro">
 				<h:panelGrid columns="2" id="painel">
-					<p:outputLabel value="Título.:" for="titulo" />
+					<p:outputLabel value="Título:" for="titulo" />
 					<p:inputText id="titulo"
-						value="#{campanhaEmpresaBean.campanha.titulo}" />
+						value="#{campanhaEmpresaBean.campanha.titulo}" maxlength="30" />
 
-					<p:outputLabel for="dataInicial" value="Data Inicial.:" />
+					<p:outputLabel for="dataInicial" value="Data Inicial:" />
 					<p:calendar id="dataInicial" locale="pt_BR"
 						value="#{campanhaEmpresaBean.campanha.dataInicial}"
-						pattern="dd/MM/yyyy" mask="true" />
+						pattern="dd/MM/yyyy" mask="true" yearRange="c-1:c+1" />
 
-					<p:outputLabel for="dataFinal" value="Data Final.:" />
+					<p:outputLabel for="dataFinal" value="Data Final:" />
 					<p:calendar id="dataFinal" locale="pt_BR"
 						value="#{campanhaEmpresaBean.campanha.dataFinal}"
-						pattern="dd/MM/yyyy" mask="true" />
+						pattern="dd/MM/yyyy" mask="true" yearRange="c-1:c+1" />
 
 					<p:outputLabel value="Tipo de Campanha:" for="tipo" />
 					<p:selectOneRadio id="tipo" required="true"

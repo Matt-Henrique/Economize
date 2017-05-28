@@ -1,5 +1,7 @@
 package br.com.economize.domain;
 
+import java.text.SimpleDateFormat;
+
 /**
 * @author Mateus Henrique Tofanello
 * 
@@ -71,6 +73,11 @@ public class Campanha extends GenericDomain {
 	public Date getDataInicial() {
 		return dataInicial;
 	}
+	
+	public String getDataInicialFormatada() {
+	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	    return sdf.format(this.getDataInicial());
+	}
 
 	public void setDataInicial(Date dataInicial) {
 		this.dataInicial = dataInicial;
@@ -78,6 +85,11 @@ public class Campanha extends GenericDomain {
 
 	public Date getDataFinal() {
 		return dataFinal;
+	}
+	
+	public String getDataFinalFormatada() {
+	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	    return sdf.format(this.getDataFinal());
 	}
 
 	public void setDataFinal(Date dataFinal) {
