@@ -77,7 +77,8 @@ public class EmpresaBean implements Serializable {
 		try {
 			empresa = new Empresa();
 
-			Wizard wizard = (Wizard) FacesContext.getCurrentInstance().getViewRoot().findComponent("formCadastro:w");
+			Wizard wizard = (Wizard) FacesContext.getCurrentInstance().getViewRoot()
+					.findComponent("formCadastro:empresaWiz");
 			wizard.setStep("tabEmp1");
 			RequestContext.getCurrentInstance().update("formCadastro");
 
@@ -127,6 +128,11 @@ public class EmpresaBean implements Serializable {
 	public void editar(ActionEvent evento) {
 		try {
 			empresa = (Empresa) evento.getComponent().getAttributes().get("empresaSelecionada");
+			
+			Wizard wizard = (Wizard) FacesContext.getCurrentInstance().getViewRoot()
+					.findComponent("formCadastro:empresaWiz");
+			wizard.setStep("tabEmp1");
+			RequestContext.getCurrentInstance().update("formCadastro");
 
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar selecionar uma empresa");

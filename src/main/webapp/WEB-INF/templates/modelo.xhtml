@@ -37,7 +37,7 @@
 
 			<p:submenu label="Campanha" icon="fa fa-tags"
 				rendered="#{autenticacaoBean.controladorAcesso.permissaoGerente}">
-				<p:menuitem value="Lista de Campanhas" url="campanha.xhtml"
+				<p:menuitem value="Lista de Campanhas" url="campanha-empresa.xhtml"
 					icon="fa fa-calendar" />
 			</p:submenu>
 			<p:submenu label="Empresa" icon="fa fa-building"
@@ -46,7 +46,7 @@
 					icon="fa fa-building" />
 			</p:submenu>
 			<p:submenu label="Usuário" icon="fa fa-group"
-				rendered="#{autenticacaoBean.controladorAcesso.permissaoGerente}">
+				rendered="#{autenticacaoBean.controladorAcesso.permissaoAdministrador}">
 				<p:menuitem value="Lista de Usuários" url="usuario.xhtml"
 					icon="fa fa-user" />
 			</p:submenu>

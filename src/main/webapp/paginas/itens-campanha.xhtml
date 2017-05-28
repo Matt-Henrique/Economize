@@ -14,14 +14,17 @@
 					var="itemCampanha" rows="10" paginatorPosition="top">
 
 					<f:facet name="header">
-						<p:button outcome="campanha" value="Voltar" />
-						<p:commandButton value="Novo"
-							actionListener="#{itensCampanhaBean.novo}"
-							oncomplete="PF('dialogo').show();"
-							update=":mensagem :formCadastro:painel">
-							<f:actionListener
-								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-						</p:commandButton>
+						<div align="left">
+							<p:button outcome="campanha-empresa" value="Voltar" />
+
+							<p:commandButton value="Novo"
+								actionListener="#{itensCampanhaBean.novo}"
+								oncomplete="PF('dialogo').show();"
+								update=":mensagem :formCadastro:painel">
+								<f:actionListener
+									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							</p:commandButton>
+						</div>
 					</f:facet>
 
 					<p:column headerText="Campanha">
@@ -39,7 +42,7 @@
 				</p:dataTable>
 			</p:panel>
 		</h:form>
-		
+
 		<p:dialog header="Itens - Cadastro" widgetVar="dialogo"
 			responsive="true" resizable="false" modal="true" maximizable="true"
 			draggable="false">

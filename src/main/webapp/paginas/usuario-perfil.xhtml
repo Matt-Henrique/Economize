@@ -10,102 +10,72 @@
 		<p:panel header="Meu Perfil">
 			<h:form id="formListagem">
 				<h:panelGrid columns="2" width="100%">
-					<p:repeat id="pessoal" var="usuario"
-						value="#{usuarioPerfilBean.usuarios}">
+					<p:repeat var="usuario" value="#{usuarioPerfilBean.usuarios}">
 						<p:panel header="Dados Pessoais">
 							<p:panelGrid columns="2" layout="grid">
 								<h:outputText value="Nome Completo:" style="font-weight: bold" />
 								<h:outputText value="#{usuario.nome}" />
 
-								<h:outputText value="Tipo de Usuário:" style="font-weight: bold" />
-								<h:outputText value="#{usuario.tipoUsuario.toString()}" />
+								<h:outputText value="CPF:" style="font-weight: bold" />
+								<h:outputText value="#{usuario.cpf}" />
 
+								
 								<h:outputText value="E-mail:" style="font-weight: bold" />
 								<h:outputText value="#{usuario.email}" />
 
-								<h:outputText value="Fone 1:" style="font-weight: bold" />
+								<h:outputText value="Telefone / Celular:"
+									style="font-weight: bold" />
 								<h:outputText value="#{usuario.fone1}" />
 
-								<h:outputText value="Fone 2:" style="font-weight: bold" />
+								<h:outputText value="Telefone / Celular:"
+									style="font-weight: bold" rendered="#{not empty usuario.fone2}" />
 								<h:outputText value="#{usuario.fone2}" />
-
-								<h:outputText value="CPF:" style="font-weight: bold" />
-								<h:outputText value="#{usuario.cpf}" />
+								
+								<h:outputText value="Tipo de Usuário:" style="font-weight: bold" />
+								<h:outputText value="#{usuario.tipoUsuario.toString()}" />
 							</p:panelGrid>
 						</p:panel>
-						<p:panel header="Opções">
-							<p:panelGrid columns="2" layout="grid">
-								<p:commandButton value="Editar Dados" icon="fa fa-pencil"
-									title="Editar" actionListener="#{usuarioPerfilBean.editar}"
-									update=":mensagem :formCadastro"
-									oncomplete="PF('usuario').show();">
-									<f:attribute name="usuarioSelecionado" value="#{usuario}" />
-								</p:commandButton>
-
-								<p:commandButton value="Alterar Senha" icon="fa fa-key"
-									title="Alterar Senha"
-									actionListener="#{usuarioPerfilBean.editar}"
-									update=":mensagem :formSenha:mudarSenha"
-									oncomplete="PF('senha').show();">
-									<f:actionListener
-										type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-									<f:attribute name="usuarioSelecionado" value="#{usuario}" />
-								</p:commandButton>
-							</p:panelGrid>
+						<p:panel header="Alterar">
+							<p:commandButton value="Telefones" icon="fa fa-phone"
+								title="Alterar" actionListener="#{usuarioPerfilBean.editar}"
+								update=":mensagem :formCadastro"
+								oncomplete="PF('telefones').show();">
+								<f:attribute name="usuarioSelecionado" value="#{usuario}" />
+							</p:commandButton> 
+							||
+							<p:commandButton value="Senha" icon="fa fa-key"
+								title="Alterar" actionListener="#{usuarioPerfilBean.editar}"
+								update=":mensagem :formSenha:mudarSenha"
+								oncomplete="PF('senha').show();">
+								<f:actionListener
+									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+								<f:attribute name="usuarioSelecionado" value="#{usuario}" />
+							</p:commandButton>
 						</p:panel>
 					</p:repeat>
 				</h:panelGrid>
 			</h:form>
 
-			<p:dialog header="Meus Dados" widgetVar="usuario" maximizable="true"
-				resizable="false" modal="true" height="550" draggable="false"
-				responsive="true" showEffect="clip" hideEffect="fold"
-				closeOnEscape="true">
+			<p:dialog header="Meus Telefones" widgetVar="telefones" modal="true"
+				resizable="false" draggable="false" responsive="true"
+				showEffect="clip" hideEffect="fold">
 				<h:form id="formCadastro">
-					<p:tab id="tabPerfil" title="Perfil">
-						<p:panel header="Dados do Administrador">
-							<h:panelGrid columns="1" id="usuario">
-								<p:outputLabel value="Nome Completo:" for="nome" />
-								<p:inputText id="nome" value="#{usuarioPerfilBean.usuario.nome}"
-									style="width:350px;" title="Nome Completo" required="true"
-									requiredMessage="Informe o Nome Completo"
-									placeholder="Ex: Mateus Henrique Neto" maxlength="50" />
-
-								<p:outputLabel value="CPF:" for="cpf" />
-								<p:inputMask mask="999.999.999-99" id="cpf" title="CPF"
-									style="width:350px;" value="#{usuarioPerfilBean.usuario.cpf}"
-									required="true" requiredMessage="Informe o CPF"
-									placeholder="Somente números" />
-							</h:panelGrid>
-						</p:panel>
-					</p:tab>
-
 					<p:tab id="tabContato" title="Contatos">
-						<p:panel header="Contatos do Administrador">
-							<h:panelGrid columns="1" id="contato">
-								<p:outputLabel value="Telefone:" for="fone" />
-								<p:inputMask mask="(99) 9?99999999" id="fone"
-									style="width:350px;" title="Telefone"
+						<p:panel header="Contatos">
+							<h:panelGrid columns="1">
+								<p:outputLabel value="Telefone / Celular:" for="fone1" />
+								<p:inputMask mask="(99) 9?99999999" id="fone1"
+									style="width:250px;" title="Telefone / Celular"
 									value="#{usuarioPerfilBean.usuario.fone1}" required="true"
 									requiredMessage="Informe o Telefone"
 									placeholder="(DDD) Telefone" />
 
-								<p:outputLabel value="Telefone (Opcional):" for="fone2" />
-								<p:inputMask mask="(99) 9?9999999" id="fone2"
-									style="width:350px;" title="Telefone"
+								<p:outputLabel value="Telefone / Celular (Opcional):"
+									for="fone2" />
+								<p:inputMask mask="(99) 9?99999999" id="fone2"
+									style="width:250px;" title="Telefone / Celular"
 									value="#{usuarioPerfilBean.usuario.fone2}"
 									placeholder="(DDD) Telefone" />
-
-								<p:outputLabel value="E-mail:" for="email" />
-								<p:inputText id="email"
-									value="#{usuarioPerfilBean.usuario.email}" style="width:350px;"
-									title="E-mail" required="true"
-									requiredMessage="Informe o E-mail"
-									validatorMessage="Informe o E-mail"
-									placeholder="Ex: joaoSantos@email.com" maxlength="100">
-									<f:validateRegex
-										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-								</p:inputText>
 							</h:panelGrid>
 						</p:panel>
 					</p:tab>
@@ -113,11 +83,11 @@
 					<div align="left">
 						<h:panelGrid columns="2">
 							<p:commandButton value="Confirmar" icon="fa fa-check"
-								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('usuario').hide()"
+								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('telefones').hide()"
 								actionListener="#{usuarioPerfilBean.salvar}"
 								update=":mensagem :formListagem" />
 							<p:commandButton value="Fechar" icon="fa fa-times"
-								process="@none" oncomplete="PF('usuario').hide();">
+								process="@none" oncomplete="PF('telefones').hide();">
 								<f:actionListener
 									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 							</p:commandButton>
@@ -126,15 +96,15 @@
 				</h:form>
 			</p:dialog>
 
-			<p:dialog header="Alteração" widgetVar="senha" maximizable="true"
+			<p:dialog header="Alterar a Senha" widgetVar="senha"
 				resizable="false" modal="true" draggable="false" responsive="true"
-				showEffect="clip" hideEffect="fold" closeOnEscape="true">
+				showEffect="clip" hideEffect="fold">
 				<h:form id="formSenha">
 					<p:tab id="tabSenha" title="Senha">
-						<p:panel header="Alterar a Senha">
+						<p:panel header="Senha">
 							<h:panelGrid columns="1" id="mudarSenha">
 								<p:outputLabel value="Nova senha:" for="senha" />
-								<p:password id="senha" style="width:350px;"
+								<p:password id="senha" style="width:250px;"
 									value="#{usuarioPerfilBean.usuario.senhaSemCriptografia}"
 									promptLabel="Digite a senha" weakLabel="Força da senha : Fraca"
 									goodLabel="Força da senha : Média" required="true"
@@ -146,7 +116,7 @@
 								</p:password>
 
 								<p:outputLabel value="Confirme a senha:" for="confSenha" />
-								<p:password id="confSenha" style="width:350px;"
+								<p:password id="confSenha" style="width:250px;"
 									value="#{usuarioPerfilBean.usuario.senhaSemCriptografia}"
 									match="confSenha" title="Confirme sua senha"
 									validatorMessage="As duas senhas devem ser iguais"

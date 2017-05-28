@@ -8,7 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	<ui:define name="conteudo">
 		<h:form id="formListagem"
-			rendered="#{autenticacaoBean.controladorAcesso.permissaoGerente}">
+			rendered="#{autenticacaoBean.controladorAcesso.permissaoAdministrador}">
 			<p:panel header="Usuário - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 					paginator="true" rows="20" value="#{usuarioBean.usuarios}"
@@ -37,13 +37,21 @@
 					</p:column>
 
 					<p:column headerText="E-mail" sortBy="#{usuario.email}"
-						filterBy="#{usuario.email}" filterMatchMode="contains">
+						filterBy="#{usuario.email}" filterMatchMode="contains"
+						styleClass="col-email">
 						<h:outputText value="#{usuario.email}" />
+					</p:column>
+
+					<p:column headerText="Empresa"
+						sortBy="#{usuario.empresa.nomeFantasia}"
+						filterBy="#{usuario.empresa.nomeFantasia}"
+						filterMatchMode="contains">
+						<h:outputText value="#{usuario.empresa.nomeFantasia}" />
 					</p:column>
 
 					<p:column headerText="Tipo" sortBy="#{usuario.tipoUsuario}"
 						filterBy="#{usuario.tipoUsuario}" filterMatchMode="contains"
-						width="140">
+						width="120">
 						<h:outputText value="#{usuario.tipoUsuario.toString()}" />
 					</p:column>
 
@@ -60,7 +68,7 @@
 
 						<p:commandButton icon="fa fa-pencil" title="Editar"
 							actionListener="#{usuarioBean.editar}"
-							update=":mensagem :formEdicao:usu"
+							update=":mensagem :formEdicao:user"
 							oncomplete="PF('edicao').show();">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
@@ -76,7 +84,7 @@
 							<f:attribute name="usuarioSelecionado" value="#{usuario}" />
 						</p:commandButton>
 
-						<p:commandButton icon="fa fa-key" title="Mudar Senha"
+						<p:commandButton icon="fa fa-key" title="Alterar Senha"
 							actionListener="#{usuarioBean.editar}"
 							update=":mensagem :formSenha:mudarSenha"
 							oncomplete="PF('senha').show();">
@@ -99,127 +107,90 @@
 			</p:panel>
 		</h:form>
 
-		<p:dialog header="Cadastro" widgetVar="dialogo" maximizable="true"
-			resizable="false" modal="true" height="500" draggable="false"
-			responsive="true" showEffect="clip" hideEffect="fold">
+		<p:dialog header="Cadastro" widgetVar="dialogo" resizable="false"
+			modal="true" height="500" draggable="false" responsive="true"
+			showEffect="clip" hideEffect="fold">
 			<h:form id="formCadastro">
-				<p:wizard nextLabel="Próximo" backLabel="Voltar" widgetVar="wiz"
-					id="w">
-					<p:tab id="tabAdm1" title="Usuário">
-						<p:panel header="Dados do Usuário">
-							<p:messages closable="true" />
-							<h:panelGrid columns="1" id="pessoal">
-								<p:outputLabel value="Nome Completo:" for="nome" />
-								<p:inputText id="nome" value="#{usuarioBean.usuario.nome}"
-									style="width:350px;" title="Nome" required="true"
-									requiredMessage="Informe o Nome"
-									placeholder="Ex: Mateus Henrique Neto" maxlength="50" />
+				<p:tab id="tabAdm1" title="Usuário">
+					<p:panel header="Dados do Usuário">
+						<h:panelGrid columns="1">
+							<p:outputLabel value="Empresa:" for="empresa" />
+							<p:selectOneMenu id="empresa" filter="true"
+								value="#{usuarioBean.usuario.empresa}" style="width:325px;"
+								autoWidth="325" required="true"
+								requiredMessage="Informe a Empresa"
+								converter="omnifaces.SelectItemsConverter">
+								<f:selectItem noSelectionOption="true"
+									itemLabel="Selecione uma empresa..." />
+								<f:selectItems value="#{usuarioBean.empresas}" var="empresa"
+									itemValue="#{empresa}" itemLabel="#{empresa.nomeFantasia}" />
+							</p:selectOneMenu>
 
-								<p:outputLabel value="CPF:" for="cpf" />
-								<p:inputMask mask="999.999.999-99" id="cpf" title="CPF"
-									style="width:350px;" value="#{usuarioBean.usuario.cpf}"
-									required="true" requiredMessage="Informe o CPF"
-									placeholder="Somente números" />
+							<p:outputLabel value="Nome Completo:" for="nome" />
+							<p:inputText id="nome" value="#{usuarioBean.usuario.nome}"
+								style="width:350px;" title="Nome" required="true"
+								requiredMessage="Informe o Nome"
+								placeholder="Ex: José Pereira Santos" maxlength="80" />
 
-								<p:outputLabel value="Tipo de Usuário:" for="tipoUsuario" />
-								<p:selectOneRadio id="tipoUsuario"
-									value="#{usuarioBean.usuario.tipoUsuario}" required="true"
-									layout="pageDirection" styleClass="one-radio">
-									<f:selectItem itemLabel="Administrador"
-										itemValue="ADMINISTRADOR"
-										itemDisabled="#{!autenticacaoBean.controladorAcesso.permissaoAdministrador}" />
-									<f:selectItem itemLabel="Gerente" itemValue="GERENTE"
-										itemDisabled="#{!autenticacaoBean.controladorAcesso.permissaoAdministrador}" />
-									<f:selectItem itemLabel="Usuário" itemValue="USUARIO" />
-								</p:selectOneRadio>
+							<p:outputLabel value="CPF:" for="cpf" />
+							<p:inputMask mask="999.999.999-99" id="cpf" title="CPF"
+								style="width:350px;" value="#{usuarioBean.usuario.cpf}"
+								required="true" requiredMessage="Informe o CPF"
+								placeholder="Somente números" />
 
-								<p:outputLabel value="Empresa:" for="empresa" />
-								<p:selectOneMenu id="empresa" filter="true"
-									value="#{usuarioBean.usuario.empresa}" style="width:325px;"
-									autoWidth="325" required="true"
-									requiredMessage="Informe a Empresa"
-									converter="omnifaces.SelectItemsConverter">
-									<f:selectItem noSelectionOption="true"
-										itemLabel="Selecione uma empresa..." />
-									<f:selectItems value="#{usuarioBean.empresas}" var="empresa"
-										itemValue="#{empresa}" itemLabel="#{empresa.nomeFantasia}" />
-								</p:selectOneMenu>
-							</h:panelGrid>
-						</p:panel>
-					</p:tab>
-					<p:tab id="tabAdm2" title="Contato">
-						<p:panel header="Contatos da Empresa">
-							<p:messages closable="true" />
-							<h:panelGrid columns="1" id="contato">
-								<p:outputLabel value="Telefone:" for="fone1 " />
-								<p:inputMask mask="(99) 9999-9999" id="fone1"
-									style="width:350px;" title="Telefone"
-									value="#{usuarioBean.usuario.fone1}" required="true"
-									requiredMessage="Informe o Telefone"
-									placeholder="(DDD) Telefone" />
+							<p:outputLabel value="E-mail:" for="email" />
+							<p:inputText id="email" value="#{usuarioBean.usuario.email}"
+								style="width:350px;" title="E-mail" required="true"
+								requiredMessage="Informe o E-mail"
+								validatorMessage="Informe o E-mail"
+								placeholder="Ex: mateus@email.com" maxlength="100">
+								<f:validateRegex
+									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							</p:inputText>
 
-								<p:outputLabel value="Telefone (Opcional):" for="fone2" />
-								<p:inputMask mask="(99) 9999-9999" id="fone2"
-									style="width:350px;" title="Telefone"
-									value="#{usuarioBean.usuario.fone2}"
-									placeholder="(DDD) Telefone" />
+							<p:outputLabel value="Telefone / Celular:" for="fone1 " />
+							<p:inputMask mask="(99) 9?99999999" id="fone1"
+								style="width:350px;" title="Telefone"
+								value="#{usuarioBean.usuario.fone1}" required="true"
+								requiredMessage="Informe o Telefone"
+								placeholder="(DDD) Telefone" />
 
-								<p:outputLabel value="E-mail:" for="email" />
-								<p:inputText id="email" value="#{usuarioBean.usuario.email}"
-									style="width:350px;" title="E-mail" required="true"
-									requiredMessage="Informe o E-mail"
-									validatorMessage="Informe o E-mail"
-									placeholder="Ex: mateus@email.com" maxlength="50">
-									<f:validateRegex
-										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-								</p:inputText>
-							</h:panelGrid>
-						</p:panel>
-					</p:tab>
-					<p:tab id="tabAdm3" title="Senha">
-						<p:panel header="Senha para Login">
-							<p:messages closable="true" />
-							<h:panelGrid columns="1" id="pass">
-								<p:outputLabel value="Nova senha:" for="senha" />
-								<p:password id="senha" style="width:350px;"
-									value="#{usuarioBean.usuario.senhaSemCriptografia}"
-									promptLabel="Digite a senha" weakLabel="Força da senha : Fraca"
-									goodLabel="Força da senha : Média" required="true"
-									requiredMessage="Digite a nova senha"
-									strongLabel="Força da senha : Forte" match="confSenha"
-									validatorMessage="As duas senhas devem ser iguais"
-									maxlength="20" feedback="true" title="Senha até 20 dígitos"
-									placeholder="Digite sua senha" />
+							<p:outputLabel value="Telefone / Celular: (Opcional):"
+								for="fone2" />
+							<p:inputMask mask="(99) 9?99999999" id="fone2"
+								style="width:350px;" title="Telefone"
+								value="#{usuarioBean.usuario.fone2}"
+								placeholder="(DDD) Telefone" />
 
-								<p:outputLabel value="Confirme a senha:" for="confSenha" />
-								<p:password id="confSenha" style="width:350px;"
-									value="#{usuarioBean.usuario.senhaSemCriptografia}"
-									match="confSenha" title="Confirme sua senha"
-									validatorMessage="As duas senhas devem ser iguais"
-									maxlength="20" placeholder="Confirme sua senha" />
-							</h:panelGrid>
-							<p:separator />
-							<div align="right">
-								<h:panelGrid columns="2">
-									<p:commandButton value="Confirmar" icon="fa fa-check"
-										oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogo').hide()"
-										actionListener="#{usuarioBean.salvar}"
-										update=":mensagem :formCadastro :formListagem:tabela" />
-								</h:panelGrid>
-							</div>
-						</p:panel>
-					</p:tab>
-				</p:wizard>
+							<p:outputLabel value="Tipo de Usuário:" for="tipoUsuario" />
+							<p:selectOneRadio id="tipoUsuario"
+								value="#{usuarioBean.usuario.tipoUsuario}" required="true"
+								layout="pageDirection" styleClass="one-radio">
+								<f:selectItem itemLabel="Administrador"
+									itemValue="ADMINISTRADOR" />
+								<f:selectItem itemLabel="Gerente" itemValue="GERENTE" />
+								<f:selectItem itemLabel="Usuário" itemValue="USUARIO" />
+							</p:selectOneRadio>
+						</h:panelGrid>
+						<p:separator />
+						<h:panelGrid columns="2">
+							<p:commandButton value="Confirmar" icon="fa fa-check"
+								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogo').hide()"
+								actionListener="#{usuarioBean.salvar}"
+								update=":mensagem :formCadastro :formListagem:tabela" />
+						</h:panelGrid>
+					</p:panel>
+				</p:tab>
 			</h:form>
 		</p:dialog>
 
-		<p:dialog header="Edição" widgetVar="edicao" maximizable="true"
-			resizable="false" modal="true" height="500" draggable="false"
-			responsive="true" showEffect="clip" hideEffect="fold">
+		<p:dialog header="Edição" widgetVar="edicao" resizable="false"
+			modal="true" height="500" draggable="false" responsive="true"
+			showEffect="clip" hideEffect="fold">
 			<h:form id="formEdicao">
 				<p:tab id="tabAdm" title="Usuário">
 					<p:panel header="Dados do Usuário">
-						<h:panelGrid columns="1" id="usu">
+						<h:panelGrid columns="1" id="user">
 							<p:outputLabel value="Nome Completo:" for="nome" />
 							<p:inputText id="nome" value="#{usuarioBean.usuario.nome}"
 								style="width:350px;" title="Nome" required="true"
@@ -234,31 +205,6 @@
 								placeholder="Somente números">
 							</p:inputMask>
 
-							<p:outputLabel value="Tipo de Usuário:" for="tipoUsuario" />
-							<p:selectOneRadio id="tipoUsuario"
-								value="#{usuarioBean.usuario.tipoUsuario}"
-								layout="pageDirection" styleClass="one-radio">
-								<f:selectItem itemLabel="Administrador"
-									itemValue="ADMINISTRADOR" />
-								<f:selectItem itemLabel="Gerente" itemValue="GERENTE" />
-								<f:selectItem itemLabel="Usuário" itemValue="USUARIO" />
-							</p:selectOneRadio>
-
-							<p:outputLabel value="Telefone:" for="fone1" />
-							<p:inputMask mask="(99) 9999-9999" id="fone1"
-								style="width:350px;" title="Telefone"
-								value="#{usuarioBean.usuario.fone1}" required="true"
-								requiredMessage="Informe o Telefone"
-								placeholder="(DDD) Telefone">
-							</p:inputMask>
-
-							<p:outputLabel value="Telefone (Opcional):" for="fone2" />
-							<p:inputMask mask="(99) 9999-9999" id="fone2"
-								style="width:350px;" title="Telefone"
-								value="#{usuarioBean.usuario.fone2}"
-								placeholder="(DDD) Telefone">
-							</p:inputMask>
-
 							<p:outputLabel value="E-mail:" for="email" />
 							<p:inputText id="email" value="#{usuarioBean.usuario.email}"
 								style="width:350px;" title="E-mail" required="true"
@@ -268,6 +214,31 @@
 								<f:validateRegex
 									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 							</p:inputText>
+
+							<p:outputLabel value="Telefone / Celular:" for="fone1" />
+							<p:inputMask mask="(99) 9999-9999" id="fone1"
+								style="width:350px;" title="Telefone"
+								value="#{usuarioBean.usuario.fone1}" required="true"
+								requiredMessage="Informe o Telefone"
+								placeholder="(DDD) Telefone">
+							</p:inputMask>
+
+							<p:outputLabel value="Telefone / Celular (Opcional):" for="fone2" />
+							<p:inputMask mask="(99) 9999-9999" id="fone2"
+								style="width:350px;" title="Telefone"
+								value="#{usuarioBean.usuario.fone2}"
+								placeholder="(DDD) Telefone">
+							</p:inputMask>
+
+							<p:outputLabel value="Tipo de Usuário:" for="tipoUsuario" />
+							<p:selectOneRadio id="tipoUsuario"
+								value="#{usuarioBean.usuario.tipoUsuario}" required="true"
+								layout="pageDirection" styleClass="one-radio">
+								<f:selectItem itemLabel="Administrador"
+									itemValue="ADMINISTRADOR" />
+								<f:selectItem itemLabel="Gerente" itemValue="GERENTE" />
+								<f:selectItem itemLabel="Usuário" itemValue="USUARIO" />
+							</p:selectOneRadio>
 						</h:panelGrid>
 					</p:panel>
 				</p:tab>
@@ -277,7 +248,7 @@
 						<p:commandButton value="Confirmar" icon="fa fa-check"
 							oncomplete="if (args &amp;&amp; !args.validationFailed) PF('edicao').hide()"
 							actionListener="#{usuarioBean.salvarEdicao}"
-							update=":mensagem :formEdicao:usu :formListagem:tabela" />
+							update=":mensagem :formEdicao:user :formListagem:tabela" />
 						<p:commandButton value="Fechar" icon="fa fa-times"
 							oncomplete="PF('edicao').hide();">
 							<f:actionListener
@@ -288,12 +259,12 @@
 			</h:form>
 		</p:dialog>
 
-		<p:dialog header="Alteração" widgetVar="senha" maximizable="true"
-			resizable="false" modal="true" draggable="false" responsive="true"
-			showEffect="clip" hideEffect="fold">
+		<p:dialog header="Alterar a Senha" widgetVar="senha"
+			maximizable="true" resizable="false" modal="true" draggable="false"
+			responsive="true" showEffect="clip" hideEffect="fold">
 			<h:form id="formSenha">
 				<p:tab id="tabSenha" title="Senha">
-					<p:panel header="Alterar a Senha">
+					<p:panel header="Senha">
 						<h:panelGrid columns="1" id="mudarSenha">
 							<p:outputLabel value="Nova senha:" for="senha" />
 							<p:password id="senha" style="width:350px;"

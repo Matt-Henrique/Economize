@@ -24,7 +24,7 @@
 									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 							</p:commandButton>
 						</div>
-						
+
 						<div align="right">
 							<p:outputLabel value="Pesquisar Campos: " />
 							<p:inputText id="globalFilter"
@@ -37,6 +37,22 @@
 						sortBy="#{empresa.nomeFantasia}"
 						filterBy="#{empresa.nomeFantasia}" filterMatchMode="contains">
 						<h:outputText value="#{empresa.nomeFantasia}" />
+					</p:column>
+
+					<p:column headerText="Telefone" sortBy="#{empresa.fone1}"
+						filterBy="#{empresa.fone1}" filterMatchMode="contains" width="120"
+						styleClass="col-fone1">
+						<h:outputText value="#{empresa.fone1}" />
+					</p:column>
+
+					<p:column headerText="CNPJ" sortBy="#{empresa.cnpj}"
+						filterBy="#{empresa.cnpj}" filterMatchMode="contains" width="155">
+						<h:outputText value="#{empresa.cnpj}" />
+					</p:column>
+
+					<p:column headerText="IE" sortBy="#{empresa.ie}"
+						filterBy="#{empresa.ie}" filterMatchMode="contains" width="155">
+						<h:outputText value="#{empresa.ie}" />
 					</p:column>
 
 					<p:column headerText="Opções" width="90">
@@ -72,16 +88,16 @@
 			</p:panel>
 		</h:form>
 
-		<p:dialog header="Cadastro" widgetVar="dialogo" maximizable="true"
-			resizable="false" modal="true" height="500" draggable="false"
-			responsive="true" showEffect="clip" hideEffect="fold">
+		<p:dialog header="Cadastro" widgetVar="dialogo" resizable="false"
+			modal="true" height="500" draggable="false" responsive="true"
+			showEffect="clip" hideEffect="fold">
 			<h:form id="formCadastro">
-				<p:wizard nextLabel="Próximo" backLabel="Voltar" widgetVar="wiz"
-					id="w">
+				<p:wizard nextLabel="Próximo" backLabel="Voltar" widgetVar="wz"
+					id="empresaWiz">
 					<p:tab id="tabEmp1" title="Empresa">
 						<p:panel header="Dados da Empresa">
 							<p:messages closable="true" />
-							<h:panelGrid columns="1" id="empresa">
+							<h:panelGrid columns="1">
 								<p:outputLabel value="Nome Fantasia:" for="nomeFant" />
 								<p:inputText id="nomeFant"
 									value="#{empresaBean.empresa.nomeFantasia}"
@@ -113,25 +129,6 @@
 						<p:panel header="Contatos da Empresa">
 							<p:messages closable="true" />
 							<h:panelGrid columns="1" id="contato">
-								<p:outputLabel value="Telefone:" for="fone1" />
-								<p:inputMask mask="(99) 9999-9999" id="fone1"
-									style="width:350px;" title="Telefone"
-									value="#{empresaBean.empresa.fone1}" required="true"
-									requiredMessage="Informe o Telefone"
-									placeholder="(DDD) Telefone" />
-
-								<p:outputLabel value="Telefone (Opcional):" for="fone2" />
-								<p:inputMask mask="(99) 9999-9999" id="fone2"
-									style="width:350px;" title="Telefone"
-									value="#{empresaBean.empresa.fone2}"
-									placeholder="(DDD) Telefone" />
-
-								<p:outputLabel value="Telefone (Opcional):" for="fone3" />
-								<p:inputMask mask="(99) 9?9999-9999" id="fone3"
-									style="width:350px;" title="Telefone"
-									value="#{empresaBean.empresa.fone3}"
-									placeholder="(DDD) Telefone" />
-
 								<p:outputLabel value="E-mail:" for="email" />
 								<p:inputText id="email" value="#{empresaBean.empresa.email}"
 									style="width:350px;" title="E-mail" required="true"
@@ -141,6 +138,27 @@
 									<f:validateRegex
 										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 								</p:inputText>
+
+								<p:outputLabel value="Telefone / Celular:" for="fone1" />
+								<p:inputMask mask="(99) 9?99999999" id="fone1"
+									style="width:350px;" title="Telefone"
+									value="#{empresaBean.empresa.fone1}" required="true"
+									requiredMessage="Informe o Telefone"
+									placeholder="(DDD) Telefone" />
+
+								<p:outputLabel value="Telefone / Celular (Opcional):"
+									for="fone2" />
+								<p:inputMask mask="(99) 9?99999999" id="fone2"
+									style="width:350px;" title="Telefone"
+									value="#{empresaBean.empresa.fone2}"
+									placeholder="(DDD) Telefone" />
+
+								<p:outputLabel value="Telefone / Celular (Opcional):"
+									for="fone3" />
+								<p:inputMask mask="(99) 9?99999999" id="fone3"
+									style="width:350px;" title="Telefone"
+									value="#{empresaBean.empresa.fone3}"
+									placeholder="(DDD) Telefone" />
 							</h:panelGrid>
 						</p:panel>
 					</p:tab>
@@ -148,21 +166,28 @@
 						<p:panel header="Endereço da Empresa">
 							<p:messages closable="true" />
 							<h:panelGrid columns="1" id="endereco">
-								<p:outputLabel value="CEP:" for="cep" />
-								<p:inputMask mask="99999-999" id="cep" title="CEP"
-									style="width:350px;" update="@form"
-									value="#{empresaBean.empresa.endereco.cep}" required="true"
-									requiredMessage="Informe o CEP" placeholder="Somente números"
-									onchange="#{empresaBean.empresa.endereco.encontraCEP()}">
-									<p:ajax update="endereco" process="@this" resetValues="true" />
-								</p:inputMask>
+								<h:panelGrid columns="4">
+									<h:panelGrid columns="1" cellpadding="0" cellspacing="0"
+										border="0">
+										<p:outputLabel value="CEP:" for="cep" />
+										<p:inputMask mask="99999-999" id="cep" title="CEP"
+											style="width:220px;" update="@form"
+											value="#{empresaBean.empresa.endereco.cep}" required="true"
+											requiredMessage="Informe o CEP" placeholder="Somente números"
+											onchange="#{empresaBean.empresa.endereco.encontraCEP()}">
+											<p:ajax update="endereco" process="@this" resetValues="true" />
+										</p:inputMask>
+									</h:panelGrid>
 
-								<p:outputLabel value="UF:" for="estado" />
-								<p:inputText id="estado" immediate="true"
-									value="#{empresaBean.empresa.endereco.estado}"
-									style="width:350px;" title="Estado" required="true"
-									requiredMessage="Informe o Estado" placeholder="Ex: SP"
-									maxlength="2" />
+									<h:panelGrid columns="1" style="margin-left: 25px">
+										<p:outputLabel value="UF:" for="estado" />
+										<p:inputText id="estado" immediate="true"
+											value="#{empresaBean.empresa.endereco.estado}"
+											style="width:70px;" title="Estado" required="true"
+											requiredMessage="Informe o Estado" placeholder="Ex: SP"
+											maxlength="2" />
+									</h:panelGrid>
+								</h:panelGrid>
 
 								<p:outputLabel value="Cidade:" for="cidade" />
 								<p:inputText id="cidade" immediate="true"
@@ -178,12 +203,28 @@
 									requiredMessage="Informe o Bairro" placeholder="Ex: Centro"
 									maxlength="50" />
 
-								<p:outputLabel value="Tipo do Logradouro:" for="tipoLogradouro" />
-								<p:inputText id="tipoLogradouro" immediate="true"
-									value="#{empresaBean.empresa.endereco.tipoLogradouro}"
-									style="width:350px;" title="Tipo do Logradouro" required="true"
-									requiredMessage="Informe o Tipo do Logradouro"
-									placeholder="Ex: Avenida, Rua, Praça" maxlength="20" />
+								<h:panelGrid columns="4">
+									<h:panelGrid columns="1" cellpadding="0" cellspacing="0"
+										border="0">
+										<p:outputLabel value="Tipo do Logradouro:"
+											for="tipoLogradouro" />
+										<p:inputText id="tipoLogradouro" immediate="true"
+											value="#{empresaBean.empresa.endereco.tipoLogradouro}"
+											style="width:220px;" title="Tipo do Logradouro"
+											required="true"
+											requiredMessage="Informe o Tipo do Logradouro"
+											placeholder="Ex: Avenida, Rua, Praça" maxlength="20" />
+									</h:panelGrid>
+
+									<h:panelGrid columns="1" style="margin-left: 25px">
+										<p:outputLabel value="Número:" for="numero" />
+										<p:inputText id="numero"
+											value="#{empresaBean.empresa.endereco.numero}"
+											style="width:70px;" title="Número" required="true"
+											requiredMessage="Informe o Número"
+											placeholder="Somente números" maxlength="5" />
+									</h:panelGrid>
+								</h:panelGrid>
 
 								<p:outputLabel value="Logradouro:" for="logradouro" />
 								<p:inputText id="logradouro" immediate="true"
@@ -191,13 +232,6 @@
 									style="width:350px;" title="Logradouro" required="true"
 									requiredMessage="Informe o Logradouro"
 									placeholder="Ex: Comendador João Cintra" maxlength="50" />
-
-								<p:outputLabel value="Número:" for="numero" />
-								<p:inputText id="numero"
-									value="#{empresaBean.empresa.endereco.numero}"
-									style="width:350px;" title="Número" required="true"
-									requiredMessage="Informe o Número"
-									placeholder="Somente números" maxlength="5" />
 
 								<p:outputLabel value="Complemento:" for="complemento" />
 								<p:inputText id="complemento" title="Complemento"
@@ -207,16 +241,18 @@
 							</h:panelGrid>
 						</p:panel>
 					</p:tab>
-					<p:tab id="tabEmp4" title="Confirmação">
-						<p:panel header="Confirmação da Empresa">
+					<p:tab id="tabEmp4" title="Logomarca">
+						<p:panel header="Logomarca da Empresa">
 							<p:messages closable="true" />
-							<h:panelGrid columns="2">
-								<p:commandButton value="Confirmar" icon="fa fa-check"
-									oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogo').hide()"
-									actionListener="#{empresaBean.salvar}"
-									update=":mensagem :formCadastro :formListagem:tabela" />
+							<h:panelGrid columns="1">
+								<p:outputLabel />
 							</h:panelGrid>
 						</p:panel>
+						<p:commandButton value="Confirmar" icon="fa fa-check"
+							oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogo').hide()"
+							actionListener="#{empresaBean.salvar}"
+							update=":mensagem :formCadastro :formListagem:tabela"
+							style="float: right" />
 					</p:tab>
 				</p:wizard>
 			</h:form>
