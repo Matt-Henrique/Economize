@@ -95,7 +95,8 @@
 		</h:form>
 
 		<p:dialog header="Informações do Produto" widgetVar="view"
-			modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+			modal="true" responsive="true" showEffect="fade" hideEffect="fade"
+			resizable="false">
 			<p:outputPanel id="view" style="text-align:center;">
 				<p:panelGrid columns="2"
 					rendered="#{not empty produtoEmpresaBean.selectedProduto}"
@@ -103,7 +104,8 @@
 
 					<f:facet name="header">
 						<div style="background-color: white">
-							<p:graphicImage id="foto" value="#{imagemBean.foto}">
+							<p:graphicImage id="foto" value="#{imagemBean.foto}" width="300"
+								height="250">
 								<f:param name="caminho"
 									value="#{produtoEmpresaBean.selectedProduto.caminho}" />
 							</p:graphicImage>
@@ -152,7 +154,7 @@
 									requiredMessage="Informe a Descrição" style="width:350px;" />
 
 								<p:outputLabel value="Descrição Reduzida:" for="descReduzida" />
-								<p:inputText id="descReduzida" maxlength="50"
+								<p:inputText id="descReduzida" maxlength="30"
 									title="Descrição Reduzida"
 									value="#{produtoEmpresaBean.produto.descricaoReduzida}"
 									required="true" requiredMessage="Informe a Descrição Reduzida"
@@ -170,7 +172,7 @@
 									style="width:350px;" />
 
 								<p:outputLabel value="Ean:" for="ean" />
-								<p:inputText id="ean" maxlength="10" title="Ean"
+								<p:inputText id="ean" maxlength="12" title="Ean"
 									value="#{produtoEmpresaBean.produto.ean}" required="true"
 									requiredMessage="Informe o Ean" style="width:350px;" />
 							</h:panelGrid>

@@ -5,6 +5,7 @@ package br.com.economize.bean;
 * 
 */
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,9 +13,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 
 import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 
 import br.com.economize.dao.ItensCampanhaDAO;
 import br.com.economize.dao.ProdutoDAO;
@@ -32,10 +35,14 @@ public class ItensCampanhaBean implements Serializable {
 	Long campanha = (Long) sessao.getAttribute("CAMPANHA_SESSAO");
 
 	private ItemCampanha itemCampanha;
+	private ItemCampanha selectedItemCampanha;
+
 	private List<ItemCampanha> itensCampanha;
 
 	ProdutoDAO produtoDAO = new ProdutoDAO();
 	private List<Produto> produtos = produtoDAO.buscaProdutoPorEmpresa(usuario.getEmpresa().getCodigo());
+
+	private boolean success;
 
 	public ItemCampanha getItemCampanha() {
 		return itemCampanha;
@@ -43,6 +50,14 @@ public class ItensCampanhaBean implements Serializable {
 
 	public void setItemCampanha(ItemCampanha itemCampanha) {
 		this.itemCampanha = itemCampanha;
+	}
+
+	public ItemCampanha getSelectedItemCampanha() {
+		return selectedItemCampanha;
+	}
+
+	public void setSelectedItemCampanha(ItemCampanha selectedItemCampanha) {
+		this.selectedItemCampanha = selectedItemCampanha;
 	}
 
 	public List<ItemCampanha> getItensCampanha() {
@@ -66,9 +81,6 @@ public class ItensCampanhaBean implements Serializable {
 		try {
 			ItensCampanhaDAO itensCampanhaDAO = new ItensCampanhaDAO();
 			itensCampanha = itensCampanhaDAO.buscaItemPorCampanha(campanha);
-
-			ProdutoDAO produtoDAO = new ProdutoDAO();
-			produtos = produtoDAO.buscaProdutoPorEmpresa(usuario.getEmpresa().getCodigo());
 
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar listar os produtos");
@@ -100,9 +112,39 @@ public class ItensCampanhaBean implements Serializable {
 
 			itensCampanha = itensCampanhaDAO.buscaItemPorCampanha(campanha);
 
+			if (success) {
+				RequestContext.getCurrentInstance().execute("PF('dialogo').hide()");
+			}
+
 			Messages.addGlobalInfo("Campanha salva com sucesso");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar a venda");
+			erro.printStackTrace();
+		}
+	}
+
+	public void editar(ActionEvent evento) {
+		try {
+			itemCampanha = (ItemCampanha) evento.getComponent().getAttributes().get("itemCampanhaSelecionado");
+
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar alterar o produto");
+			erro.printStackTrace();
+		}
+	}
+
+	public void excluir(ActionEvent evento) throws IOException {
+		try {
+			itemCampanha = (ItemCampanha) evento.getComponent().getAttributes().get("itemCampanhaSelecionado");
+
+			ItensCampanhaDAO itensCampanhaDAO = new ItensCampanhaDAO();
+			itensCampanhaDAO.excluir(itemCampanha);
+
+			itensCampanha = itensCampanhaDAO.buscaItemPorCampanha(campanha);
+
+			Messages.addGlobalInfo("ItemCampanha excluído com sucesso");
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar excluir o produto");
 			erro.printStackTrace();
 		}
 	}

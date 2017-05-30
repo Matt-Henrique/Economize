@@ -60,7 +60,7 @@ public class MailJavaMessage {
 		// Nome do email remetente
 		setFromNameMail("E-conomize");
 		// Senha do email remetente
-		setPassMail("ItapiraPlanGeD");
+		setPassMail("senha");
 		// Charset, no caso de HTML é necessário
 		setCharsetMail("UTF-8");
 		// Tipo do formato da mensagem, texto ou HTML

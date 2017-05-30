@@ -189,7 +189,6 @@ public class ProdutoEmpresaBean implements Serializable {
 			Messages.addGlobalError("Ocorreu um erro ao tentar excluir o produto");
 			erro.printStackTrace();
 		}
-
 	}
 
 	public void upload(FileUploadEvent evento) {

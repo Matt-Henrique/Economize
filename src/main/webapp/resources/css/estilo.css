@@ -35,7 +35,6 @@ body {
 #footer {
 	background-image: linear-gradient(to right, #e7e4db 1%, #cbccc6);
 	border: 1px silver;
-	border-radius: 5px;
 	box-shadow: 1px 1px 1px;
 	position: absolute;
 	width: 100%;

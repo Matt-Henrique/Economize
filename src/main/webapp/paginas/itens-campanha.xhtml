@@ -11,13 +11,15 @@
 			<p:panel header="Itens da Campanha - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 					paginator="true" value="#{itensCampanhaBean.itensCampanha}"
-					var="itemCampanha" rows="10" paginatorPosition="top">
-
+					var="itemCampanha" rows="10" paginatorPosition="bottom"
+					rowHover="true" rowExpandMode="true" widgetVar="itemTable"
+					multiViewState="true" reflow="true">
 					<f:facet name="header">
 						<div align="left">
-							<p:button outcome="campanha-empresa" value="Voltar" />
+							<p:button outcome="campanha-empresa" value="Voltar"
+								icon="fa fa-arrow-circle-left" />
 
-							<p:commandButton value="Novo"
+							<p:commandButton value="Novo" icon="fa fa-file-o"
 								actionListener="#{itensCampanhaBean.novo}"
 								oncomplete="PF('dialogo').show();"
 								update=":mensagem :formCadastro:painel">
@@ -25,21 +27,65 @@
 									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 							</p:commandButton>
 						</div>
+						
+						<div align="right">
+							<p:outputLabel value="Pesquisar Campos: " />
+							<p:inputText id="globalFilter" onkeyup="PF('itemTable').filter()"
+								placeholder="Faça uma busca" style="width: 150px" />
+						</div>
 					</f:facet>
 
-					<p:column headerText="Campanha">
+					<p:column headerText="Campanha"
+						sortBy="#{itemCampanha.campanha.titulo}"
+						filterBy="#{itemCampanha.campanha.titulo}"
+						filterMatchMode="contains">
 						<h:outputText value="#{itemCampanha.campanha.titulo}" />
 					</p:column>
 
-					<p:column headerText="Produto">
-						<h:outputText value="#{itemCampanha.produto.descricao}" />
+					<p:column headerText="Produto"
+						sortBy="#{itemCampanha.produto.descricaoReduzida}"
+						filterBy="#{itemCampanha.produto.descricaoReduzida}"
+						filterMatchMode="contains">
+						<h:outputText value="#{itemCampanha.produto.descricaoReduzida}" />
 					</p:column>
 
-					<p:column headerText="Preço">
-						<h:outputText value="#{itemCampanha.precoOferta}" />
+					<p:column headerText="Preço" sortBy="#{itemCampanha.precoOferta}"
+						filterBy="#{itemCampanha.precoOferta}" filterMatchMode="contains"
+						width="130">
+						<h:outputText value="#{itemCampanha.precoOferta}">
+							<f:convertNumber type="number" pattern="###,##0.00" />
+						</h:outputText>
 					</p:column>
 
+					<p:column headerText="Opções" width="90">
+						<p:commandButton icon="fa fa-trash" title="Excluir"
+							actionListener="#{itensCampanhaBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o item da campanha?" />
+							<f:attribute name="itemCampanhaSelecionado"
+								value="#{itemCampanha}" />
+						</p:commandButton>
+
+						<p:commandButton icon="fa fa-pencil" title="Editar"
+							actionListener="#{itensCampanhaBean.editar}"
+							update=":mensagem :formCadastro:painel"
+							oncomplete="PF('dialogo').show();">
+							<f:attribute name="itemCampanhaSelecionado"
+								value="#{itemCampanha}" />
+						</p:commandButton>
+					</p:column>
 				</p:dataTable>
+
+				<p:confirmDialog global="true" hideEffect="fold" showEffect="clip"
+					responsive="true">
+					<div align="center">
+						<p:commandButton value="Sim" type="button"
+							styleClass="ui-confirmdialog-yes" icon="fa fa-check" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-confirmdialog-no" icon="fa fa-times" />
+					</div>
+				</p:confirmDialog>
 			</p:panel>
 		</h:form>
 
@@ -48,11 +94,6 @@
 			draggable="false">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painel" columns="2">
-					<p:outputLabel value="Preço" for="preco" />
-					<p:inputText id="preco"
-						value="#{itensCampanhaBean.itemCampanha.precoOferta}">
-					</p:inputText>
-
 					<p:outputLabel for="produto" value="produto" />
 					<p:selectOneMenu id="produto" filter="true"
 						value="#{itensCampanhaBean.itemCampanha.produto}" required="true"
@@ -63,17 +104,32 @@
 							itemValue="#{produto}"
 							itemLabel="#{produto.descricaoReduzida} - #{produto.categoria.categoria}" />
 					</p:selectOneMenu>
+
+					<p:outputLabel value="Preço Normal" for="precoNormal" />
+					<p:inputNumber id="precoNormal" title="Preço Normal"
+						value="#{itensCampanhaBean.itemCampanha.precoNormal}"
+						required="true" requiredMessage="Informe o Preço Normal"
+						thousandSeparator="." decimalSeparator="," maxValue="99999"
+						inputStyle="width: 100px;">
+					</p:inputNumber>
+
+					<p:outputLabel value="Preço da Oferta" for="precoOferta" />
+					<p:inputNumber id="precoOferta" title="Preço da Oferta"
+						value="#{itensCampanhaBean.itemCampanha.precoOferta}"
+						required="true" requiredMessage="Informe o Preço da Oferta"
+						thousandSeparator="." decimalSeparator="," maxValue="99999"
+						inputStyle="width: 100px;">
+					</p:inputNumber>
 				</h:panelGrid>
 				<p:separator />
 				<div align="right">
 					<h:panelGrid columns="2">
-						<p:commandButton value="Salvar"
+						<p:commandButton value="Salvar" icon="fa fa-check"
+							oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogo').hide()"
 							actionListener="#{itensCampanhaBean.salvar}"
-							update=":mensagem :formCadastro:painel :formListagem:tabela" />
-						<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();">
-							<f:actionListener
-								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-						</p:commandButton>
+							update=":mensagem :formCadastro:painel :formListagem:tabela"
+							ajax="false" process="@this" />
+						<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 					</h:panelGrid>
 				</div>
 			</h:form>

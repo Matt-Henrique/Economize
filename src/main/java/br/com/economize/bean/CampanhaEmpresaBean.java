@@ -17,6 +17,7 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 
 import br.com.economize.dao.CampanhaDAO;
 import br.com.economize.domain.Campanha;
@@ -35,6 +36,8 @@ public class CampanhaEmpresaBean implements Serializable {
 
 	CampanhaDAO campanhaDAO = new CampanhaDAO();
 	private List<Campanha> campanhas = campanhaDAO.buscaCampanhaPorEmpresa(usuario.getEmpresa().getCodigo());
+	
+	private boolean success;
 
 	public Campanha getCampanha() {
 		return campanha;
@@ -97,6 +100,10 @@ public class CampanhaEmpresaBean implements Serializable {
 			campanhaDAO.merge(campanha);
 
 			campanhas = campanhaDAO.buscaCampanhaPorEmpresa(usuario.getEmpresa().getCodigo());
+			
+			if (success) {
+				RequestContext.getCurrentInstance().execute("PF('dialogo').hide()");
+			}
 
 			Messages.addGlobalInfo("Campanha salva com sucesso");
 		} catch (RuntimeException erro) {
